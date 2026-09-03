@@ -29,8 +29,13 @@
 #include <core/frame/frame_factory.h>
 #include <core/monitor/monitor.h>
 #include <tuple>
+#include <type_traits>
 #include <utility>
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#endif
 extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavcodec/codec_id.h>
@@ -47,6 +52,9 @@ extern "C" {
 #include <libavutil/pixfmt.h>
 #include <libavutil/samplefmt.h>
 }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #include <algorithm>
 #include <atomic>

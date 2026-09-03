@@ -46,6 +46,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 #include <memory>
+#include <optional>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
