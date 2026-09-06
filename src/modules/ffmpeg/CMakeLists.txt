@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.28)
 project (ffmpeg)
 
 set(SOURCES
+	producer/a53_cc_substitution.cpp
+	producer/a53_cc_substitution.h
 	producer/av_producer.cpp
 	producer/av_producer.h
 	producer/av_input.cpp

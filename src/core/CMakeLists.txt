@@ -13,6 +13,7 @@ set(SOURCES
 		frame/frame.cpp
 		frame/frame_side_data.cpp
 		frame/frame_transform.cpp
+				frame/side_data_transform.cpp
 		frame/geometry.cpp
 
 		mixer/audio/audio_mixer.cpp
@@ -47,6 +48,7 @@ set(HEADERS
 		frame/frame.h
 		frame/frame_factory.h
 		frame/frame_transform.h
+				frame/side_data_transform.h
 		frame/frame_visitor.h
 		frame/geometry.h
 		frame/pixel_format.h
