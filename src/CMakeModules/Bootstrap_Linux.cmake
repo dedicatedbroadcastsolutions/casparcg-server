@@ -65,11 +65,11 @@ find_package(X11 REQUIRED)
 
 if (ENABLE_HTML)
     if (USE_SYSTEM_CEF)
-        set(CEF_LIB_PATH "/usr/lib/casparcg-cef-142")
+        set(CEF_LIB_PATH "/usr/lib/casparcg-cef-152")
 
         add_library(CEF::CEF INTERFACE IMPORTED)
         target_include_directories(CEF::CEF INTERFACE
-            "/usr/include/casparcg-cef-142"
+            "/usr/include/casparcg-cef-152"
         )
         target_link_libraries(CEF::CEF INTERFACE
             "-Wl,-rpath,${CEF_LIB_PATH} ${CEF_LIB_PATH}/libcef.so"
@@ -78,8 +78,8 @@ if (ENABLE_HTML)
     else()
         casparcg_add_external_project(cef)
         ExternalProject_Add(cef
-            URL ${CASPARCG_DOWNLOAD_MIRROR}/cef/cef_binary_142.0.17+g60aac24+chromium-142.0.7444.176_linux64_minimal.tar.bz2
-            URL_HASH SHA256=1d89e19b2f446105f9a1fe6fdc96bced86249b5884241dcc4013b7c94dabf424
+            URL ${CASPARCG_DOWNLOAD_MIRROR}/cef/cef_binary_152.0.5+gb129680+chromium-152.0.7977.54_linux64_minimal.tar.bz2
+            URL_HASH SHA256=75b06fb292f3b91a9d1708f11a7a80c4e8738add1bee6a687313fa441c4afa0c
             DOWNLOAD_DIR ${CASPARCG_DOWNLOAD_CACHE}
             CMAKE_ARGS -DUSE_SANDBOX=Off
             INSTALL_COMMAND ""

@@ -112,12 +112,12 @@ jobs:
 
                   if [[ "${{ matrix.family }}" == "ubuntu" ]]; then
                     # update the control file to reference the current cef version
-                    CASPARCG_CEF_VER=$(dpkg-query -W -f='${Version}' casparcg-cef-142)
+                    CASPARCG_CEF_VER=$(dpkg-query -W -f='${Version}' casparcg-cef-152)
                     sed -i "s/@CASPARCG_CEF_VER@/${CASPARCG_CEF_VER}/" debian/control
 
                     # Download required packages
                     cd ..
-                    apt-get download casparcg-cef-142=$CASPARCG_CEF_VER
+                    apt-get download casparcg-cef-152=$CASPARCG_CEF_VER
                     apt-get download casparcg-scanner
                   fi
               env:
