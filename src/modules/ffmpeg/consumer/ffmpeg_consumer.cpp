@@ -32,6 +32,7 @@
 #include <common/memory.h>
 #include <common/scope_exit.h>
 #include <common/timer.h>
+#include <common/timespan.h>
 
 #include <core/consumer/channel_info.h>
 #include <core/frame/frame.h>
@@ -396,6 +397,9 @@ struct ffmpeg_consumer : public core::frame_consumer
 
     std::string path_;
     std::string args_;
+    timespan    delay_;
+    int         delay_frames_ = 0;
+    bool        primed_       = false; // set once the first real frame has been duplicated in
 
     std::exception_ptr exception_;
     std::mutex         exception_mutex_;
@@ -406,7 +410,7 @@ struct ffmpeg_consumer : public core::frame_consumer
     common::bit_depth depth_;
 
   public:
-    ffmpeg_consumer(std::string path, std::string args, bool realtime, common::bit_depth depth)
+    ffmpeg_consumer(std::string path, std::string args, bool realtime, common::bit_depth depth, timespan delay = timespan{})
         : channel_index_([&] {
             boost::crc_16_type result;
             result.process_bytes(path.data(), path.length());
@@ -415,6 +419,7 @@ struct ffmpeg_consumer : public core::frame_consumer
         , realtime_(realtime)
         , path_(std::move(path))
         , args_(std::move(args))
+        , delay_(delay)
         , depth_(depth)
     {
         state_["file/path"] = u8(path_);
@@ -447,6 +452,9 @@ struct ffmpeg_consumer : public core::frame_consumer
 
         format_desc_   = format_desc;
         channel_index_ = channel_info.index;
+
+        delay_frames_ = std::clamp<int>(delay_.in_frames(format_desc_.fps), 0, static_cast<int>(format_desc_.fps));
+        frame_buffer_.set_capacity((realtime_ ? 1 : 64) + delay_frames_);
 
         graph_->set_text(print());
 
@@ -638,9 +646,22 @@ struct ffmpeg_consumer : public core::frame_consumer
         if (!frame_buffer_.try_push({frame, video_pts, audio_pts})) {
             graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
         }
-
         video_pts += 1;
         audio_pts += frame.audio_data().size() / format_desc_.audio_channels;
+
+        // Hold this output delay_frames_ behind the others: duplicate the very first real frame
+        // (each duplicate still gets its own monotonically increasing pts) instead of pushing a
+        // default-constructed one, since a falsy frame here means "close the encoder" (see
+        // Stream::send()'s av_buffersrc_close branch), not "nothing to show yet".
+        if (!primed_) {
+            primed_ = true;
+            for (auto n = 0; n < delay_frames_; ++n) {
+                if (!frame_buffer_.try_push({frame, video_pts, audio_pts}))
+                    graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
+                video_pts += 1;
+                audio_pts += frame.audio_data().size() / format_desc_.audio_channels;
+            }
+        }
 
         graph_->set_value("input", static_cast<double>(frame_buffer_.size() + 0.001) / frame_buffer_.capacity());
 
@@ -688,6 +709,7 @@ create_preconfigured_consumer(const boost::property_tree::wptree&               
     return spl::make_shared<ffmpeg_consumer>(u8(ptree.get<std::wstring>(L"path", L"")),
                                              u8(ptree.get<std::wstring>(L"args", L"")),
                                              ptree.get(L"realtime", false),
-                                             channel_info.depth);
+                                             channel_info.depth,
+                                             timespan{u8(ptree.get(L"delay", L"0"))});
 }
 }} // namespace caspar::ffmpeg
