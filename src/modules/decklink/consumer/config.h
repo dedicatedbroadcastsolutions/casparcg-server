@@ -23,6 +23,8 @@
 
 #include <boost/property_tree/ptree.hpp>
 
+#include <common/timespan.h>
+
 #include <core/consumer/channel_info.h>
 #include <core/frame/pixel_format.h>
 #include <core/video_format.h>
@@ -120,6 +122,7 @@ struct configuration
     int                  base_buffer_depth           = 3;
     bool                 hdr                         = false;
     pixel_format_t       pixel_format                = pixel_format_t::rgba;
+    timespan             delay; // holds this output N frames behind the others, e.g. for fill/key sync
 
     port_configuration              primary;
     std::vector<port_configuration> secondaries;

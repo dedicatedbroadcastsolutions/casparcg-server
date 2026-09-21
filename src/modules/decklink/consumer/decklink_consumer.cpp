@@ -656,7 +656,9 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
     std::mutex                    buffer_mutex_;
     std::condition_variable       buffer_cond_;
     std::queue<core::const_frame> buffer_;
-    int                           buffer_capacity_ = channel_format_desc_.field_count;
+    const int                     delay_frames_ = config_.delay.in_frames(channel_format_desc_.fps);
+    int                           buffer_capacity_ = channel_format_desc_.field_count + delay_frames_;
+    bool                          primed_          = false; // set once the first real frame has been duplicated in
 
     const int buffer_size_ = config_.buffer_depth(); // Minimum buffer-size 3.
 
@@ -1124,6 +1126,16 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
                 // Always push a field2, as we have supplied field1
                 buffer_cond_.wait(lock, [&] { return buffer_.size() < buffer_capacity_ || abort_request_; });
             }
+
+            // Hold this output delay_frames_ behind the others: duplicate the very first real frame
+            // that arrives instead of padding with blank/black content, so there's never a frame that
+            // fails the pixel-format/impl_ checks the rest of this pipeline assumes every frame has.
+            if (!primed_) {
+                primed_ = true;
+                for (auto n = 0; n < delay_frames_; ++n)
+                    buffer_.push(frame);
+            }
+
             buffer_.push(std::move(frame));
         }
         buffer_cond_.notify_all();

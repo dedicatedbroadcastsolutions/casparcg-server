@@ -23,6 +23,7 @@
 
 #include <common/param.h>
 #include <common/ptree.h>
+#include <common/utf.h>
 
 #ifdef WIN32
 #include <isa_availability.h>
@@ -203,6 +204,7 @@ configuration parse_xml_config(const boost::property_tree::wptree&  ptree,
 
     config.embedded_audio    = ptree.get(L"embedded-audio", config.embedded_audio);
     config.base_buffer_depth = ptree.get(L"buffer-depth", config.base_buffer_depth);
+    config.delay             = timespan{u8(ptree.get(L"delay", L"0"))};
 
     if (ptree.get_child_optional(L"ports")) {
         for (auto& xml_port : ptree | witerate_children(L"ports") | welement_context_iteration) {
