@@ -211,6 +211,7 @@ struct newtek_ndi_consumer : public core::frame_consumer
         send_thread = boost::thread([this]() {
             set_thread_realtime_priority();
             set_thread_name(L"NDI-SEND: " + name_);
+            set_thread_affinity(env::realtime_cpu_affinity());
             CASPAR_LOG(info) << L"Starting ndi-send thread for ndi output: " << name_;
             try {
                 auto buffer_size = buffer_.size();
