@@ -30,6 +30,7 @@
 #include <atomic>
 #include <functional>
 #include <future>
+#include <vector>
 
 namespace caspar {
 
@@ -42,13 +43,15 @@ class executor final
     using queue_t = tbb::concurrent_bounded_queue<task_t>;
 
     std::wstring      name_;
+    std::vector<int>  cpu_affinity_;
     std::atomic<bool> is_running_{true};
     queue_t           queue_;
     std::thread       thread_;
 
   public:
-    executor(const std::wstring& name)
+    explicit executor(const std::wstring& name, const std::vector<int>& cpu_affinity = {})
         : name_(name)
+        , cpu_affinity_(cpu_affinity)
         , thread_(std::thread([this] { run(); }))
     {
     }
@@ -132,6 +135,7 @@ class executor final
     void run()
     {
         set_thread_name(name_);
+        set_thread_affinity(cpu_affinity_);
 
         task_t task;
 

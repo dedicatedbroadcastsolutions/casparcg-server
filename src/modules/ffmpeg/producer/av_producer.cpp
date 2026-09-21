@@ -848,8 +848,8 @@ struct AVProducer::Impl
         , vfilter_(vfilter)
         , seekable_(seekable)
         , scale_mode_(scale_mode)
-        , video_executor_(L"video-executor")
-        , audio_executor_(L"audio-executor")
+        , video_executor_(std::in_place, L"video-executor", env::background_cpu_affinity())
+        , audio_executor_(std::in_place, L"audio-executor", env::background_cpu_affinity())
     {
         diagnostics::register_graph(graph_);
         graph_->set_color("underflow", diagnostics::color(0.6f, 0.3f, 0.9f));
@@ -941,6 +941,7 @@ struct AVProducer::Impl
         }
 
         set_thread_name(L"[ffmpeg::av_producer]");
+        set_thread_affinity(env::background_cpu_affinity());
 
         boost::range::rotate(audio_cadence, std::end(audio_cadence) - 1);
 

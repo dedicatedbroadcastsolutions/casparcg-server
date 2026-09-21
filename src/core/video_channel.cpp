@@ -35,6 +35,7 @@
 #include "producer/stage.h"
 
 #include <common/diagnostics/graph.h>
+#include <common/env.h>
 #include <common/executor.h>
 #include <common/timer.h>
 
@@ -124,6 +125,7 @@ struct video_channel::impl final
         thread_ = std::thread([this] {
             set_thread_realtime_priority();
             set_thread_name(L"channel-" + std::to_wstring(channel_info_.index));
+            set_thread_affinity(env::realtime_cpu_affinity());
 
             while (!abort_request_) {
                 try {

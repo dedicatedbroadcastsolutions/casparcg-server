@@ -134,6 +134,7 @@ struct device::impl : public std::enable_shared_from_this<impl>
         thread_ = std::thread([&] {
             context_->bind();
             set_thread_name(L"OpenGL Device");
+            set_thread_affinity(env::realtime_cpu_affinity());
             io_context_.run();
             context_->unbind();
         });

@@ -44,11 +44,44 @@ bool                         log_enabled = true;
 std::wstring                 ftemplate;
 std::wstring                 data;
 boost::property_tree::wptree pt;
+std::vector<int>             realtime_cpus;
+std::vector<int>             background_cpus;
 
 void check_is_configured()
 {
     if (pt.empty())
         CASPAR_THROW_EXCEPTION(invalid_operation() << msg_info(L"Environment properties has not been configured"));
+}
+
+// Parses a comma-separated list of cpu ids and/or ranges, e.g. "0-9,12,14-15".
+std::vector<int> parse_cpu_list(const std::wstring& spec)
+{
+    std::vector<int> result;
+
+    std::vector<std::wstring> parts;
+    boost::split(parts, spec, boost::is_any_of(L","));
+
+    for (auto part : parts) {
+        boost::trim(part);
+        if (part.empty())
+            continue;
+
+        auto dash = part.find(L'-');
+        try {
+            if (dash == std::wstring::npos) {
+                result.push_back(std::stoi(part));
+            } else {
+                auto first = std::stoi(part.substr(0, dash));
+                auto last  = std::stoi(part.substr(dash + 1));
+                for (auto cpu = first; cpu <= last; ++cpu)
+                    result.push_back(cpu);
+            }
+        } catch (...) {
+            CASPAR_LOG(warning) << L"Ignoring invalid cpu-affinity entry \"" << part << L"\"";
+        }
+    }
+
+    return result;
 }
 
 std::wstring resolve_or_create(const std::wstring& folder)
@@ -118,6 +151,9 @@ void configure(const std::wstring& filename)
         ftemplate =
             clean_path(boost::filesystem::absolute(paths.get(L"template-path", initial + L"/template/")).wstring());
         data = clean_path(paths.get(L"data-path", initial + L"/data/"));
+
+        realtime_cpus   = parse_cpu_list(pt.get(L"configuration.cpu-affinity.realtime-cpus", L""));
+        background_cpus = parse_cpu_list(pt.get(L"configuration.cpu-affinity.background-cpus", L""));
     } catch (...) {
         CASPAR_LOG(error) << L" ### Invalid configuration file. ###";
         throw;
@@ -186,6 +222,18 @@ const boost::property_tree::wptree& properties()
 {
     check_is_configured();
     return pt;
+}
+
+const std::vector<int>& realtime_cpu_affinity()
+{
+    check_is_configured();
+    return realtime_cpus;
+}
+
+const std::vector<int>& background_cpu_affinity()
+{
+    check_is_configured();
+    return background_cpus;
 }
 
 void log_configuration_warnings()

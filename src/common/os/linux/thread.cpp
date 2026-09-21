@@ -18,4 +18,17 @@ void set_thread_realtime_priority()
     pthread_setschedparam(handle, SCHED_FIFO, &param);
 }
 
+bool set_thread_affinity(const std::vector<int>& cpu_ids)
+{
+    if (cpu_ids.empty())
+        return true;
+
+    cpu_set_t set;
+    CPU_ZERO(&set);
+    for (auto cpu_id : cpu_ids)
+        CPU_SET(cpu_id, &set);
+
+    return pthread_setaffinity_np(pthread_self(), sizeof(set), &set) == 0;
+}
+
 } // namespace caspar

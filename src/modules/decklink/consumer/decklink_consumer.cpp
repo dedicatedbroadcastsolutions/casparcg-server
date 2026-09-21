@@ -38,6 +38,7 @@
 #include <core/video_format.h>
 
 #include <common/diagnostics/graph.h>
+#include <common/env.h>
 #include <common/except.h>
 #include <common/executor.h>
 #include <common/timer.h>
@@ -921,6 +922,7 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
             // set_thread_realtime_priority();
             set_thread_name(L"decklink_consumer[" + std::to_wstring(config_.primary.device_index) +
                             L"]-ScheduledFrameCompleted");
+            set_thread_affinity(env::realtime_cpu_affinity());
         }
         try {
             auto tick_time = tick_timer_.elapsed() * decklink_format_desc_.hz * 0.5;
@@ -1171,7 +1173,8 @@ struct decklink_consumer_proxy : public core::frame_consumer
   public:
     explicit decklink_consumer_proxy(const configuration& config)
         : config_(config)
-        , executor_(L"decklink_consumer[" + std::to_wstring(config.primary.device_index) + L"]")
+        , executor_(L"decklink_consumer[" + std::to_wstring(config.primary.device_index) + L"]",
+                    env::realtime_cpu_affinity())
     {
         executor_.begin_invoke([=] { com_initialize(); });
     }

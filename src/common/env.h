@@ -24,6 +24,7 @@
 #include <boost/property_tree/ptree_fwd.hpp>
 
 #include <string>
+#include <vector>
 
 namespace caspar { namespace env {
 
@@ -39,6 +40,14 @@ const std::wstring& version();
 bool log_to_file();
 
 const boost::property_tree::wptree& properties();
+
+// Logical CPU ids (from <configuration.cpu-affinity.realtime-cpus>) that latency-critical threads (video channels,
+// GPU, decklink/NDI output) should be pinned to. Empty (the default) means no pinning is applied.
+const std::vector<int>& realtime_cpu_affinity();
+
+// Logical CPU ids (from <configuration.cpu-affinity.background-cpus>) that less time-critical threads (e.g. the
+// ffmpeg file producer's decode threads) should be pinned to. Empty (the default) means no pinning is applied.
+const std::vector<int>& background_cpu_affinity();
 
 void log_configuration_warnings();
 
