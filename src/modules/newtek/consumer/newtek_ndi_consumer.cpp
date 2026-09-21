@@ -25,6 +25,7 @@
 #include "newtek_ndi_consumer.h"
 
 #include <boost/thread/exceptions.hpp>
+#include <algorithm>
 #include <chrono>
 #include <condition_variable>
 #include <core/consumer/channel_info.h>
@@ -41,6 +42,7 @@
 #include <common/future.h>
 #include <common/param.h>
 #include <common/timer.h>
+#include <common/timespan.h>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -61,9 +63,12 @@ struct newtek_ndi_consumer : public core::frame_consumer
     const std::string       discovery_server_url_;
     const bool              use_advertiser_;
     const bool              allow_monitoring_;
+    const timespan          delay_;
 
     core::video_format_desc              format_desc_;
     int                                  channel_index_;
+    int                                  delay_frames_ = 0;
+    bool                                 primed_       = false; // set once the first real frame has been duplicated in
     NDIlib_v6*                           ndi_lib_;
     NDIlib_video_frame_v2_t              ndi_video_frame_;
     NDIlib_audio_frame_interleaved_32s_t ndi_audio_frame_;
@@ -90,7 +95,8 @@ struct newtek_ndi_consumer : public core::frame_consumer
                         bool         allow_fields,
                         std::string  discovery_server_url = "",
                         bool         use_advertiser       = false,
-                        bool         allow_monitoring     = true)
+                        bool         allow_monitoring     = true,
+                        timespan     delay                = timespan{})
         : name_(!name.empty() ? name : default_ndi_name())
         , instance_no_(instances_++)
         , frame_no_(0)
@@ -98,6 +104,7 @@ struct newtek_ndi_consumer : public core::frame_consumer
         , discovery_server_url_(discovery_server_url)
         , use_advertiser_(use_advertiser)
         , allow_monitoring_(allow_monitoring)
+        , delay_(delay)
         , channel_index_(0)
         , executor_(L"ndi_consumer[" + std::to_wstring(instance_no_) + L"]")
     {
@@ -126,6 +133,7 @@ struct newtek_ndi_consumer : public core::frame_consumer
     {
         format_desc_   = format_desc;
         channel_index_ = channel_info.index;
+        delay_frames_  = std::clamp<int>(delay_.in_frames(format_desc_.fps), 0, static_cast<int>(format_desc_.fps));
 
         // Make sure to stop the advertiser before recreating the sender
         ndi_advertiser_instance_.reset();
@@ -279,6 +287,14 @@ struct newtek_ndi_consumer : public core::frame_consumer
             tick_timer_.restart();
             {
                 std::unique_lock<std::mutex> lock(buffer_mutex_);
+                // Hold this output delay_frames_ behind the others: duplicate the very first real
+                // frame instead of padding with a default-constructed one, since the send thread
+                // dereferences frame.image_data() unconditionally (a blank frame would crash it).
+                if (!primed_) {
+                    primed_ = true;
+                    for (auto n = 0; n < delay_frames_; ++n)
+                        buffer_.push(frame);
+                }
                 buffer_.push(std::move(frame));
             }
             worker_cond_.notify_all();
@@ -336,13 +352,14 @@ create_ndi_consumer(const std::vector<std::wstring>&                         par
     bool         allow_fields           = contains_param(L"ALLOW_FIELDS", params);
     bool         use_advertiser         = contains_param(L"USE_ADVERTISER", params);
     bool         allow_monitoring       = get_param(L"ALLOW_MONITORING", params, true);
+    timespan     delay                  = timespan{u8(get_param(L"DELAY", params, L"0"))};
     std::wstring discovery_server_url_w = get_param(L"DISCOVERY_SERVER", params, L"");
     if (discovery_server_url_w.empty())
         discovery_server_url_w = env::properties().get(L"configuration.ndi.discovery-server", L"");
     std::string discovery_server_url = ndi::apply_default_discovery_port(u8(discovery_server_url_w));
 
     return spl::make_shared<newtek_ndi_consumer>(
-        name, allow_fields, discovery_server_url, use_advertiser, allow_monitoring);
+        name, allow_fields, discovery_server_url, use_advertiser, allow_monitoring, delay);
 }
 
 spl::shared_ptr<core::frame_consumer>
@@ -355,6 +372,7 @@ create_preconfigured_ndi_consumer(const boost::property_tree::wptree&           
     bool         allow_fields           = ptree.get(L"allow-fields", false);
     bool         use_advertiser         = ptree.get(L"use-advertiser", false);
     bool         allow_monitoring       = ptree.get(L"allow-monitoring", true);
+    timespan     delay                  = timespan{u8(ptree.get(L"delay", L"0"))};
     std::wstring discovery_server_url_w = ptree.get(L"discovery-server", L"");
     if (discovery_server_url_w.empty())
         discovery_server_url_w = env::properties().get(L"configuration.ndi.discovery-server", L"");
@@ -364,7 +382,7 @@ create_preconfigured_ndi_consumer(const boost::property_tree::wptree&           
         CASPAR_THROW_EXCEPTION(caspar_exception() << msg_info("Newtek NDI consumer only supports 8-bit color depth."));
 
     return spl::make_shared<newtek_ndi_consumer>(
-        name, allow_fields, discovery_server_url, use_advertiser, allow_monitoring);
+        name, allow_fields, discovery_server_url, use_advertiser, allow_monitoring, delay);
 }
 
 }} // namespace caspar::newtek
