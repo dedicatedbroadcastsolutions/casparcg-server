@@ -71,7 +71,7 @@ class sting_producer : public frame_producer
     frame_pair overlay_;
 
     const sting_info info_;
-    const bool       is_cut_mode_;
+    const bool       is_cut_mode_; // true when mask filename is "empty": cuts to dst under the overlay, no dst mask
 
     frame_producer_and_attrs        dst_producer_{};
     frame_producer_and_attrs        src_producer_{};
