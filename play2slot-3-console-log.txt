@@ -1,0 +1,1863 @@
+[2026-09-21T02:49:14.562Z] [STDOUT] [2026-09-20 19:49:14.562] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19177 QP=28.00 NAL=2 Slice:P Poc:4   I:0    P:131  SKIP:1909 size=703 bytes
+[2026-09-20 19:49:14.562] [trace]   
+[2026-09-21T02:49:14.567Z] [STDOUT] [2026-09-20 19:49:14.566] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.566] [trace]   
+[2026-09-21T02:49:14.567Z] [STDOUT] [2026-09-20 19:49:14.567] [trace]   side_data_mixer: processing from 17578 to 17578
+[2026-09-21T02:49:14.568Z] [STDOUT] [2026-09-20 19:49:14.567] [trace]   side_data_mixer: processing from 17579 to 17579
+[2026-09-21T02:49:14.568Z] [STDOUT] [2026-09-20 19:49:14.568] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42233191, out pts 42191
+[2026-09-20 19:49:14.568] [trace]   
+[2026-09-21T02:49:14.568Z] [STDOUT] [2026-09-20 19:49:14.568] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42190 to pts 42190
+[2026-09-20 19:49:14.568] [trace]   
+[2026-09-21T02:49:14.569Z] [STDOUT] [2026-09-20 19:49:14.569] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.569Z] [STDOUT] [2026-09-20 19:49:14.569] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.569] [trace]   
+[2026-09-21T02:49:14.570Z] [STDOUT] [2026-09-20 19:49:14.569] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.569] [trace]   
+[2026-09-20 19:49:14.570] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.570] [trace]   
+[2026-09-21T02:49:14.572Z] [STDOUT] [2026-09-20 19:49:14.572] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42234192, out pts 42192
+[2026-09-20 19:49:14.572] [trace]   
+[2026-09-21T02:49:14.572Z] [STDOUT] [2026-09-20 19:49:14.572] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42191 to pts 42191
+[2026-09-20 19:49:14.572] [trace]   
+[2026-09-21T02:49:14.575Z] [STDOUT] [2026-09-20 19:49:14.574] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19176 QP=30.00 NAL=2 Slice:P Poc:2   I:37   P:579  SKIP:1424 size=2937 bytes
+[2026-09-20 19:49:14.574] [trace]   
+[2026-09-21T02:49:14.578Z] [STDOUT] [2026-09-20 19:49:14.578] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.580Z] [STDOUT] [2026-09-20 19:49:14.579] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.579] [trace]   
+[2026-09-20 19:49:14.579] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.579] [trace]   
+[2026-09-20 19:49:14.580] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.580] [trace]   
+[2026-09-21T02:49:14.580Z] [STDOUT] [2026-09-20 19:49:14.580] [trace]   side_data_mixer: processing from 17588 to 17588
+[2026-09-21T02:49:14.581Z] [STDOUT] [2026-09-20 19:49:14.580] [trace]   side_data_mixer: processing from 17589 to 17589
+[2026-09-21T02:49:14.582Z] [STDOUT] [2026-09-20 19:49:14.582] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19177 QP=35.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=95 bytes
+[2026-09-20 19:49:14.582] [trace]   
+[2026-09-21T02:49:14.583Z] [STDOUT] [2026-09-20 19:49:14.582] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46760714, out pts 46714
+[2026-09-20 19:49:14.582] [trace]   
+[2026-09-21T02:49:14.583Z] [STDOUT] [2026-09-20 19:49:14.582] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46713 to pts 46713
+[2026-09-20 19:49:14.582] [trace]   
+[2026-09-21T02:49:14.583Z] [STDOUT] [2026-09-20 19:49:14.583] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.583] [trace]   
+[2026-09-21T02:49:14.584Z] [STDOUT] [2026-09-20 19:49:14.584] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.587Z] [STDOUT] [2026-09-20 19:49:14.587] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19176 QP=0.00 NAL=2 Slice:P Poc:2   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.587] [trace]   
+[2026-09-21T02:49:14.587Z] [STDOUT] [2026-09-20 19:49:14.587] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46761715, out pts 46715
+[2026-09-20 19:49:14.587] [trace]   
+[2026-09-20 19:49:14.587] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46714 to pts 46714
+[2026-09-20 19:49:14.587] [trace]   
+[2026-09-21T02:49:14.590Z] [STDOUT] [2026-09-20 19:49:14.590] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19178 QP=26.00 NAL=2 Slice:P Poc:6   I:14   P:495  SKIP:1531 size=2248 bytes
+[2026-09-20 19:49:14.590] [trace]   
+[2026-09-21T02:49:14.595Z] [STDOUT] [2026-09-20 19:49:14.594] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19177 QP=0.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.594] [trace]   
+[2026-09-21T02:49:14.596Z] [STDOUT] [2026-09-20 19:49:14.596] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19179 QP=28.00 NAL=2 Slice:P Poc:8   I:0    P:0    SKIP:2040 size=90 bytes
+[2026-09-20 19:49:14.596] [trace]   
+[2026-09-21T02:49:14.600Z] [STDOUT] [2026-09-20 19:49:14.599] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.599] [trace]   
+[2026-09-21T02:49:14.600Z] [STDOUT] [2026-09-20 19:49:14.600] [trace]   side_data_mixer: processing from 17580 to 17580
+[2026-09-21T02:49:14.601Z] [STDOUT] [2026-09-20 19:49:14.601] [trace]   side_data_mixer: processing from 17581 to 17581
+[2026-09-21T02:49:14.601Z] [STDOUT] [2026-09-20 19:49:14.601] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42235193, out pts 42193
+[2026-09-20 19:49:14.601] [trace]   
+[2026-09-21T02:49:14.601Z] [STDOUT] [2026-09-20 19:49:14.601] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42192 to pts 42192
+[2026-09-20 19:49:14.601] [trace]   
+[2026-09-21T02:49:14.605Z] [STDOUT] [2026-09-20 19:49:14.605] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.607Z] [STDOUT] [2026-09-20 19:49:14.607] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.607] [trace]   
+[2026-09-21T02:49:14.607Z] [STDOUT] [2026-09-20 19:49:14.607] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.607] [trace]   
+[2026-09-20 19:49:14.607] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.607] [trace]   
+[2026-09-21T02:49:14.608Z] [STDOUT] [2026-09-20 19:49:14.608] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42236194, out pts 42194
+[2026-09-20 19:49:14.608] [trace]   
+[2026-09-21T02:49:14.608Z] [STDOUT] [2026-09-20 19:49:14.608] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42193 to pts 42193
+[2026-09-20 19:49:14.608] [trace]   
+[2026-09-21T02:49:14.610Z] [STDOUT] [2026-09-20 19:49:14.610] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19178 QP=32.00 NAL=2 Slice:P Poc:6   I:0    P:0    SKIP:2040 size=171 bytes
+[2026-09-20 19:49:14.610] [trace]   
+[2026-09-21T02:49:14.615Z] [STDOUT] [2026-09-20 19:49:14.613] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:14.613] [trace]   side_data_mixer: processing from 17590 to 17590
+[2026-09-20 19:49:14.613] [trace]   side_data_mixer: processing from 17591 to 17591
+[2026-09-21T02:49:14.618Z] [STDOUT] [2026-09-20 19:49:14.617] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.619Z] [STDOUT] [2026-09-20 19:49:14.619] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.619] [trace]   
+[2026-09-21T02:49:14.620Z] [STDOUT] [2026-09-20 19:49:14.619] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19178 QP=0.00 NAL=2 Slice:P Poc:6   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.619] [trace]   
+[2026-09-20 19:49:14.619] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.619] [trace]   
+[2026-09-20 19:49:14.619] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.619] [trace]   
+[2026-09-21T02:49:14.621Z] [STDOUT] [2026-09-20 19:49:14.621] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46762716, out pts 46716
+[2026-09-20 19:49:14.621] [trace]   
+[2026-09-21T02:49:14.622Z] [STDOUT] [2026-09-20 19:49:14.621] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46715 to pts 46715
+[2026-09-20 19:49:14.621] [trace]   
+[2026-09-20 19:49:14.621] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19179 QP=30.00 NAL=2 Slice:P Poc:8   I:3    P:67   SKIP:1970 size=345 bytes
+[2026-09-20 19:49:14.621] [trace]   
+[2026-09-21T02:49:14.622Z] [STDOUT] [2026-09-20 19:49:14.622] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.622] [trace]   
+[2026-09-21T02:49:14.624Z] [STDOUT] [2026-09-20 19:49:14.623] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19180 QP=24.17 NAL=2 Slice:P Poc:10  I:34   P:814  SKIP:1192 size=4733 bytes
+[2026-09-20 19:49:14.623] [trace]   
+[2026-09-21T02:49:14.625Z] [STDOUT] [2026-09-20 19:49:14.624] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46763717, out pts 46717
+[2026-09-20 19:49:14.624] [trace]   
+[2026-09-20 19:49:14.624] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46716 to pts 46716
+[2026-09-20 19:49:14.624] [trace]   
+[2026-09-21T02:49:14.631Z] [STDOUT] [2026-09-20 19:49:14.630] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19179 QP=0.00 NAL=2 Slice:P Poc:8   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.630] [trace]   
+[2026-09-21T02:49:14.633Z] [STDOUT] [2026-09-20 19:49:14.633] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19181 QP=28.00 NAL=2 Slice:P Poc:12  I:3    P:136  SKIP:1901 size=624 bytes
+[2026-09-20 19:49:14.633] [trace]   
+[2026-09-21T02:49:14.634Z] [STDOUT] [2026-09-20 19:49:14.633] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.633] [trace]   
+[2026-09-20 19:49:14.634] [trace]   side_data_mixer: processing from 17582 to 17582
+[2026-09-21T02:49:14.634Z] [STDOUT] [2026-09-20 19:49:14.634] [trace]   side_data_mixer: processing from 17583 to 17583
+[2026-09-21T02:49:14.635Z] [STDOUT] [2026-09-20 19:49:14.635] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42237195, out pts 42195
+[2026-09-20 19:49:14.635] [trace]   
+[2026-09-21T02:49:14.636Z] [STDOUT] [2026-09-20 19:49:14.635] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42194 to pts 42194
+[2026-09-20 19:49:14.635] [trace]   
+[2026-09-21T02:49:14.637Z] [STDOUT] [2026-09-20 19:49:14.636] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.636] [trace]   
+[2026-09-21T02:49:14.637Z] [STDOUT] [2026-09-20 19:49:14.636] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.636] [trace]   
+[2026-09-20 19:49:14.636] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.636] [trace]   
+[2026-09-21T02:49:14.638Z] [STDOUT] [2026-09-20 19:49:14.638] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42238196, out pts 42196
+[2026-09-20 19:49:14.638] [trace]   
+[2026-09-20 19:49:14.638] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42195 to pts 42195
+[2026-09-20 19:49:14.638] [trace]   
+[2026-09-21T02:49:14.639Z] [STDOUT] [2026-09-20 19:49:14.639] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.643Z] [STDOUT] [2026-09-20 19:49:14.642] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19180 QP=29.00 NAL=2 Slice:P Poc:10  I:8    P:352  SKIP:1680 size=2651 bytes
+[2026-09-20 19:49:14.642] [trace]   
+[2026-09-21T02:49:14.645Z] [STDOUT] [2026-09-20 19:49:14.644] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.647Z] [STDOUT] [2026-09-20 19:49:14.646] [trace]   side_data_mixer: processing from 17592 to 17592
+[2026-09-20 19:49:14.646] [trace]   side_data_mixer: processing from 17593 to 17593
+[2026-09-21T02:49:14.651Z] [STDOUT] [2026-09-20 19:49:14.650] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19180 QP=0.00 NAL=2 Slice:P Poc:10  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.650] [trace]   
+[2026-09-21T02:49:14.652Z] [STDOUT] [2026-09-20 19:49:14.651] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.651] [trace]   
+[2026-09-21T02:49:14.652Z] [STDOUT] [2026-09-20 19:49:14.651] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.651] [trace]   
+[2026-09-20 19:49:14.651] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:14.651] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.651] [trace]   
+[2026-09-21T02:49:14.652Z] [STDOUT] [2026-09-20 19:49:14.652] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19181 QP=28.00 NAL=2 Slice:P Poc:12  I:28   P:596  SKIP:1416 size=4158 bytes
+[2026-09-20 19:49:14.652] [trace]   
+[2026-09-21T02:49:14.654Z] [STDOUT] [2026-09-20 19:49:14.654] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46764718, out pts 46718
+[2026-09-20 19:49:14.654] [trace]   
+[2026-09-21T02:49:14.654Z] [STDOUT] [2026-09-20 19:49:14.654] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46717 to pts 46717
+[2026-09-20 19:49:14.654] [trace]   
+[2026-09-21T02:49:14.656Z] [STDOUT] [2026-09-20 19:49:14.655] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.655] [trace]   
+[2026-09-21T02:49:14.657Z] [STDOUT] [2026-09-20 19:49:14.656] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19182 QP=27.00 NAL=2 Slice:P Poc:14  I:0    P:47   SKIP:1993 size=334 bytes
+[2026-09-20 19:49:14.656] [trace]   
+[2026-09-21T02:49:14.658Z] [STDOUT] [2026-09-20 19:49:14.657] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46765719, out pts 46719
+[2026-09-20 19:49:14.657] [trace]   
+[2026-09-21T02:49:14.658Z] [STDOUT] [2026-09-20 19:49:14.657] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46718 to pts 46718
+[2026-09-20 19:49:14.657] [trace]   
+[2026-09-21T02:49:14.660Z] [STDOUT] [2026-09-20 19:49:14.660] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19181 QP=0.00 NAL=2 Slice:P Poc:12  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.660] [trace]   
+[2026-09-21T02:49:14.667Z] [STDOUT] [2026-09-20 19:49:14.666] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19183 QP=26.00 NAL=2 Slice:P Poc:16  I:2    P:137  SKIP:1901 size=876 bytes
+[2026-09-20 19:49:14.666] [trace]   
+[2026-09-21T02:49:14.667Z] [STDOUT] [2026-09-20 19:49:14.666] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.666] [trace]   
+[2026-09-20 19:49:14.667] [trace]   side_data_mixer: processing from 17584 to 17584
+[2026-09-21T02:49:14.668Z] [STDOUT] [2026-09-20 19:49:14.667] [trace]   side_data_mixer: processing from 17585 to 17585
+[2026-09-21T02:49:14.668Z] [STDOUT] [2026-09-20 19:49:14.668] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42239197, out pts 42197
+[2026-09-20 19:49:14.668] [trace]   
+[2026-09-21T02:49:14.668Z] [STDOUT] [2026-09-20 19:49:14.668] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42196 to pts 42196
+[2026-09-20 19:49:14.668] [trace]   
+[2026-09-21T02:49:14.671Z] [STDOUT] [2026-09-20 19:49:14.670] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.674Z] [STDOUT] [2026-09-20 19:49:14.674] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.674] [trace]   
+[2026-09-21T02:49:14.675Z] [STDOUT] [2026-09-20 19:49:14.674] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.674] [trace]   
+[2026-09-20 19:49:14.674] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.674] [trace]   
+[2026-09-20 19:49:14.674] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19182 QP=27.00 NAL=2 Slice:P Poc:14  I:43   P:688  SKIP:1309 size=3869 bytes
+[2026-09-20 19:49:14.674] [trace]   
+[2026-09-21T02:49:14.676Z] [STDOUT] [2026-09-20 19:49:14.675] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42240198, out pts 42198
+[2026-09-20 19:49:14.675] [trace]   
+[2026-09-20 19:49:14.675] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42197 to pts 42197
+[2026-09-20 19:49:14.675] [trace]   
+[2026-09-21T02:49:14.680Z] [STDOUT] [2026-09-20 19:49:14.677] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.680Z] [STDOUT] [2026-09-20 19:49:14.680] [trace]   side_data_mixer: processing from 17594 to 17594
+[2026-09-21T02:49:14.680Z] [STDOUT] [2026-09-20 19:49:14.680] [trace]   side_data_mixer: processing from 17595 to 17595
+[2026-09-21T02:49:14.682Z] [STDOUT] [2026-09-20 19:49:14.681] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.684Z] [STDOUT] [2026-09-20 19:49:14.684] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19183 QP=27.00 NAL=2 Slice:P Poc:16  I:0    P:63   SKIP:1977 size=361 bytes
+[2026-09-20 19:49:14.684] [trace]   
+[2026-09-21T02:49:14.684Z] [STDOUT] [2026-09-20 19:49:14.684] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19182 QP=0.00 NAL=2 Slice:P Poc:14  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.684] [trace]   
+[2026-09-21T02:49:14.685Z] [STDOUT] [2026-09-20 19:49:14.685] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.685] [trace]   
+[2026-09-21T02:49:14.685Z] [STDOUT] [2026-09-20 19:49:14.685] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.685] [trace]   
+[2026-09-21T02:49:14.685Z] [STDOUT] [2026-09-20 19:49:14.685] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.685] [trace]   
+[2026-09-21T02:49:14.686Z] [STDOUT] [2026-09-20 19:49:14.686] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46766720, out pts 46720
+[2026-09-20 19:49:14.686] [trace]   
+[2026-09-21T02:49:14.686Z] [STDOUT] [2026-09-20 19:49:14.686] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46719 to pts 46719
+[2026-09-20 19:49:14.686] [trace]   
+[2026-09-21T02:49:14.687Z] [STDOUT] [2026-09-20 19:49:14.687] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.687] [trace]   
+[2026-09-21T02:49:14.688Z] [STDOUT] [2026-09-20 19:49:14.687] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46767721, out pts 46721
+[2026-09-20 19:49:14.687] [trace]   
+[2026-09-21T02:49:14.688Z] [STDOUT] [2026-09-20 19:49:14.687] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19184 QP=24.00 NAL=2 Slice:P Poc:18  I:10   P:308  SKIP:1722 size=1680 bytes
+[2026-09-20 19:49:14.687] [trace]   
+[2026-09-20 19:49:14.687] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46720 to pts 46720
+[2026-09-20 19:49:14.687] [trace]   
+[2026-09-21T02:49:14.691Z] [STDOUT] [2026-09-20 19:49:14.691] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19183 QP=0.00 NAL=2 Slice:P Poc:16  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.691] [trace]   
+[2026-09-21T02:49:14.695Z] [STDOUT] [2026-09-20 19:49:14.694] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19185 QP=26.00 NAL=2 Slice:P Poc:20  I:4    P:154  SKIP:1882 size=815 bytes
+[2026-09-20 19:49:14.694] [trace]   
+[2026-09-21T02:49:14.700Z] [STDOUT] [2026-09-20 19:49:14.700] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.700] [trace]   
+[2026-09-21T02:49:14.701Z] [STDOUT] [2026-09-20 19:49:14.700] [trace]   side_data_mixer: processing from 17586 to 17586
+[2026-09-21T02:49:14.701Z] [STDOUT] [2026-09-20 19:49:14.701] [trace]   side_data_mixer: processing from 17587 to 17587
+[2026-09-21T02:49:14.702Z] [STDOUT] [2026-09-20 19:49:14.701] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42241199, out pts 42199
+[2026-09-20 19:49:14.701] [trace]   
+[2026-09-21T02:49:14.702Z] [STDOUT] [2026-09-20 19:49:14.701] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42198 to pts 42198
+[2026-09-20 19:49:14.701] [trace]   
+[2026-09-21T02:49:14.703Z] [STDOUT] [2026-09-20 19:49:14.703] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.707Z] [STDOUT] [2026-09-20 19:49:14.707] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19184 QP=26.00 NAL=2 Slice:P Poc:18  I:23   P:521  SKIP:1496 size=3339 bytes
+[2026-09-20 19:49:14.707] [trace]   
+[2026-09-21T02:49:14.708Z] [STDOUT] [2026-09-20 19:49:14.707] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.707] [trace]   
+[2026-09-20 19:49:14.707] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.707] [trace]   
+[2026-09-20 19:49:14.707] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.707] [trace]   
+[2026-09-21T02:49:14.710Z] [STDOUT] [2026-09-20 19:49:14.710] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42242200, out pts 42200
+[2026-09-20 19:49:14.710] [trace]   
+[2026-09-21T02:49:14.710Z] [STDOUT] [2026-09-20 19:49:14.710] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42199 to pts 42199
+[2026-09-20 19:49:14.710] [trace]   
+[2026-09-21T02:49:14.711Z] [STDOUT] [2026-09-20 19:49:14.711] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.713Z] [STDOUT] [2026-09-20 19:49:14.713] [trace]   side_data_mixer: processing from 17596 to 17596
+[2026-09-21T02:49:14.713Z] [STDOUT] [2026-09-20 19:49:14.713] [trace]   side_data_mixer: processing from 17597 to 17597
+[2026-09-21T02:49:14.713Z] [STDOUT] [2026-09-20 19:49:14.713] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19185 QP=27.00 NAL=2 Slice:P Poc:20  I:0    P:2    SKIP:2038 size=101 bytes
+[2026-09-20 19:49:14.713] [trace]   
+[2026-09-21T02:49:14.718Z] [STDOUT] [2026-09-20 19:49:14.718] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.718] [trace]   
+[2026-09-21T02:49:14.718Z] [STDOUT] [2026-09-20 19:49:14.718] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.718] [trace]   
+[2026-09-20 19:49:14.718] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.718] [trace]   
+[2026-09-21T02:49:14.719Z] [STDOUT] [2026-09-20 19:49:14.719] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46768722, out pts 46722
+[2026-09-20 19:49:14.719] [trace]   
+[2026-09-20 19:49:14.719] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46721 to pts 46721
+[2026-09-20 19:49:14.719] [trace]   
+[2026-09-21T02:49:14.720Z] [STDOUT] [2026-09-20 19:49:14.720] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.720] [trace]   
+[2026-09-21T02:49:14.721Z] [STDOUT] [2026-09-20 19:49:14.721] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46769723, out pts 46723
+[2026-09-20 19:49:14.721] [trace]   
+[2026-09-20 19:49:14.721] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19184 QP=0.00 NAL=2 Slice:P Poc:18  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.721] [trace]   
+[2026-09-21T02:49:14.721Z] [STDOUT] [2026-09-20 19:49:14.721] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46722 to pts 46722
+[2026-09-20 19:49:14.721] [trace]   
+[2026-09-21T02:49:14.722Z] [STDOUT] [2026-09-20 19:49:14.721] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.727Z] [STDOUT] [2026-09-20 19:49:14.726] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19186 QP=24.00 NAL=2 Slice:P Poc:22  I:1    P:195  SKIP:1844 size=1083 bytes
+[2026-09-20 19:49:14.726] [trace]   
+[2026-09-21T02:49:14.729Z] [STDOUT] [2026-09-20 19:49:14.728] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19185 QP=0.00 NAL=2 Slice:P Poc:20  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.728] [trace]   
+[2026-09-21T02:49:14.735Z] [STDOUT] [2026-09-20 19:49:14.733] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.733] [trace]   
+[2026-09-20 19:49:14.734] [trace]   side_data_mixer: processing from 17588 to 17588
+[2026-09-21T02:49:14.735Z] [STDOUT] [2026-09-20 19:49:14.735] [trace]   side_data_mixer: processing from 17589 to 17589
+[2026-09-21T02:49:14.735Z] [STDOUT] [2026-09-20 19:49:14.735] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19187 QP=24.00 NAL=2 Slice:P Poc:24  I:2    P:151  SKIP:1887 size=967 bytes
+[2026-09-20 19:49:14.735] [trace]   
+[2026-09-21T02:49:14.735Z] [STDOUT] [2026-09-20 19:49:14.735] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42243201, out pts 42201
+[2026-09-20 19:49:14.735] [trace]   
+[2026-09-21T02:49:14.736Z] [STDOUT] [2026-09-20 19:49:14.735] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42200 to pts 42200
+[2026-09-20 19:49:14.735] [trace]   
+[2026-09-21T02:49:14.738Z] [STDOUT] [2026-09-20 19:49:14.737] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.741Z] [STDOUT] [2026-09-20 19:49:14.741] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.741] [trace]   
+[2026-09-21T02:49:14.742Z] [STDOUT] [2026-09-20 19:49:14.741] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19186 QP=26.00 NAL=2 Slice:P Poc:22  I:2    P:110  SKIP:1928 size=627 bytes
+[2026-09-20 19:49:14.741] [trace]   
+[2026-09-20 19:49:14.741] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.741] [trace]   
+[2026-09-20 19:49:14.741] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.741] [trace]   
+[2026-09-21T02:49:14.743Z] [STDOUT] [2026-09-20 19:49:14.742] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42244202, out pts 42202
+[2026-09-20 19:49:14.742] [trace]   
+[2026-09-20 19:49:14.742] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42201 to pts 42201
+[2026-09-20 19:49:14.742] [trace]   
+[2026-09-21T02:49:14.747Z] [STDOUT] [2026-09-20 19:49:14.746] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.748Z] [STDOUT] [2026-09-20 19:49:14.746] [trace]   side_data_mixer: processing from 17598 to 17598
+[2026-09-21T02:49:14.748Z] [STDOUT] [2026-09-20 19:49:14.747] [trace]   side_data_mixer: processing from 17599 to 17599
+[2026-09-21T02:49:14.749Z] [STDOUT] [2026-09-20 19:49:14.749] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19187 QP=26.00 NAL=2 Slice:P Poc:24  I:1    P:71   SKIP:1968 size=418 bytes
+[2026-09-20 19:49:14.749] [trace]   
+[2026-09-21T02:49:14.750Z] [STDOUT] [2026-09-20 19:49:14.749] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.754Z] [STDOUT] [2026-09-20 19:49:14.751] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.751] [trace]   
+[2026-09-20 19:49:14.751] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.751] [trace]   
+[2026-09-21T02:49:14.755Z] [STDOUT] [2026-09-20 19:49:14.751] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.751] [trace]   
+[2026-09-20 19:49:14.752] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19186 QP=0.00 NAL=2 Slice:P Poc:22  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.752] [trace]   
+[2026-09-20 19:49:14.752] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46770724, out pts 46724
+[2026-09-20 19:49:14.752] [trace]   
+[2026-09-20 19:49:14.752] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46723 to pts 46723
+[2026-09-20 19:49:14.752] [trace]   
+[2026-09-20 19:49:14.753] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.753] [trace]   
+[2026-09-21T02:49:14.755Z] [STDOUT] [2026-09-20 19:49:14.754] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46771725, out pts 46725
+[2026-09-20 19:49:14.754] [trace]   
+[2026-09-20 19:49:14.754] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46724 to pts 46724
+[2026-09-20 19:49:14.754] [trace]   
+[2026-09-21T02:49:14.756Z] [STDOUT] [2026-09-20 19:49:14.756] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19188 QP=23.00 NAL=2 Slice:P Poc:26  I:103  P:833  SKIP:1104 size=3733 bytes
+[2026-09-20 19:49:14.756] [trace]   
+[2026-09-21T02:49:14.762Z] [STDOUT] [2026-09-20 19:49:14.761] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19187 QP=0.00 NAL=2 Slice:P Poc:24  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.761] [trace]   
+[2026-09-21T02:49:14.763Z] [STDOUT] [2026-09-20 19:49:14.763] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19189 QP=23.00 NAL=2 Slice:P Poc:28  I:0    P:53   SKIP:1987 size=283 bytes
+[2026-09-20 19:49:14.763] [trace]   
+[2026-09-21T02:49:14.767Z] [STDOUT] [2026-09-20 19:49:14.767] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.767] [trace]   
+[2026-09-21T02:49:14.768Z] [STDOUT] [2026-09-20 19:49:14.767] [trace]   side_data_mixer: processing from 17590 to 17590
+[2026-09-21T02:49:14.768Z] [STDOUT] [2026-09-20 19:49:14.768] [trace]   side_data_mixer: processing from 17591 to 17591
+[2026-09-21T02:49:14.768Z] [STDOUT] [2026-09-20 19:49:14.768] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42245203, out pts 42203
+[2026-09-20 19:49:14.768] [trace]   
+[2026-09-21T02:49:14.769Z] [STDOUT] [2026-09-20 19:49:14.768] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42202 to pts 42202
+[2026-09-20 19:49:14.768] [trace]   
+[2026-09-21T02:49:14.771Z] [STDOUT] [2026-09-20 19:49:14.771] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.775Z] [STDOUT] [2026-09-20 19:49:14.774] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.774] [trace]   
+[2026-09-20 19:49:14.774] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.774] [trace]   
+[2026-09-20 19:49:14.774] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.774] [trace]   
+[2026-09-21T02:49:14.776Z] [STDOUT] [2026-09-20 19:49:14.775] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19188 QP=26.00 NAL=2 Slice:P Poc:26  I:1    P:28   SKIP:2011 size=275 bytes
+[2026-09-20 19:49:14.775] [trace]   
+[2026-09-21T02:49:14.776Z] [STDOUT] [2026-09-20 19:49:14.776] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42246204, out pts 42204
+[2026-09-20 19:49:14.776] [trace]   
+[2026-09-21T02:49:14.777Z] [STDOUT] [2026-09-20 19:49:14.776] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42203 to pts 42203
+[2026-09-20 19:49:14.776] [trace]   
+[2026-09-21T02:49:14.780Z] [STDOUT] [2026-09-20 19:49:14.779] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.780Z] [STDOUT] [2026-09-20 19:49:14.780] [trace]   side_data_mixer: processing from 17600 to 17600
+[2026-09-21T02:49:14.781Z] [STDOUT] [2026-09-20 19:49:14.780] [trace]   side_data_mixer: processing from 17601 to 17601
+[2026-09-21T02:49:14.781Z] [STDOUT] [2026-09-20 19:49:14.781] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.785Z] [STDOUT] [2026-09-20 19:49:14.785] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.785] [trace]   
+[2026-09-21T02:49:14.785Z] [STDOUT] [2026-09-20 19:49:14.785] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.785] [trace]   
+[2026-09-21T02:49:14.785Z] [STDOUT] [2026-09-20 19:49:14.785] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.785] [trace]   
+[2026-09-20 19:49:14.785] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19189 QP=26.00 NAL=2 Slice:P Poc:28  I:0    P:34   SKIP:2006 size=246 bytes
+[2026-09-20 19:49:14.785] [trace]   
+[2026-09-21T02:49:14.787Z] [STDOUT] [2026-09-20 19:49:14.786] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19188 QP=0.00 NAL=2 Slice:P Poc:26  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.786] [trace]   
+[2026-09-20 19:49:14.786] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46772726, out pts 46726
+[2026-09-20 19:49:14.786] [trace]   
+[2026-09-21T02:49:14.787Z] [STDOUT] [2026-09-20 19:49:14.786] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46725 to pts 46725
+[2026-09-20 19:49:14.786] [trace]   
+[2026-09-21T02:49:14.788Z] [STDOUT] [2026-09-20 19:49:14.787] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19190 QP=22.00 NAL=2 Slice:P Poc:30  I:24   P:911  SKIP:1105 size=4918 bytes
+[2026-09-20 19:49:14.787] [trace]   
+[2026-09-21T02:49:14.788Z] [STDOUT] [2026-09-20 19:49:14.787] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.787] [trace]   
+[2026-09-21T02:49:14.790Z] [STDOUT] [2026-09-20 19:49:14.790] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46773727, out pts 46727
+[2026-09-20 19:49:14.790] [trace]   
+[2026-09-21T02:49:14.790Z] [STDOUT] [2026-09-20 19:49:14.790] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46726 to pts 46726
+[2026-09-20 19:49:14.790] [trace]   
+[2026-09-21T02:49:14.793Z] [STDOUT] [2026-09-20 19:49:14.793] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19189 QP=0.00 NAL=2 Slice:P Poc:28  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.793] [trace]   
+[2026-09-21T02:49:14.795Z] [STDOUT] [2026-09-20 19:49:14.794] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19191 QP=24.00 NAL=2 Slice:P Poc:32  I:0    P:105  SKIP:1935 size=711 bytes
+[2026-09-20 19:49:14.794] [trace]   
+[2026-09-21T02:49:14.801Z] [STDOUT] [2026-09-20 19:49:14.800] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.800] [trace]   
+[2026-09-20 19:49:14.800] [trace]   side_data_mixer: processing from 17592 to 17592
+[2026-09-21T02:49:14.801Z] [STDOUT] [2026-09-20 19:49:14.801] [trace]   side_data_mixer: processing from 17593 to 17593
+[2026-09-21T02:49:14.802Z] [STDOUT] [2026-09-20 19:49:14.802] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.802Z] [STDOUT] [2026-09-20 19:49:14.802] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42247205, out pts 42205
+[2026-09-20 19:49:14.802] [trace]   
+[2026-09-20 19:49:14.802] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42204 to pts 42204
+[2026-09-20 19:49:14.802] [trace]   
+[2026-09-21T02:49:14.804Z] [STDOUT] [2026-09-20 19:49:14.803] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.803] [trace]   
+[2026-09-21T02:49:14.804Z] [STDOUT] [2026-09-20 19:49:14.803] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.803] [trace]   
+[2026-09-20 19:49:14.804] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.804] [trace]   
+[2026-09-21T02:49:14.806Z] [STDOUT] [2026-09-20 19:49:14.805] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42248206, out pts 42206
+[2026-09-20 19:49:14.805] [trace]   
+[2026-09-20 19:49:14.805] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42205 to pts 42205
+[2026-09-20 19:49:14.805] [trace]   
+[2026-09-21T02:49:14.808Z] [STDOUT] [2026-09-20 19:49:14.807] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19190 QP=26.00 NAL=2 Slice:P Poc:30  I:0    P:38   SKIP:2002 size=309 bytes
+[2026-09-20 19:49:14.807] [trace]   
+[2026-09-21T02:49:14.814Z] [STDOUT] [2026-09-20 19:49:14.813] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.813] [trace]   
+[2026-09-21T02:49:14.815Z] [STDOUT] [2026-09-20 19:49:14.813] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.813] [trace]   
+[2026-09-20 19:49:14.814] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.814] [trace]   
+[2026-09-20 19:49:14.814] [trace]   side_data_mixer: processing from 17602 to 17602
+[2026-09-20 19:49:14.814] [trace]   side_data_mixer: processing from 17603 to 17603
+[2026-09-20 19:49:14.814] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.817Z] [STDOUT] [2026-09-20 19:49:14.816] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46774728, out pts 46728
+[2026-09-20 19:49:14.816] [trace]   
+[2026-09-21T02:49:14.818Z] [STDOUT] [2026-09-20 19:49:14.816] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46727 to pts 46727
+[2026-09-20 19:49:14.816] [trace]   
+[2026-09-21T02:49:14.819Z] [STDOUT] [2026-09-20 19:49:14.818] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.818] [trace]   
+[2026-09-21T02:49:14.819Z] [STDOUT] [2026-09-20 19:49:14.819] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.821Z] [STDOUT] [2026-09-20 19:49:14.820] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19190 QP=0.00 NAL=2 Slice:P Poc:30  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.820] [trace]   
+[2026-09-21T02:49:14.821Z] [STDOUT] [2026-09-20 19:49:14.820] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19191 QP=26.00 NAL=2 Slice:P Poc:32  I:0    P:28   SKIP:2012 size=202 bytes
+[2026-09-20 19:49:14.820] [trace]   
+[2026-09-21T02:49:14.822Z] [STDOUT] [2026-09-20 19:49:14.822] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46775729, out pts 46729
+[2026-09-20 19:49:14.822] [trace]   
+[2026-09-20 19:49:14.822] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46728 to pts 46728
+[2026-09-20 19:49:14.822] [trace]   
+[2026-09-21T02:49:14.825Z] [STDOUT] [2026-09-20 19:49:14.824] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19192 QP=23.00 NAL=2 Slice:P Poc:34  I:0    P:58   SKIP:1982 size=446 bytes
+[2026-09-20 19:49:14.824] [trace]   
+[2026-09-21T02:49:14.830Z] [STDOUT] [2026-09-20 19:49:14.830] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19191 QP=0.00 NAL=2 Slice:P Poc:32  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.830] [trace]   
+[2026-09-21T02:49:14.832Z] [STDOUT] [2026-09-20 19:49:14.832] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19193 QP=23.00 NAL=2 Slice:P Poc:36  I:4    P:148  SKIP:1888 size=1197 bytes
+[2026-09-20 19:49:14.832] [trace]   
+[2026-09-21T02:49:14.834Z] [STDOUT] [2026-09-20 19:49:14.833] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.833] [trace]   
+[2026-09-20 19:49:14.834] [trace]   side_data_mixer: processing from 17594 to 17594
+[2026-09-21T02:49:14.834Z] [STDOUT] [2026-09-20 19:49:14.834] [trace]   side_data_mixer: processing from 17595 to 17595
+[2026-09-21T02:49:14.835Z] [STDOUT] [2026-09-20 19:49:14.835] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42249207, out pts 42207
+[2026-09-20 19:49:14.835] [trace]   
+[2026-09-21T02:49:14.836Z] [STDOUT] [2026-09-20 19:49:14.835] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42206 to pts 42206
+[2026-09-20 19:49:14.835] [trace]   
+[2026-09-21T02:49:14.838Z] [STDOUT] [2026-09-20 19:49:14.837] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.842Z] [STDOUT] [2026-09-20 19:49:14.841] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.841] [trace]   
+[2026-09-20 19:49:14.841] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.841] [trace]   
+[2026-09-20 19:49:14.841] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.841] [trace]   
+[2026-09-21T02:49:14.843Z] [STDOUT] [2026-09-20 19:49:14.842] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19192 QP=26.00 NAL=2 Slice:P Poc:34  I:0    P:18   SKIP:2022 size=240 bytes
+[2026-09-20 19:49:14.842] [trace]   
+[2026-09-21T02:49:14.844Z] [STDOUT] [2026-09-20 19:49:14.843] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42250208, out pts 42208
+[2026-09-20 19:49:14.843] [trace]   
+[2026-09-21T02:49:14.844Z] [STDOUT] [2026-09-20 19:49:14.843] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42207 to pts 42207
+[2026-09-20 19:49:14.843] [trace]   
+[2026-09-21T02:49:14.847Z] [STDOUT] [2026-09-20 19:49:14.847] [trace]   side_data_mixer: processing from 17604 to 17604
+[2026-09-21T02:49:14.847Z] [STDOUT] [2026-09-20 19:49:14.847] [trace]   side_data_mixer: processing from 17605 to 17605
+[2026-09-21T02:49:14.849Z] [STDOUT] [2026-09-20 19:49:14.848] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.852Z] [STDOUT] [2026-09-20 19:49:14.851] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.851] [trace]   
+[2026-09-21T02:49:14.852Z] [STDOUT] [2026-09-20 19:49:14.851] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.851] [trace]   
+[2026-09-20 19:49:14.851] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:14.851] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.851] [trace]   
+[2026-09-21T02:49:14.854Z] [STDOUT] [2026-09-20 19:49:14.853] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19193 QP=26.00 NAL=2 Slice:P Poc:36  I:0    P:23   SKIP:2017 size=188 bytes
+[2026-09-20 19:49:14.853] [trace]   
+[2026-09-21T02:49:14.854Z] [STDOUT] [2026-09-20 19:49:14.854] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19192 QP=0.00 NAL=2 Slice:P Poc:34  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.854] [trace]   
+[2026-09-21T02:49:14.855Z] [STDOUT] [2026-09-20 19:49:14.854] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46776730, out pts 46730
+[2026-09-20 19:49:14.854] [trace]   
+[2026-09-20 19:49:14.854] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46729 to pts 46729
+[2026-09-20 19:49:14.854] [trace]   
+[2026-09-21T02:49:14.855Z] [STDOUT] [2026-09-20 19:49:14.855] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.855] [trace]   
+[2026-09-21T02:49:14.856Z] [STDOUT] [2026-09-20 19:49:14.856] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46777731, out pts 46731
+[2026-09-20 19:49:14.856] [trace]   
+[2026-09-21T02:49:14.857Z] [STDOUT] [2026-09-20 19:49:14.856] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46730 to pts 46730
+[2026-09-20 19:49:14.856] [trace]   
+[2026-09-21T02:49:14.859Z] [STDOUT] [2026-09-20 19:49:14.858] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19194 QP=22.00 NAL=2 Slice:P Poc:38  I:0    P:166  SKIP:1874 size=1006 bytes
+[2026-09-20 19:49:14.858] [trace]   
+[2026-09-21T02:49:14.863Z] [STDOUT] [2026-09-20 19:49:14.863] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19193 QP=0.00 NAL=2 Slice:P Poc:36  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.863] [trace]   
+[2026-09-21T02:49:14.866Z] [STDOUT] [2026-09-20 19:49:14.865] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19195 QP=23.00 NAL=2 Slice:P Poc:40  I:2    P:113  SKIP:1925 size=1038 bytes
+[2026-09-20 19:49:14.865] [trace]   
+[2026-09-21T02:49:14.868Z] [STDOUT] [2026-09-20 19:49:14.867] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.867] [trace]   
+[2026-09-21T02:49:14.868Z] [STDOUT] [2026-09-20 19:49:14.867] [trace]   side_data_mixer: processing from 17596 to 17596
+[2026-09-21T02:49:14.868Z] [STDOUT] [2026-09-20 19:49:14.868] [trace]   side_data_mixer: processing from 17597 to 17597
+[2026-09-21T02:49:14.869Z] [STDOUT] [2026-09-20 19:49:14.868] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42251209, out pts 42209
+[2026-09-20 19:49:14.868] [trace]   
+[2026-09-21T02:49:14.869Z] [STDOUT] [2026-09-20 19:49:14.868] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42208 to pts 42208
+[2026-09-20 19:49:14.868] [trace]   
+[2026-09-21T02:49:14.870Z] [STDOUT] [2026-09-20 19:49:14.869] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.869] [trace]   
+[2026-09-21T02:49:14.870Z] [STDOUT] [2026-09-20 19:49:14.869] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.869] [trace]   
+[2026-09-20 19:49:14.869] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.869] [trace]   
+[2026-09-21T02:49:14.871Z] [STDOUT] [2026-09-20 19:49:14.870] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42252210, out pts 42210
+[2026-09-20 19:49:14.870] [trace]   
+[2026-09-21T02:49:14.871Z] [STDOUT] [2026-09-20 19:49:14.870] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42209 to pts 42209
+[2026-09-20 19:49:14.870] [trace]   
+[2026-09-21T02:49:14.873Z] [STDOUT] [2026-09-20 19:49:14.872] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.879Z] [STDOUT] [2026-09-20 19:49:14.878] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19194 QP=26.00 NAL=2 Slice:P Poc:38  I:1    P:17   SKIP:2022 size=227 bytes
+[2026-09-20 19:49:14.878] [trace]   
+[2026-09-21T02:49:14.880Z] [STDOUT] [2026-09-20 19:49:14.878] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.881Z] [STDOUT] [2026-09-20 19:49:14.880] [trace]   side_data_mixer: processing from 17606 to 17606
+[2026-09-21T02:49:14.881Z] [STDOUT] [2026-09-20 19:49:14.880] [trace]   side_data_mixer: processing from 17607 to 17607
+[2026-09-21T02:49:14.881Z] [STDOUT] [2026-09-20 19:49:14.881] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.881] [trace]   
+[2026-09-21T02:49:14.881Z] [STDOUT] [2026-09-20 19:49:14.881] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.881] [trace]   
+[2026-09-20 19:49:14.881] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.881] [trace]   
+[2026-09-21T02:49:14.884Z] [STDOUT] [2026-09-20 19:49:14.883] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46778732, out pts 46732
+[2026-09-20 19:49:14.883] [trace]   
+[2026-09-21T02:49:14.884Z] [STDOUT] [2026-09-20 19:49:14.884] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46731 to pts 46731
+[2026-09-20 19:49:14.884] [trace]   
+[2026-09-21T02:49:14.885Z] [STDOUT] [2026-09-20 19:49:14.885] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.885] [trace]   
+[2026-09-21T02:49:14.886Z] [STDOUT] [2026-09-20 19:49:14.886] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46779733, out pts 46733
+[2026-09-20 19:49:14.886] [trace]   
+[2026-09-21T02:49:14.887Z] [STDOUT] [2026-09-20 19:49:14.886] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46732 to pts 46732
+[2026-09-20 19:49:14.886] [trace]   
+[2026-09-20 19:49:14.886] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.888Z] [STDOUT] [2026-09-20 19:49:14.888] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19194 QP=0.00 NAL=2 Slice:P Poc:38  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.888] [trace]   
+[2026-09-21T02:49:14.891Z] [STDOUT] [2026-09-20 19:49:14.891] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19195 QP=26.00 NAL=2 Slice:P Poc:40  I:0    P:8    SKIP:2032 size=120 bytes
+[2026-09-20 19:49:14.891] [trace]   
+[2026-09-21T02:49:14.892Z] [STDOUT] [2026-09-20 19:49:14.891] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19196 QP=22.00 NAL=2 Slice:P Poc:42  I:0    P:129  SKIP:1911 size=810 bytes
+[2026-09-20 19:49:14.891] [trace]   
+[2026-09-21T02:49:14.896Z] [STDOUT] [2026-09-20 19:49:14.896] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19195 QP=0.00 NAL=2 Slice:P Poc:40  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.896] [trace]   
+[2026-09-21T02:49:14.899Z] [STDOUT] [2026-09-20 19:49:14.899] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19197 QP=21.00 NAL=2 Slice:P Poc:44  I:20   P:787  SKIP:1233 size=3797 bytes
+[2026-09-20 19:49:14.899] [trace]   
+[2026-09-21T02:49:14.900Z] [STDOUT] [2026-09-20 19:49:14.900] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.900] [trace]   
+[2026-09-21T02:49:14.901Z] [STDOUT] [2026-09-20 19:49:14.901] [trace]   side_data_mixer: processing from 17598 to 17598
+[2026-09-21T02:49:14.901Z] [STDOUT] [2026-09-20 19:49:14.901] [trace]   side_data_mixer: processing from 17599 to 17599
+[2026-09-21T02:49:14.902Z] [STDOUT] [2026-09-20 19:49:14.901] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42253211, out pts 42211
+[2026-09-20 19:49:14.901] [trace]   
+[2026-09-21T02:49:14.902Z] [STDOUT] [2026-09-20 19:49:14.901] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42210 to pts 42210
+[2026-09-20 19:49:14.901] [trace]   
+[2026-09-21T02:49:14.904Z] [STDOUT] [2026-09-20 19:49:14.904] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.908Z] [STDOUT] [2026-09-20 19:49:14.907] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.907] [trace]   
+[2026-09-20 19:49:14.908] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.908] [trace]   
+[2026-09-21T02:49:14.908Z] [STDOUT] [2026-09-20 19:49:14.908] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.908] [trace]   
+[2026-09-21T02:49:14.909Z] [STDOUT] [2026-09-20 19:49:14.908] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19196 QP=25.00 NAL=2 Slice:P Poc:42  I:61   P:811  SKIP:1168 size=5242 bytes
+[2026-09-20 19:49:14.908] [trace]   
+[2026-09-21T02:49:14.910Z] [STDOUT] [2026-09-20 19:49:14.909] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42254212, out pts 42212
+[2026-09-20 19:49:14.909] [trace]   
+[2026-09-20 19:49:14.909] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42211 to pts 42211
+[2026-09-20 19:49:14.909] [trace]   
+[2026-09-21T02:49:14.914Z] [STDOUT] [2026-09-20 19:49:14.914] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.916Z] [STDOUT] [2026-09-20 19:49:14.914] [trace]   side_data_mixer: processing from 17608 to 17608
+[2026-09-21T02:49:14.916Z] [STDOUT] [2026-09-20 19:49:14.915] [trace]   side_data_mixer: processing from 17609 to 17609
+[2026-09-20 19:49:14.915] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.919Z] [STDOUT] [2026-09-20 19:49:14.918] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.918] [trace]   
+[2026-09-21T02:49:14.919Z] [STDOUT] [2026-09-20 19:49:14.918] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.918] [trace]   
+[2026-09-20 19:49:14.918] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.918] [trace]   
+[2026-09-21T02:49:14.920Z] [STDOUT] [2026-09-20 19:49:14.920] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46780734, out pts 46734
+[2026-09-20 19:49:14.920] [trace]   
+[2026-09-21T02:49:14.920Z] [STDOUT] [2026-09-20 19:49:14.920] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46733 to pts 46733
+[2026-09-20 19:49:14.920] [trace]   
+[2026-09-21T02:49:14.921Z] [STDOUT] [2026-09-20 19:49:14.921] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19198 QP=21.00 NAL=2 Slice:P Poc:46  I:0    P:62   SKIP:1978 size=451 bytes
+[2026-09-20 19:49:14.921] [trace]   
+[2026-09-21T02:49:14.922Z] [STDOUT] [2026-09-20 19:49:14.921] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.921] [trace]   
+[2026-09-21T02:49:14.922Z] [STDOUT] [2026-09-20 19:49:14.922] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19197 QP=25.00 NAL=2 Slice:P Poc:44  I:1    P:104  SKIP:1935 size=532 bytes
+[2026-09-20 19:49:14.922] [trace]   
+[2026-09-21T02:49:14.922Z] [STDOUT] [2026-09-20 19:49:14.922] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46781735, out pts 46735
+[2026-09-20 19:49:14.922] [trace]   
+[2026-09-21T02:49:14.923Z] [STDOUT] [2026-09-20 19:49:14.922] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46734 to pts 46734
+[2026-09-20 19:49:14.922] [trace]   
+[2026-09-21T02:49:14.925Z] [STDOUT] [2026-09-20 19:49:14.924] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19196 QP=0.00 NAL=2 Slice:P Poc:42  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.924] [trace]   
+[2026-09-21T02:49:14.928Z] [STDOUT] [2026-09-20 19:49:14.928] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19199 QP=22.00 NAL=2 Slice:P Poc:48  I:1    P:165  SKIP:1874 size=1431 bytes
+[2026-09-20 19:49:14.928] [trace]   
+[2026-09-21T02:49:14.932Z] [STDOUT] [2026-09-20 19:49:14.932] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19197 QP=0.00 NAL=2 Slice:P Poc:44  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.932] [trace]   
+[2026-09-21T02:49:14.934Z] [STDOUT] [2026-09-20 19:49:14.934] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.934] [trace]   
+[2026-09-21T02:49:14.935Z] [STDOUT] [2026-09-20 19:49:14.934] [trace]   side_data_mixer: processing from 17600 to 17600
+[2026-09-21T02:49:14.936Z] [STDOUT] [2026-09-20 19:49:14.934] [trace]   side_data_mixer: processing from 17601 to 17601
+[2026-09-20 19:49:14.935] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42255213, out pts 42213
+[2026-09-20 19:49:14.935] [trace]   
+[2026-09-20 19:49:14.935] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42212 to pts 42212
+[2026-09-20 19:49:14.935] [trace]   
+[2026-09-21T02:49:14.937Z] [STDOUT] [2026-09-20 19:49:14.936] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.941Z] [STDOUT] [2026-09-20 19:49:14.940] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19198 QP=25.00 NAL=2 Slice:P Poc:46  I:0    P:66   SKIP:1974 size=439 bytes
+[2026-09-20 19:49:14.940] [trace]   
+[2026-09-21T02:49:14.942Z] [STDOUT] [2026-09-20 19:49:14.941] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.941] [trace]   
+[2026-09-21T02:49:14.942Z] [STDOUT] [2026-09-20 19:49:14.941] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.941] [trace]   
+[2026-09-21T02:49:14.942Z] [STDOUT] [2026-09-20 19:49:14.942] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.942] [trace]   
+[2026-09-21T02:49:14.943Z] [STDOUT] [2026-09-20 19:49:14.943] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42256214, out pts 42214
+[2026-09-20 19:49:14.943] [trace]   
+[2026-09-21T02:49:14.943Z] [STDOUT] [2026-09-20 19:49:14.943] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42213 to pts 42213
+[2026-09-20 19:49:14.943] [trace]   
+[2026-09-21T02:49:14.945Z] [STDOUT] [2026-09-20 19:49:14.944] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.947Z] [STDOUT] [2026-09-20 19:49:14.947] [trace]   side_data_mixer: processing from 17610 to 17610
+[2026-09-21T02:49:14.947Z] [STDOUT] [2026-09-20 19:49:14.947] [trace]   side_data_mixer: processing from 17611 to 17611
+[2026-09-21T02:49:14.948Z] [STDOUT] [2026-09-20 19:49:14.947] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.950Z] [STDOUT] [2026-09-20 19:49:14.950] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19198 QP=0.00 NAL=2 Slice:P Poc:46  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:14.950] [trace]   
+[2026-09-21T02:49:14.950Z] [STDOUT] [2026-09-20 19:49:14.950] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19199 QP=25.00 NAL=2 Slice:P Poc:48  I:2    P:38   SKIP:2000 size=237 bytes
+[2026-09-20 19:49:14.950] [trace]   
+[2026-09-21T02:49:14.952Z] [STDOUT] [2026-09-20 19:49:14.952] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.952] [trace]   
+[2026-09-21T02:49:14.952Z] [STDOUT] [2026-09-20 19:49:14.952] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.952] [trace]   
+[2026-09-21T02:49:14.953Z] [STDOUT] [2026-09-20 19:49:14.952] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19200 QP=28.00 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=17428 bytes
+[2026-09-20 19:49:14.952] [trace]   
+[2026-09-20 19:49:14.952] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.952] [trace]   
+[2026-09-21T02:49:14.953Z] [STDOUT] [2026-09-20 19:49:14.953] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46782736, out pts 46736
+[2026-09-20 19:49:14.953] [trace]   
+[2026-09-20 19:49:14.953] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46735 to pts 46735
+[2026-09-20 19:49:14.953] [trace]   
+[2026-09-21T02:49:14.955Z] [STDOUT] [2026-09-20 19:49:14.954] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.954] [trace]   
+[2026-09-21T02:49:14.956Z] [STDOUT] [2026-09-20 19:49:14.956] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46783737, out pts 46737
+[2026-09-20 19:49:14.956] [trace]   
+[2026-09-21T02:49:14.957Z] [STDOUT] [2026-09-20 19:49:14.956] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46736 to pts 46736
+[2026-09-20 19:49:14.956] [trace]   
+[2026-09-21T02:49:14.958Z] [STDOUT] [2026-09-20 19:49:14.958] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19199 QP=0.00 NAL=2 Slice:P Poc:48  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.958] [trace]   
+[2026-09-21T02:49:14.961Z] [STDOUT] [2026-09-20 19:49:14.961] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19201 QP=26.00 NAL=2 Slice:P Poc:2   I:1    P:190  SKIP:1849 size=1036 bytes
+[2026-09-20 19:49:14.961] [trace]   
+[2026-09-21T02:49:14.968Z] [STDOUT] [2026-09-20 19:49:14.967] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.967] [trace]   
+[2026-09-21T02:49:14.968Z] [STDOUT] [2026-09-20 19:49:14.967] [trace]   side_data_mixer: processing from 17602 to 17602
+[2026-09-21T02:49:14.968Z] [STDOUT] [2026-09-20 19:49:14.968] [trace]   side_data_mixer: processing from 17603 to 17603
+[2026-09-21T02:49:14.969Z] [STDOUT] [2026-09-20 19:49:14.968] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42257215, out pts 42215
+[2026-09-20 19:49:14.968] [trace]   
+[2026-09-20 19:49:14.969] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42214 to pts 42214
+[2026-09-20 19:49:14.969] [trace]   
+[2026-09-21T02:49:14.970Z] [STDOUT] [2026-09-20 19:49:14.970] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.974Z] [STDOUT] [2026-09-20 19:49:14.973] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19200 QP=32.00 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=22622 bytes
+[2026-09-20 19:49:14.973] [trace]   
+[2026-09-21T02:49:14.975Z] [STDOUT] [2026-09-20 19:49:14.975] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.975] [trace]   
+[2026-09-21T02:49:14.976Z] [STDOUT] [2026-09-20 19:49:14.975] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:14.975] [trace]   
+[2026-09-20 19:49:14.975] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.975] [trace]   
+[2026-09-21T02:49:14.979Z] [STDOUT] [2026-09-20 19:49:14.978] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42258216, out pts 42216
+[2026-09-20 19:49:14.978] [trace]   
+[2026-09-21T02:49:14.979Z] [STDOUT] [2026-09-20 19:49:14.978] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42215 to pts 42215
+[2026-09-20 19:49:14.978] [trace]   
+[2026-09-21T02:49:14.981Z] [STDOUT] [2026-09-20 19:49:14.980] [trace]   side_data_mixer: processing from 17612 to 17612
+[2026-09-21T02:49:14.981Z] [STDOUT] [2026-09-20 19:49:14.980] [trace]   side_data_mixer: processing from 17613 to 17613
+[2026-09-20 19:49:14.981] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.982Z] [STDOUT] [2026-09-20 19:49:14.982] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19201 QP=29.00 NAL=2 Slice:P Poc:2   I:8    P:336  SKIP:1696 size=2478 bytes
+[2026-09-20 19:49:14.982] [trace]   
+[2026-09-21T02:49:14.985Z] [STDOUT] [2026-09-20 19:49:14.985] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:14.985] [trace]   
+[2026-09-21T02:49:14.986Z] [STDOUT] [2026-09-20 19:49:14.985] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:14.985] [trace]   
+[2026-09-20 19:49:14.985] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.985] [trace]   
+[2026-09-21T02:49:14.986Z] [STDOUT] [2026-09-20 19:49:14.986] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46784738, out pts 46738
+[2026-09-20 19:49:14.986] [trace]   
+[2026-09-21T02:49:14.986Z] [STDOUT] [2026-09-20 19:49:14.986] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46737 to pts 46737
+[2026-09-20 19:49:14.986] [trace]   
+[2026-09-21T02:49:14.987Z] [STDOUT] [2026-09-20 19:49:14.987] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:14.987] [trace]   
+[2026-09-21T02:49:14.988Z] [STDOUT] [2026-09-20 19:49:14.987] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46785739, out pts 46739
+[2026-09-20 19:49:14.987] [trace]   
+[2026-09-21T02:49:14.988Z] [STDOUT] [2026-09-20 19:49:14.987] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46738 to pts 46738
+[2026-09-20 19:49:14.987] [trace]   
+[2026-09-21T02:49:14.990Z] [STDOUT] [2026-09-20 19:49:14.990] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:14.990Z] [STDOUT] [2026-09-20 19:49:14.990] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19200 QP=0.01 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=1913 bytes
+[2026-09-20 19:49:14.990] [trace]   
+[2026-09-21T02:49:14.995Z] [STDOUT] [2026-09-20 19:49:14.995] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19202 QP=28.00 NAL=2 Slice:P Poc:4   I:1    P:8    SKIP:2031 size=179 bytes
+[2026-09-20 19:49:14.995] [trace]   
+[2026-09-21T02:49:15.000Z] [STDOUT] [2026-09-20 19:49:14.999] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19201 QP=0.00 NAL=2 Slice:P Poc:2   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:14.999] [trace]   
+[2026-09-21T02:49:15.002Z] [STDOUT] [2026-09-20 19:49:15.002] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:15.002] [trace]   side_data_mixer: processing from 17604 to 17604
+[2026-09-21T02:49:15.002Z] [STDOUT] [2026-09-20 19:49:15.002] [trace]   side_data_mixer: processing from 17605 to 17605
+[2026-09-21T02:49:15.003Z] [STDOUT] [2026-09-20 19:49:15.003] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.003] [trace]   
+[2026-09-21T02:49:15.005Z] [STDOUT] [2026-09-20 19:49:15.004] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42259217, out pts 42217
+[2026-09-20 19:49:15.004] [trace]   
+[2026-09-20 19:49:15.004] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42216 to pts 42216
+[2026-09-20 19:49:15.004] [trace]   
+[2026-09-21T02:49:15.006Z] [STDOUT] [2026-09-20 19:49:15.005] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19203 QP=29.00 NAL=2 Slice:P Poc:6   I:2    P:171  SKIP:1867 size=681 bytes
+[2026-09-20 19:49:15.005] [trace]   
+[2026-09-21T02:49:15.006Z] [STDOUT] [2026-09-20 19:49:15.006] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19202 QP=33.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=171 bytes
+[2026-09-20 19:49:15.006] [trace]   
+[2026-09-21T02:49:15.011Z] [STDOUT] [2026-09-20 19:49:15.010] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.010] [trace]   
+[2026-09-21T02:49:15.011Z] [STDOUT] [2026-09-20 19:49:15.010] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.010] [trace]   
+[2026-09-20 19:49:15.011] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.011] [trace]   
+[2026-09-20 19:49:15.011] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.014Z] [STDOUT] [2026-09-20 19:49:15.013] [trace]   side_data_mixer: processing from 17614 to 17614
+[2026-09-21T02:49:15.014Z] [STDOUT] [2026-09-20 19:49:15.014] [trace]   side_data_mixer: processing from 17615 to 17615
+[2026-09-21T02:49:15.015Z] [STDOUT] [2026-09-20 19:49:15.014] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42260218, out pts 42218
+[2026-09-20 19:49:15.014] [trace]   
+[2026-09-21T02:49:15.015Z] [STDOUT] [2026-09-20 19:49:15.014] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42217 to pts 42217
+[2026-09-20 19:49:15.014] [trace]   
+[2026-09-21T02:49:15.017Z] [STDOUT] [2026-09-20 19:49:15.016] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19203 QP=32.00 NAL=2 Slice:P Poc:6   I:0    P:0    SKIP:2040 size=93 bytes
+[2026-09-20 19:49:15.016] [trace]   
+[2026-09-21T02:49:15.017Z] [STDOUT] [2026-09-20 19:49:15.017] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.019Z] [STDOUT] [2026-09-20 19:49:15.018] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.018] [trace]   
+[2026-09-21T02:49:15.019Z] [STDOUT] [2026-09-20 19:49:15.019] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19202 QP=0.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.019] [trace]   
+[2026-09-20 19:49:15.019] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.019] [trace]   
+[2026-09-20 19:49:15.019] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.019] [trace]   
+[2026-09-21T02:49:15.020Z] [STDOUT] [2026-09-20 19:49:15.019] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46786740, out pts 46740
+[2026-09-20 19:49:15.019] [trace]   
+[2026-09-21T02:49:15.020Z] [STDOUT] [2026-09-20 19:49:15.019] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46739 to pts 46739
+[2026-09-20 19:49:15.019] [trace]   
+[2026-09-21T02:49:15.021Z] [STDOUT] [2026-09-20 19:49:15.020] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.020] [trace]   
+[2026-09-21T02:49:15.022Z] [STDOUT] [2026-09-20 19:49:15.021] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19204 QP=27.00 NAL=2 Slice:P Poc:8   I:3    P:300  SKIP:1737 size=1334 bytes
+[2026-09-20 19:49:15.021] [trace]   
+[2026-09-21T02:49:15.022Z] [STDOUT] [2026-09-20 19:49:15.021] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46787741, out pts 46741
+[2026-09-20 19:49:15.021] [trace]   
+[2026-09-20 19:49:15.022] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46740 to pts 46740
+[2026-09-20 19:49:15.022] [trace]   
+[2026-09-21T02:49:15.027Z] [STDOUT] [2026-09-20 19:49:15.026] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19203 QP=0.00 NAL=2 Slice:P Poc:6   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.026] [trace]   
+[2026-09-21T02:49:15.028Z] [STDOUT] [2026-09-20 19:49:15.028] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19205 QP=27.00 NAL=2 Slice:P Poc:10  I:3    P:238  SKIP:1799 size=1149 bytes
+[2026-09-20 19:49:15.028] [trace]   
+[2026-09-21T02:49:15.035Z] [STDOUT] [2026-09-20 19:49:15.033] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.033] [trace]   
+[2026-09-20 19:49:15.034] [trace]   side_data_mixer: processing from 17606 to 17606
+[2026-09-20 19:49:15.034] [trace]   side_data_mixer: processing from 17607 to 17607
+[2026-09-21T02:49:15.035Z] [STDOUT] [2026-09-20 19:49:15.035] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42261219, out pts 42219
+[2026-09-20 19:49:15.035] [trace]   
+[2026-09-20 19:49:15.035] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42218 to pts 42218
+[2026-09-20 19:49:15.035] [trace]   
+[2026-09-21T02:49:15.037Z] [STDOUT] [2026-09-20 19:49:15.036] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.041Z] [STDOUT] [2026-09-20 19:49:15.041] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19204 QP=30.00 NAL=2 Slice:P Poc:8   I:0    P:10   SKIP:2030 size=199 bytes
+[2026-09-20 19:49:15.041] [trace]   
+[2026-09-21T02:49:15.041Z] [STDOUT] [2026-09-20 19:49:15.041] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.041] [trace]   
+[2026-09-20 19:49:15.041] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.041] [trace]   
+[2026-09-20 19:49:15.041] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.041] [trace]   
+[2026-09-21T02:49:15.043Z] [STDOUT] [2026-09-20 19:49:15.043] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42262220, out pts 42220
+[2026-09-20 19:49:15.043] [trace]   
+[2026-09-21T02:49:15.043Z] [STDOUT] [2026-09-20 19:49:15.043] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42219 to pts 42219
+[2026-09-20 19:49:15.043] [trace]   
+[2026-09-21T02:49:15.047Z] [STDOUT] [2026-09-20 19:49:15.046] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.048Z] [STDOUT] [2026-09-20 19:49:15.047] [trace]   side_data_mixer: processing from 17616 to 17616
+[2026-09-21T02:49:15.048Z] [STDOUT] [2026-09-20 19:49:15.048] [trace]   side_data_mixer: processing from 17617 to 17617
+[2026-09-21T02:49:15.049Z] [STDOUT] [2026-09-20 19:49:15.049] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.050Z] [STDOUT] [2026-09-20 19:49:15.050] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19205 QP=28.00 NAL=2 Slice:P Poc:10  I:41   P:557  SKIP:1442 size=3956 bytes
+[2026-09-20 19:49:15.050] [trace]   
+[2026-09-21T02:49:15.052Z] [STDOUT] [2026-09-20 19:49:15.052] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.052] [trace]   
+[2026-09-20 19:49:15.052] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.052] [trace]   
+[2026-09-21T02:49:15.052Z] [STDOUT] [2026-09-20 19:49:15.052] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.052] [trace]   
+[2026-09-21T02:49:15.053Z] [STDOUT] [2026-09-20 19:49:15.053] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46788742, out pts 46742
+[2026-09-20 19:49:15.053] [trace]   
+[2026-09-21T02:49:15.053Z] [STDOUT] [2026-09-20 19:49:15.053] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46741 to pts 46741
+[2026-09-20 19:49:15.053] [trace]   
+[2026-09-21T02:49:15.054Z] [STDOUT] [2026-09-20 19:49:15.054] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19204 QP=0.00 NAL=2 Slice:P Poc:8   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.054] [trace]   
+[2026-09-21T02:49:15.054Z] [STDOUT] [2026-09-20 19:49:15.054] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.054] [trace]   
+[2026-09-21T02:49:15.055Z] [STDOUT] [2026-09-20 19:49:15.055] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46789743, out pts 46743
+[2026-09-20 19:49:15.055] [trace]   
+[2026-09-21T02:49:15.055Z] [STDOUT] [2026-09-20 19:49:15.055] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46742 to pts 46742
+[2026-09-20 19:49:15.055] [trace]   
+[2026-09-21T02:49:15.056Z] [STDOUT] [2026-09-20 19:49:15.056] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19206 QP=24.32 NAL=2 Slice:P Poc:12  I:20   P:719  SKIP:1301 size=4268 bytes
+[2026-09-20 19:49:15.056] [trace]   
+[2026-09-21T02:49:15.062Z] [STDOUT] [2026-09-20 19:49:15.062] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19207 QP=26.00 NAL=2 Slice:P Poc:14  I:0    P:54   SKIP:1986 size=275 bytes
+[2026-09-20 19:49:15.062] [trace]   
+[2026-09-21T02:49:15.064Z] [STDOUT] [2026-09-20 19:49:15.063] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19205 QP=0.00 NAL=2 Slice:P Poc:10  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.063] [trace]   
+[2026-09-21T02:49:15.067Z] [STDOUT] [2026-09-20 19:49:15.067] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.067] [trace]   
+[2026-09-21T02:49:15.068Z] [STDOUT] [2026-09-20 19:49:15.067] [trace]   side_data_mixer: processing from 17608 to 17608
+[2026-09-21T02:49:15.068Z] [STDOUT] [2026-09-20 19:49:15.068] [trace]   side_data_mixer: processing from 17609 to 17609
+[2026-09-21T02:49:15.069Z] [STDOUT] [2026-09-20 19:49:15.068] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42263221, out pts 42221
+[2026-09-20 19:49:15.068] [trace]   
+[2026-09-21T02:49:15.069Z] [STDOUT] [2026-09-20 19:49:15.068] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42220 to pts 42220
+[2026-09-20 19:49:15.068] [trace]   
+[2026-09-21T02:49:15.071Z] [STDOUT] [2026-09-20 19:49:15.070] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.075Z] [STDOUT] [2026-09-20 19:49:15.074] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19206 QP=27.09 NAL=2 Slice:P Poc:12  I:34   P:616  SKIP:1390 size=3432 bytes
+[2026-09-20 19:49:15.074] [trace]   
+[2026-09-21T02:49:15.075Z] [STDOUT] [2026-09-20 19:49:15.074] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.074] [trace]   
+[2026-09-21T02:49:15.075Z] [STDOUT] [2026-09-20 19:49:15.075] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.075] [trace]   
+[2026-09-20 19:49:15.075] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.075] [trace]   
+[2026-09-21T02:49:15.077Z] [STDOUT] [2026-09-20 19:49:15.077] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42264222, out pts 42222
+[2026-09-20 19:49:15.077] [trace]   
+[2026-09-21T02:49:15.077Z] [STDOUT] [2026-09-20 19:49:15.077] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42221 to pts 42221
+[2026-09-20 19:49:15.077] [trace]   
+[2026-09-21T02:49:15.079Z] [STDOUT] [2026-09-20 19:49:15.078] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.080Z] [STDOUT] [2026-09-20 19:49:15.080] [trace]   side_data_mixer: processing from 17618 to 17618
+[2026-09-21T02:49:15.080Z] [STDOUT] [2026-09-20 19:49:15.080] [trace]   side_data_mixer: processing from 17619 to 17619
+[2026-09-21T02:49:15.084Z] [STDOUT] [2026-09-20 19:49:15.083] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.084Z] [STDOUT] [2026-09-20 19:49:15.084] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19207 QP=26.00 NAL=2 Slice:P Poc:14  I:28   P:582  SKIP:1430 size=4105 bytes
+[2026-09-20 19:49:15.084] [trace]   
+[2026-09-21T02:49:15.085Z] [STDOUT] [2026-09-20 19:49:15.084] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19206 QP=0.00 NAL=2 Slice:P Poc:12  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.084] [trace]   
+[2026-09-21T02:49:15.090Z] [STDOUT] [2026-09-20 19:49:15.086] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.086] [trace]   
+[2026-09-21T02:49:15.091Z] [STDOUT] [2026-09-20 19:49:15.086] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.086] [trace]   
+[2026-09-20 19:49:15.087] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.087] [trace]   
+[2026-09-20 19:49:15.087] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19208 QP=25.00 NAL=2 Slice:P Poc:16  I:3    P:134  SKIP:1903 size=766 bytes
+[2026-09-20 19:49:15.087] [trace]   
+[2026-09-20 19:49:15.089] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46790744, out pts 46744
+[2026-09-20 19:49:15.089] [trace]   
+[2026-09-20 19:49:15.089] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46743 to pts 46743
+[2026-09-20 19:49:15.089] [trace]   
+[2026-09-21T02:49:15.091Z] [STDOUT] [2026-09-20 19:49:15.091] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.091] [trace]   
+[2026-09-21T02:49:15.092Z] [STDOUT] [2026-09-20 19:49:15.091] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46791745, out pts 46745
+[2026-09-20 19:49:15.091] [trace]   
+[2026-09-21T02:49:15.092Z] [STDOUT] [2026-09-20 19:49:15.092] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46744 to pts 46744
+[2026-09-20 19:49:15.092] [trace]   
+[2026-09-21T02:49:15.093Z] [STDOUT] [2026-09-20 19:49:15.092] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19207 QP=0.00 NAL=2 Slice:P Poc:14  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.092] [trace]   
+[2026-09-21T02:49:15.096Z] [STDOUT] [2026-09-20 19:49:15.096] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19209 QP=26.00 NAL=2 Slice:P Poc:18  I:4    P:236  SKIP:1800 size=1253 bytes
+[2026-09-20 19:49:15.096] [trace]   
+[2026-09-21T02:49:15.101Z] [STDOUT] [2026-09-20 19:49:15.100] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.100] [trace]   
+[2026-09-21T02:49:15.101Z] [STDOUT] [2026-09-20 19:49:15.101] [trace]   side_data_mixer: processing from 17610 to 17610
+[2026-09-21T02:49:15.101Z] [STDOUT] [2026-09-20 19:49:15.101] [trace]   side_data_mixer: processing from 17611 to 17611
+[2026-09-21T02:49:15.102Z] [STDOUT] [2026-09-20 19:49:15.102] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42265223, out pts 42223
+[2026-09-20 19:49:15.102] [trace]   
+[2026-09-21T02:49:15.102Z] [STDOUT] [2026-09-20 19:49:15.102] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42222 to pts 42222
+[2026-09-20 19:49:15.102] [trace]   
+[2026-09-21T02:49:15.104Z] [STDOUT] [2026-09-20 19:49:15.103] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.103] [trace]   
+[2026-09-21T02:49:15.104Z] [STDOUT] [2026-09-20 19:49:15.103] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.103] [trace]   
+[2026-09-20 19:49:15.103] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.103] [trace]   
+[2026-09-21T02:49:15.104Z] [STDOUT] [2026-09-20 19:49:15.104] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.107Z] [STDOUT] [2026-09-20 19:49:15.106] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42266224, out pts 42224
+[2026-09-20 19:49:15.106] [trace]   
+[2026-09-21T02:49:15.107Z] [STDOUT] [2026-09-20 19:49:15.107] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42223 to pts 42223
+[2026-09-20 19:49:15.107] [trace]   
+[2026-09-21T02:49:15.108Z] [STDOUT] [2026-09-20 19:49:15.108] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19208 QP=26.00 NAL=2 Slice:P Poc:16  I:2    P:57   SKIP:1981 size=404 bytes
+[2026-09-20 19:49:15.108] [trace]   
+[2026-09-21T02:49:15.114Z] [STDOUT] [2026-09-20 19:49:15.114] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.114] [trace]   
+[2026-09-20 19:49:15.114] [trace]   side_data_mixer: processing from 17620 to 17620
+[2026-09-21T02:49:15.115Z] [STDOUT] [2026-09-20 19:49:15.114] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.114] [trace]   
+[2026-09-20 19:49:15.114] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.114] [trace]   
+[2026-09-20 19:49:15.114] [trace]   side_data_mixer: processing from 17621 to 17621
+[2026-09-21T02:49:15.116Z] [STDOUT] [2026-09-20 19:49:15.115] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.116Z] [STDOUT] [2026-09-20 19:49:15.115] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46792746, out pts 46746
+[2026-09-20 19:49:15.115] [trace]   
+[2026-09-21T02:49:15.117Z] [STDOUT] [2026-09-20 19:49:15.116] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46745 to pts 46745
+[2026-09-20 19:49:15.116] [trace]   
+[2026-09-21T02:49:15.117Z] [STDOUT] [2026-09-20 19:49:15.117] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.117] [trace]   
+[2026-09-21T02:49:15.118Z] [STDOUT] [2026-09-20 19:49:15.118] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.119Z] [STDOUT] [2026-09-20 19:49:15.119] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19209 QP=26.00 NAL=2 Slice:P Poc:18  I:0    P:30   SKIP:2010 size=208 bytes
+[2026-09-20 19:49:15.119] [trace]   
+[2026-09-21T02:49:15.120Z] [STDOUT] [2026-09-20 19:49:15.119] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46793747, out pts 46747
+[2026-09-20 19:49:15.119] [trace]   
+[2026-09-20 19:49:15.119] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46746 to pts 46746
+[2026-09-20 19:49:15.119] [trace]   
+[2026-09-21T02:49:15.122Z] [STDOUT] [2026-09-20 19:49:15.121] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19208 QP=0.00 NAL=2 Slice:P Poc:16  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.121] [trace]   
+[2026-09-21T02:49:15.123Z] [STDOUT] [2026-09-20 19:49:15.123] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19210 QP=25.00 NAL=2 Slice:P Poc:20  I:1    P:183  SKIP:1856 size=991 bytes
+[2026-09-20 19:49:15.123] [trace]   
+[2026-09-21T02:49:15.129Z] [STDOUT] [2026-09-20 19:49:15.128] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19209 QP=0.00 NAL=2 Slice:P Poc:18  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.128] [trace]   
+[2026-09-21T02:49:15.131Z] [STDOUT] [2026-09-20 19:49:15.130] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19211 QP=26.00 NAL=2 Slice:P Poc:22  I:6    P:254  SKIP:1780 size=1710 bytes
+[2026-09-20 19:49:15.130] [trace]   
+[2026-09-21T02:49:15.134Z] [STDOUT] [2026-09-20 19:49:15.134] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.134] [trace]   
+[2026-09-21T02:49:15.134Z] [STDOUT] [2026-09-20 19:49:15.134] [trace]   side_data_mixer: processing from 17612 to 17612
+[2026-09-21T02:49:15.135Z] [STDOUT] [2026-09-20 19:49:15.134] [trace]   side_data_mixer: processing from 17613 to 17613
+[2026-09-21T02:49:15.135Z] [STDOUT] [2026-09-20 19:49:15.135] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42267225, out pts 42225
+[2026-09-20 19:49:15.135] [trace]   
+[2026-09-21T02:49:15.135Z] [STDOUT] [2026-09-20 19:49:15.135] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42224 to pts 42224
+[2026-09-20 19:49:15.135] [trace]   
+[2026-09-21T02:49:15.138Z] [STDOUT] [2026-09-20 19:49:15.137] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.142Z] [STDOUT] [2026-09-20 19:49:15.141] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.141] [trace]   
+[2026-09-21T02:49:15.142Z] [STDOUT] [2026-09-20 19:49:15.142] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.142] [trace]   
+[2026-09-20 19:49:15.142] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19210 QP=26.00 NAL=2 Slice:P Poc:20  I:0    P:40   SKIP:2000 size=343 bytes
+[2026-09-20 19:49:15.142] [trace]   
+[2026-09-20 19:49:15.142] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.142] [trace]   
+[2026-09-21T02:49:15.143Z] [STDOUT] [2026-09-20 19:49:15.143] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42268226, out pts 42226
+[2026-09-20 19:49:15.143] [trace]   
+[2026-09-21T02:49:15.143Z] [STDOUT] [2026-09-20 19:49:15.143] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42225 to pts 42225
+[2026-09-20 19:49:15.143] [trace]   
+[2026-09-21T02:49:15.147Z] [STDOUT] [2026-09-20 19:49:15.146] [trace]   side_data_mixer: processing from 17622 to 17622
+[2026-09-21T02:49:15.147Z] [STDOUT] [2026-09-20 19:49:15.147] [trace]   side_data_mixer: processing from 17623 to 17623
+[2026-09-21T02:49:15.149Z] [STDOUT] [2026-09-20 19:49:15.148] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.150Z] [STDOUT] [2026-09-20 19:49:15.149] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19211 QP=25.05 NAL=2 Slice:P Poc:22  I:60   P:754  SKIP:1226 size=4784 bytes
+[2026-09-20 19:49:15.149] [trace]   
+[2026-09-21T02:49:15.151Z] [STDOUT] [2026-09-20 19:49:15.151] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.152Z] [STDOUT] [2026-09-20 19:49:15.151] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.151] [trace]   
+[2026-09-21T02:49:15.152Z] [STDOUT] [2026-09-20 19:49:15.151] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.151] [trace]   
+[2026-09-20 19:49:15.152] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.152] [trace]   
+[2026-09-21T02:49:15.155Z] [STDOUT] [2026-09-20 19:49:15.155] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46794748, out pts 46748
+[2026-09-20 19:49:15.155] [trace]   
+[2026-09-21T02:49:15.156Z] [STDOUT] [2026-09-20 19:49:15.155] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19210 QP=0.00 NAL=2 Slice:P Poc:20  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.155] [trace]   
+[2026-09-20 19:49:15.155] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46747 to pts 46747
+[2026-09-20 19:49:15.155] [trace]   
+[2026-09-21T02:49:15.156Z] [STDOUT] [2026-09-20 19:49:15.156] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.156] [trace]   
+[2026-09-21T02:49:15.157Z] [STDOUT] [2026-09-20 19:49:15.156] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19212 QP=25.00 NAL=2 Slice:P Poc:24  I:4    P:213  SKIP:1823 size=1095 bytes
+[2026-09-20 19:49:15.156] [trace]   
+[2026-09-21T02:49:15.157Z] [STDOUT] [2026-09-20 19:49:15.157] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46795749, out pts 46749
+[2026-09-20 19:49:15.157] [trace]   
+[2026-09-21T02:49:15.158Z] [STDOUT] [2026-09-20 19:49:15.157] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46748 to pts 46748
+[2026-09-20 19:49:15.157] [trace]   
+[2026-09-21T02:49:15.163Z] [STDOUT] [2026-09-20 19:49:15.162] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19213 QP=26.00 NAL=2 Slice:P Poc:26  I:12   P:301  SKIP:1727 size=1770 bytes
+[2026-09-20 19:49:15.162] [trace]   
+[2026-09-21T02:49:15.164Z] [STDOUT] [2026-09-20 19:49:15.163] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19211 QP=0.00 NAL=2 Slice:P Poc:22  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.163] [trace]   
+[2026-09-21T02:49:15.168Z] [STDOUT] [2026-09-20 19:49:15.167] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.167] [trace]   
+[2026-09-21T02:49:15.168Z] [STDOUT] [2026-09-20 19:49:15.168] [trace]   side_data_mixer: processing from 17614 to 17614
+[2026-09-21T02:49:15.169Z] [STDOUT] [2026-09-20 19:49:15.168] [trace]   side_data_mixer: processing from 17615 to 17615
+[2026-09-21T02:49:15.169Z] [STDOUT] [2026-09-20 19:49:15.169] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42269227, out pts 42227
+[2026-09-20 19:49:15.169] [trace]   
+[2026-09-21T02:49:15.170Z] [STDOUT] [2026-09-20 19:49:15.169] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42226 to pts 42226
+[2026-09-20 19:49:15.169] [trace]   
+[2026-09-21T02:49:15.172Z] [STDOUT] [2026-09-20 19:49:15.171] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.171] [trace]   
+[2026-09-21T02:49:15.172Z] [STDOUT] [2026-09-20 19:49:15.171] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.171] [trace]   
+[2026-09-20 19:49:15.171] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.171] [trace]   
+[2026-09-21T02:49:15.172Z] [STDOUT] [2026-09-20 19:49:15.172] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42270228, out pts 42228
+[2026-09-20 19:49:15.172] [trace]   
+[2026-09-20 19:49:15.172] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42227 to pts 42227
+[2026-09-20 19:49:15.172] [trace]   
+[2026-09-21T02:49:15.173Z] [STDOUT] [2026-09-20 19:49:15.172] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.178Z] [STDOUT] [2026-09-20 19:49:15.177] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19212 QP=25.00 NAL=2 Slice:P Poc:24  I:1    P:138  SKIP:1901 size=997 bytes
+[2026-09-20 19:49:15.177] [trace]   
+[2026-09-21T02:49:15.179Z] [STDOUT] [2026-09-20 19:49:15.178] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.182Z] [STDOUT] [2026-09-20 19:49:15.182] [trace]   side_data_mixer: processing from 17624 to 17624
+[2026-09-21T02:49:15.182Z] [STDOUT] [2026-09-20 19:49:15.182] [trace]   side_data_mixer: processing from 17625 to 17625
+[2026-09-21T02:49:15.183Z] [STDOUT] [2026-09-20 19:49:15.182] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.186Z] [STDOUT] [2026-09-20 19:49:15.185] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.185] [trace]   
+[2026-09-21T02:49:15.186Z] [STDOUT] [2026-09-20 19:49:15.185] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.185] [trace]   
+[2026-09-20 19:49:15.185] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.185] [trace]   
+[2026-09-20 19:49:15.186] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19213 QP=25.00 NAL=2 Slice:P Poc:26  I:1    P:5    SKIP:2034 size=112 bytes
+[2026-09-20 19:49:15.186] [trace]   
+[2026-09-21T02:49:15.187Z] [STDOUT] [2026-09-20 19:49:15.186] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19212 QP=0.00 NAL=2 Slice:P Poc:24  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.186] [trace]   
+[2026-09-21T02:49:15.187Z] [STDOUT] [2026-09-20 19:49:15.187] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46796750, out pts 46750
+[2026-09-20 19:49:15.187] [trace]   
+[2026-09-21T02:49:15.187Z] [STDOUT] [2026-09-20 19:49:15.187] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46749 to pts 46749
+[2026-09-20 19:49:15.187] [trace]   
+[2026-09-21T02:49:15.188Z] [STDOUT] [2026-09-20 19:49:15.188] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.188] [trace]   
+[2026-09-21T02:49:15.189Z] [STDOUT] [2026-09-20 19:49:15.189] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19214 QP=25.00 NAL=2 Slice:P Poc:28  I:1    P:210  SKIP:1829 size=1110 bytes
+[2026-09-20 19:49:15.189] [trace]   
+[2026-09-21T02:49:15.190Z] [STDOUT] [2026-09-20 19:49:15.189] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46797751, out pts 46751
+[2026-09-20 19:49:15.189] [trace]   
+[2026-09-20 19:49:15.189] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46750 to pts 46750
+[2026-09-20 19:49:15.189] [trace]   
+[2026-09-21T02:49:15.196Z] [STDOUT] [2026-09-20 19:49:15.196] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19213 QP=0.00 NAL=2 Slice:P Poc:26  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.196] [trace]   
+[2026-09-21T02:49:15.198Z] [STDOUT] [2026-09-20 19:49:15.197] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19215 QP=25.00 NAL=2 Slice:P Poc:30  I:14   P:300  SKIP:1726 size=2491 bytes
+[2026-09-20 19:49:15.197] [trace]   
+[2026-09-21T02:49:15.201Z] [STDOUT] [2026-09-20 19:49:15.200] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.200] [trace]   
+[2026-09-21T02:49:15.202Z] [STDOUT] [2026-09-20 19:49:15.201] [trace]   side_data_mixer: processing from 17616 to 17616
+[2026-09-21T02:49:15.203Z] [STDOUT] [2026-09-20 19:49:15.202] [trace]   side_data_mixer: processing from 17617 to 17617
+[2026-09-20 19:49:15.202] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42271229, out pts 42229
+[2026-09-20 19:49:15.202] [trace]   
+[2026-09-20 19:49:15.202] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42228 to pts 42228
+[2026-09-20 19:49:15.202] [trace]   
+[2026-09-21T02:49:15.206Z] [STDOUT] [2026-09-20 19:49:15.205] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.209Z] [STDOUT] [2026-09-20 19:49:15.208] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.208] [trace]   
+[2026-09-21T02:49:15.209Z] [STDOUT] [2026-09-20 19:49:15.208] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.208] [trace]   
+[2026-09-20 19:49:15.208] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.208] [trace]   
+[2026-09-21T02:49:15.210Z] [STDOUT] [2026-09-20 19:49:15.209] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42272230, out pts 42230
+[2026-09-20 19:49:15.209] [trace]   
+[2026-09-21T02:49:15.210Z] [STDOUT] [2026-09-20 19:49:15.209] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42229 to pts 42229
+[2026-09-20 19:49:15.209] [trace]   
+[2026-09-21T02:49:15.212Z] [STDOUT] [2026-09-20 19:49:15.211] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19214 QP=24.00 NAL=2 Slice:P Poc:28  I:14   P:551  SKIP:1475 size=2964 bytes
+[2026-09-20 19:49:15.211] [trace]   
+[2026-09-21T02:49:15.214Z] [STDOUT] [2026-09-20 19:49:15.213] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.215Z] [STDOUT] [2026-09-20 19:49:15.214] [trace]   side_data_mixer: processing from 17626 to 17626
+[2026-09-21T02:49:15.215Z] [STDOUT] [2026-09-20 19:49:15.215] [trace]   side_data_mixer: processing from 17627 to 17627
+[2026-09-21T02:49:15.218Z] [STDOUT] [2026-09-20 19:49:15.217] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.219Z] [STDOUT] [2026-09-20 19:49:15.219] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.219] [trace]   
+[2026-09-21T02:49:15.220Z] [STDOUT] [2026-09-20 19:49:15.219] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.219] [trace]   
+[2026-09-20 19:49:15.219] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.219] [trace]   
+[2026-09-21T02:49:15.221Z] [STDOUT] [2026-09-20 19:49:15.220] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19214 QP=0.00 NAL=2 Slice:P Poc:28  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.220] [trace]   
+[2026-09-21T02:49:15.221Z] [STDOUT] [2026-09-20 19:49:15.220] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19215 QP=24.00 NAL=2 Slice:P Poc:30  I:1    P:4    SKIP:2035 size=108 bytes
+[2026-09-20 19:49:15.220] [trace]   
+[2026-09-20 19:49:15.221] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46798752, out pts 46752
+[2026-09-20 19:49:15.221] [trace]   
+[2026-09-21T02:49:15.222Z] [STDOUT] [2026-09-20 19:49:15.221] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46751 to pts 46751
+[2026-09-20 19:49:15.221] [trace]   
+[2026-09-21T02:49:15.222Z] [STDOUT] [2026-09-20 19:49:15.222] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.222] [trace]   
+[2026-09-21T02:49:15.224Z] [STDOUT] [2026-09-20 19:49:15.223] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19216 QP=24.00 NAL=2 Slice:P Poc:32  I:3    P:193  SKIP:1844 size=958 bytes
+[2026-09-20 19:49:15.223] [trace]   
+[2026-09-21T02:49:15.224Z] [STDOUT] [2026-09-20 19:49:15.223] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46799753, out pts 46753
+[2026-09-20 19:49:15.223] [trace]   
+[2026-09-20 19:49:15.223] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46752 to pts 46752
+[2026-09-20 19:49:15.223] [trace]   
+[2026-09-21T02:49:15.230Z] [STDOUT] [2026-09-20 19:49:15.229] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19215 QP=0.00 NAL=2 Slice:P Poc:30  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.229] [trace]   
+[2026-09-21T02:49:15.231Z] [STDOUT] [2026-09-20 19:49:15.231] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19217 QP=23.00 NAL=2 Slice:P Poc:34  I:124  P:825  SKIP:1091 size=3774 bytes
+[2026-09-20 19:49:15.231] [trace]   
+[2026-09-21T02:49:15.234Z] [STDOUT] [2026-09-20 19:49:15.234] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.234] [trace]   
+[2026-09-21T02:49:15.235Z] [STDOUT] [2026-09-20 19:49:15.234] [trace]   side_data_mixer: processing from 17618 to 17618
+[2026-09-21T02:49:15.235Z] [STDOUT] [2026-09-20 19:49:15.234] [trace]   side_data_mixer: processing from 17619 to 17619
+[2026-09-21T02:49:15.236Z] [STDOUT] [2026-09-20 19:49:15.236] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42273231, out pts 42231
+[2026-09-20 19:49:15.236] [trace]   
+[2026-09-21T02:49:15.236Z] [STDOUT] [2026-09-20 19:49:15.236] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42230 to pts 42230
+[2026-09-20 19:49:15.236] [trace]   
+[2026-09-21T02:49:15.238Z] [STDOUT] [2026-09-20 19:49:15.238] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.242Z] [STDOUT] [2026-09-20 19:49:15.241] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19216 QP=24.00 NAL=2 Slice:P Poc:32  I:1    P:5    SKIP:2034 size=197 bytes
+[2026-09-20 19:49:15.241] [trace]   
+[2026-09-21T02:49:15.242Z] [STDOUT] [2026-09-20 19:49:15.242] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.242] [trace]   
+[2026-09-21T02:49:15.242Z] [STDOUT] [2026-09-20 19:49:15.242] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.242] [trace]   
+[2026-09-21T02:49:15.243Z] [STDOUT] [2026-09-20 19:49:15.242] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.242] [trace]   
+[2026-09-21T02:49:15.245Z] [STDOUT] [2026-09-20 19:49:15.244] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42274232, out pts 42232
+[2026-09-20 19:49:15.244] [trace]   
+[2026-09-21T02:49:15.245Z] [STDOUT] [2026-09-20 19:49:15.244] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42231 to pts 42231
+[2026-09-20 19:49:15.244] [trace]   
+[2026-09-21T02:49:15.247Z] [STDOUT] [2026-09-20 19:49:15.247] [trace]   side_data_mixer: processing from 17628 to 17628
+[2026-09-21T02:49:15.247Z] [STDOUT] [2026-09-20 19:49:15.247] [trace]   side_data_mixer: processing from 17629 to 17629
+[2026-09-21T02:49:15.252Z] [STDOUT] [2026-09-20 19:49:15.249] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.252Z] [STDOUT] [2026-09-20 19:49:15.251] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.251] [trace]   
+[2026-09-21T02:49:15.252Z] [STDOUT] [2026-09-20 19:49:15.251] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.251] [trace]   
+[2026-09-20 19:49:15.251] [trace]   [ffmpeg] [h264 @ 0x7e1034657a40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.251] [trace]   
+[2026-09-21T02:49:15.254Z] [STDOUT] [2026-09-20 19:49:15.254] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19216 QP=0.00 NAL=2 Slice:P Poc:32  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.254] [trace]   
+[2026-09-21T02:49:15.255Z] [STDOUT] [2026-09-20 19:49:15.254] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.255Z] [STDOUT] [2026-09-20 19:49:15.254] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46800754, out pts 46754
+[2026-09-20 19:49:15.254] [trace]   
+[2026-09-21T02:49:15.256Z] [STDOUT] [2026-09-20 19:49:15.254] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19217 QP=24.00 NAL=2 Slice:P Poc:34  I:0    P:15   SKIP:2025 size=149 bytes
+[2026-09-20 19:49:15.254] [trace]   
+[2026-09-20 19:49:15.255] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46753 to pts 46753
+[2026-09-20 19:49:15.255] [trace]   
+[2026-09-21T02:49:15.256Z] [STDOUT] [2026-09-20 19:49:15.256] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.256] [trace]   
+[2026-09-21T02:49:15.259Z] [STDOUT] [2026-09-20 19:49:15.258] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46801755, out pts 46755
+[2026-09-20 19:49:15.258] [trace]   
+[2026-09-21T02:49:15.259Z] [STDOUT] [2026-09-20 19:49:15.259] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46754 to pts 46754
+[2026-09-20 19:49:15.259] [trace]   
+[2026-09-21T02:49:15.260Z] [STDOUT] [2026-09-20 19:49:15.260] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19218 QP=23.00 NAL=2 Slice:P Poc:36  I:1    P:110  SKIP:1929 size=649 bytes
+[2026-09-20 19:49:15.260] [trace]   
+[2026-09-21T02:49:15.262Z] [STDOUT] [2026-09-20 19:49:15.262] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19217 QP=0.00 NAL=2 Slice:P Poc:34  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.262] [trace]   
+[2026-09-21T02:49:15.268Z] [STDOUT] [2026-09-20 19:49:15.267] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19219 QP=25.00 NAL=2 Slice:P Poc:38  I:13   P:278  SKIP:1749 size=2642 bytes
+[2026-09-20 19:49:15.267] [trace]   
+[2026-09-21T02:49:15.268Z] [STDOUT] [2026-09-20 19:49:15.267] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.267] [trace]   
+[2026-09-21T02:49:15.268Z] [STDOUT] [2026-09-20 19:49:15.268] [trace]   side_data_mixer: processing from 17620 to 17620
+[2026-09-21T02:49:15.269Z] [STDOUT] [2026-09-20 19:49:15.268] [trace]   side_data_mixer: processing from 17621 to 17621
+[2026-09-21T02:49:15.269Z] [STDOUT] [2026-09-20 19:49:15.269] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42275233, out pts 42233
+[2026-09-20 19:49:15.269] [trace]   
+[2026-09-20 19:49:15.269] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42232 to pts 42232
+[2026-09-20 19:49:15.269] [trace]   
+[2026-09-21T02:49:15.270Z] [STDOUT] [2026-09-20 19:49:15.270] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.274Z] [STDOUT] [2026-09-20 19:49:15.273] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19218 QP=24.00 NAL=2 Slice:P Poc:36  I:0    P:20   SKIP:2020 size=253 bytes
+[2026-09-20 19:49:15.273] [trace]   
+[2026-09-21T02:49:15.275Z] [STDOUT] [2026-09-20 19:49:15.275] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.275] [trace]   
+[2026-09-21T02:49:15.275Z] [STDOUT] [2026-09-20 19:49:15.275] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.275] [trace]   
+[2026-09-20 19:49:15.275] [trace]   [ffmpeg] [h264 @ 0x7e102c4ca600] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.275] [trace]   
+[2026-09-21T02:49:15.277Z] [STDOUT] [2026-09-20 19:49:15.276] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42276234, out pts 42234
+[2026-09-20 19:49:15.276] [trace]   
+[2026-09-21T02:49:15.277Z] [STDOUT] [2026-09-20 19:49:15.277] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42233 to pts 42233
+[2026-09-20 19:49:15.277] [trace]   
+[2026-09-21T02:49:15.281Z] [STDOUT] [2026-09-20 19:49:15.280] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.282Z] [STDOUT] [2026-09-20 19:49:15.280] [trace]   side_data_mixer: processing from 17630 to 17630
+[2026-09-20 19:49:15.281] [trace]   side_data_mixer: processing from 17631 to 17631
+[2026-09-21T02:49:15.283Z] [STDOUT] [2026-09-20 19:49:15.283] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.284Z] [STDOUT] [2026-09-20 19:49:15.284] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19219 QP=24.00 NAL=2 Slice:P Poc:38  I:0    P:13   SKIP:2027 size=140 bytes
+[2026-09-20 19:49:15.284] [trace]   
+[2026-09-21T02:49:15.286Z] [STDOUT] [2026-09-20 19:49:15.285] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.285] [trace]   
+[2026-09-21T02:49:15.287Z] [STDOUT] [2026-09-20 19:49:15.285] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.285] [trace]   
+[2026-09-20 19:49:15.285] [trace]   [ffmpeg] [h264 @ 0x7e1034624bc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.285] [trace]   
+[2026-09-20 19:49:15.286] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19218 QP=0.00 NAL=2 Slice:P Poc:36  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.286] [trace]   
+[2026-09-21T02:49:15.287Z] [STDOUT] [2026-09-20 19:49:15.287] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19220 QP=24.00 NAL=2 Slice:P Poc:40  I:0    P:114  SKIP:1926 size=663 bytes
+[2026-09-20 19:49:15.287] [trace]   
+[2026-09-21T02:49:15.287Z] [STDOUT] [2026-09-20 19:49:15.287] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46802756, out pts 46756
+[2026-09-20 19:49:15.287] [trace]   
+[2026-09-21T02:49:15.288Z] [STDOUT] [2026-09-20 19:49:15.287] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46755 to pts 46755
+[2026-09-20 19:49:15.287] [trace]   
+[2026-09-21T02:49:15.289Z] [STDOUT] [2026-09-20 19:49:15.288] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.288] [trace]   
+[2026-09-21T02:49:15.291Z] [STDOUT] [2026-09-20 19:49:15.291] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46803757, out pts 46757
+[2026-09-20 19:49:15.291] [trace]   
+[2026-09-21T02:49:15.291Z] [STDOUT] [2026-09-20 19:49:15.291] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46756 to pts 46756
+[2026-09-20 19:49:15.291] [trace]   
+[2026-09-21T02:49:15.294Z] [STDOUT] [2026-09-20 19:49:15.293] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19219 QP=0.00 NAL=2 Slice:P Poc:38  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.293] [trace]   
+[2026-09-21T02:49:15.298Z] [STDOUT] [2026-09-20 19:49:15.297] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19221 QP=25.00 NAL=2 Slice:P Poc:42  I:4    P:274  SKIP:1762 size=2682 bytes
+[2026-09-20 19:49:15.297] [trace]   
+[2026-09-21T02:49:15.301Z] [STDOUT] [2026-09-20 19:49:15.300] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.300] [trace]   
+[2026-09-21T02:49:15.301Z] [STDOUT] [2026-09-20 19:49:15.301] [trace]   side_data_mixer: processing from 17622 to 17622
+[2026-09-21T02:49:15.302Z] [STDOUT] [2026-09-20 19:49:15.301] [trace]   side_data_mixer: processing from 17623 to 17623
+[2026-09-21T02:49:15.303Z] [STDOUT] [2026-09-20 19:49:15.302] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42277235, out pts 42235
+[2026-09-20 19:49:15.302] [trace]   
+[2026-09-21T02:49:15.303Z] [STDOUT] [2026-09-20 19:49:15.302] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42234 to pts 42234
+[2026-09-20 19:49:15.302] [trace]   
+[2026-09-21T02:49:15.304Z] [STDOUT] [2026-09-20 19:49:15.303] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.307Z] [STDOUT] [2026-09-20 19:49:15.306] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19220 QP=24.00 NAL=2 Slice:P Poc:40  I:0    P:3    SKIP:2037 size=182 bytes
+[2026-09-20 19:49:15.306] [trace]   
+[2026-09-21T02:49:15.309Z] [STDOUT] [2026-09-20 19:49:15.309] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.309] [trace]   
+[2026-09-21T02:49:15.309Z] [STDOUT] [2026-09-20 19:49:15.309] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.309] [trace]   
+[2026-09-20 19:49:15.309] [trace]   [ffmpeg] [h264 @ 0x7e102c21c580] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.309] [trace]   
+[2026-09-21T02:49:15.312Z] [STDOUT] [2026-09-20 19:49:15.312] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.312Z] [STDOUT] [2026-09-20 19:49:15.312] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42278236, out pts 42236
+[2026-09-20 19:49:15.312] [trace]   
+[2026-09-20 19:49:15.312] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42235 to pts 42235
+[2026-09-20 19:49:15.312] [trace]   
+[2026-09-21T02:49:15.314Z] [STDOUT] [2026-09-20 19:49:15.314] [trace]   side_data_mixer: processing from 17632 to 17632
+[2026-09-21T02:49:15.314Z] [STDOUT] [2026-09-20 19:49:15.314] [trace]   side_data_mixer: processing from 17633 to 17633
+[2026-09-21T02:49:15.316Z] [STDOUT] [2026-09-20 19:49:15.315] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19221 QP=24.00 NAL=2 Slice:P Poc:42  I:0    P:2    SKIP:2038 size=95 bytes
+[2026-09-20 19:49:15.315] [trace]   
+[2026-09-21T02:49:15.317Z] [STDOUT] [2026-09-20 19:49:15.316] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19220 QP=0.00 NAL=2 Slice:P Poc:40  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.316] [trace]   
+[2026-09-21T02:49:15.320Z] [STDOUT] [2026-09-20 19:49:15.318] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.318] [trace]   
+[2026-09-20 19:49:15.318] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.318] [trace]   
+[2026-09-20 19:49:15.319] [trace]   [ffmpeg] [h264 @ 0x7e10340b9680] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.319] [trace]   
+[2026-09-21T02:49:15.321Z] [STDOUT] [2026-09-20 19:49:15.321] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.324Z] [STDOUT] [2026-09-20 19:49:15.324] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46804758, out pts 46758
+[2026-09-20 19:49:15.324] [trace]   
+[2026-09-21T02:49:15.325Z] [STDOUT] [2026-09-20 19:49:15.324] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46757 to pts 46757
+[2026-09-20 19:49:15.324] [trace]   
+[2026-09-20 19:49:15.324] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19221 QP=0.00 NAL=2 Slice:P Poc:42  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.324] [trace]   
+[2026-09-21T02:49:15.326Z] [STDOUT] [2026-09-20 19:49:15.325] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.325] [trace]   
+[2026-09-21T02:49:15.326Z] [STDOUT] [2026-09-20 19:49:15.325] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19222 QP=24.00 NAL=2 Slice:P Poc:44  I:0    P:135  SKIP:1905 size=750 bytes
+[2026-09-20 19:49:15.325] [trace]   
+[2026-09-21T02:49:15.326Z] [STDOUT] [2026-09-20 19:49:15.326] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46805759, out pts 46759
+[2026-09-20 19:49:15.326] [trace]   
+[2026-09-21T02:49:15.327Z] [STDOUT] [2026-09-20 19:49:15.326] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46758 to pts 46758
+[2026-09-20 19:49:15.326] [trace]   
+[2026-09-21T02:49:15.332Z] [STDOUT] [2026-09-20 19:49:15.331] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19223 QP=25.00 NAL=2 Slice:P Poc:46  I:15   P:291  SKIP:1734 size=2545 bytes
+[2026-09-20 19:49:15.331] [trace]   
+[2026-09-21T02:49:15.335Z] [STDOUT] [2026-09-20 19:49:15.334] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.334] [trace]   
+[2026-09-21T02:49:15.335Z] [STDOUT] [2026-09-20 19:49:15.334] [trace]   side_data_mixer: processing from 17624 to 17624
+[2026-09-21T02:49:15.335Z] [STDOUT] [2026-09-20 19:49:15.335] [trace]   side_data_mixer: processing from 17625 to 17625
+[2026-09-21T02:49:15.335Z] [STDOUT] [2026-09-20 19:49:15.335] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42279237, out pts 42237
+[2026-09-20 19:49:15.335] [trace]   
+[2026-09-21T02:49:15.336Z] [STDOUT] [2026-09-20 19:49:15.335] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42236 to pts 42236
+[2026-09-20 19:49:15.335] [trace]   
+[2026-09-21T02:49:15.337Z] [STDOUT] [2026-09-20 19:49:15.336] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.336] [trace]   
+[2026-09-21T02:49:15.337Z] [STDOUT] [2026-09-20 19:49:15.336] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.336] [trace]   
+[2026-09-21T02:49:15.337Z] [STDOUT] [2026-09-20 19:49:15.337] [trace]   [ffmpeg] [h264 @ 0x7e102c22f940] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.337] [trace]   
+[2026-09-21T02:49:15.337Z] [STDOUT] [2026-09-20 19:49:15.337] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42280238, out pts 42238
+[2026-09-20 19:49:15.337] [trace]   
+[2026-09-21T02:49:15.337Z] [STDOUT] [2026-09-20 19:49:15.337] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42237 to pts 42237
+[2026-09-20 19:49:15.337] [trace]   
+[2026-09-21T02:49:15.339Z] [STDOUT] [2026-09-20 19:49:15.338] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.343Z] [STDOUT] [2026-09-20 19:49:15.343] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19222 QP=23.00 NAL=2 Slice:P Poc:44  I:94   P:922  SKIP:1024 size=6400 bytes
+[2026-09-20 19:49:15.343] [trace]   
+[2026-09-21T02:49:15.345Z] [STDOUT] [2026-09-20 19:49:15.345] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.347Z] [STDOUT] [2026-09-20 19:49:15.346] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.346] [trace]   
+[2026-09-21T02:49:15.347Z] [STDOUT] [2026-09-20 19:49:15.347] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.347] [trace]   
+[2026-09-20 19:49:15.347] [trace]   [ffmpeg] [h264 @ 0x7e10340cbf00] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.347] [trace]   
+[2026-09-21T02:49:15.348Z] [STDOUT] [2026-09-20 19:49:15.347] [trace]   side_data_mixer: processing from 17634 to 17634
+[2026-09-21T02:49:15.348Z] [STDOUT] [2026-09-20 19:49:15.348] [trace]   side_data_mixer: processing from 17635 to 17635
+[2026-09-21T02:49:15.350Z] [STDOUT] [2026-09-20 19:49:15.349] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.351Z] [STDOUT] [2026-09-20 19:49:15.351] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46806760, out pts 46760
+[2026-09-20 19:49:15.351] [trace]   
+[2026-09-21T02:49:15.352Z] [STDOUT] [2026-09-20 19:49:15.351] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46759 to pts 46759
+[2026-09-20 19:49:15.351] [trace]   
+[2026-09-21T02:49:15.352Z] [STDOUT] [2026-09-20 19:49:15.352] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.352] [trace]   
+[2026-09-21T02:49:15.354Z] [STDOUT] [2026-09-20 19:49:15.353] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19223 QP=24.00 NAL=2 Slice:P Poc:46  I:0    P:0    SKIP:2040 size=90 bytes
+[2026-09-20 19:49:15.353] [trace]   
+[2026-09-21T02:49:15.354Z] [STDOUT] [2026-09-20 19:49:15.354] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19222 QP=0.00 NAL=2 Slice:P Poc:44  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.354] [trace]   
+[2026-09-21T02:49:15.355Z] [STDOUT] [2026-09-20 19:49:15.354] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19224 QP=24.00 NAL=2 Slice:P Poc:48  I:1    P:135  SKIP:1904 size=788 bytes
+[2026-09-20 19:49:15.354] [trace]   
+[2026-09-20 19:49:15.354] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46807761, out pts 46761
+[2026-09-20 19:49:15.354] [trace]   
+[2026-09-20 19:49:15.354] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46760 to pts 46760
+[2026-09-20 19:49:15.354] [trace]   
+[2026-09-21T02:49:15.364Z] [STDOUT] [2026-09-20 19:49:15.363] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19223 QP=0.00 NAL=2 Slice:P Poc:46  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.363] [trace]   
+[2026-09-21T02:49:15.365Z] [STDOUT] [2026-09-20 19:49:15.364] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19225 QP=29.00 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=16322 bytes
+[2026-09-20 19:49:15.364] [trace]   
+[2026-09-21T02:49:15.368Z] [STDOUT] [2026-09-20 19:49:15.367] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.367] [trace]   
+[2026-09-21T02:49:15.369Z] [STDOUT] [2026-09-20 19:49:15.368] [trace]   side_data_mixer: processing from 17626 to 17626
+[2026-09-21T02:49:15.369Z] [STDOUT] [2026-09-20 19:49:15.368] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42281239, out pts 42239
+[2026-09-20 19:49:15.368] [trace]   
+[2026-09-20 19:49:15.369] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42238 to pts 42238
+[2026-09-20 19:49:15.369] [trace]   
+[2026-09-21T02:49:15.370Z] [STDOUT] [2026-09-20 19:49:15.369] [trace]   side_data_mixer: processing from 17627 to 17627
+[2026-09-21T02:49:15.371Z] [STDOUT] [2026-09-20 19:49:15.370] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.375Z] [STDOUT] [2026-09-20 19:49:15.374] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19224 QP=24.00 NAL=2 Slice:P Poc:48  I:0    P:1    SKIP:2039 size=173 bytes
+[2026-09-20 19:49:15.374] [trace]   
+[2026-09-21T02:49:15.376Z] [STDOUT] [2026-09-20 19:49:15.375] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.375] [trace]   
+[2026-09-21T02:49:15.376Z] [STDOUT] [2026-09-20 19:49:15.375] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.375] [trace]   
+[2026-09-20 19:49:15.375] [trace]   [ffmpeg] [h264 @ 0x7e102c242f40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.375] [trace]   
+[2026-09-21T02:49:15.377Z] [STDOUT] [2026-09-20 19:49:15.376] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42282240, out pts 42240
+[2026-09-20 19:49:15.376] [trace]   
+[2026-09-21T02:49:15.377Z] [STDOUT] [2026-09-20 19:49:15.376] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42239 to pts 42239
+[2026-09-20 19:49:15.376] [trace]   
+[2026-09-21T02:49:15.381Z] [STDOUT] [2026-09-20 19:49:15.380] [trace]   side_data_mixer: processing from 17636 to 17636
+[2026-09-21T02:49:15.381Z] [STDOUT] [2026-09-20 19:49:15.381] [trace]   side_data_mixer: processing from 17637 to 17637
+[2026-09-21T02:49:15.382Z] [STDOUT] [2026-09-20 19:49:15.381] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.385Z] [STDOUT] [2026-09-20 19:49:15.385] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.385] [trace]   
+[2026-09-21T02:49:15.386Z] [STDOUT] [2026-09-20 19:49:15.385] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.385] [trace]   
+[2026-09-20 19:49:15.385] [trace]   [ffmpeg] [h264 @ 0x7e103462d500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.385] [trace]   
+[2026-09-21T02:49:15.388Z] [STDOUT] [2026-09-20 19:49:15.387] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46808762, out pts 46762
+[2026-09-20 19:49:15.387] [trace]   
+[2026-09-20 19:49:15.387] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46761 to pts 46761
+[2026-09-20 19:49:15.387] [trace]   
+[2026-09-21T02:49:15.389Z] [STDOUT] [2026-09-20 19:49:15.389] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.389] [trace]   
+[2026-09-21T02:49:15.390Z] [STDOUT] [2026-09-20 19:49:15.389] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46809763, out pts 46763
+[2026-09-20 19:49:15.389] [trace]   
+[2026-09-20 19:49:15.389] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46762 to pts 46762
+[2026-09-20 19:49:15.389] [trace]   
+[2026-09-21T02:49:15.390Z] [STDOUT] [2026-09-20 19:49:15.390] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19224 QP=0.00 NAL=2 Slice:P Poc:48  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.390] [trace]   
+[2026-09-21T02:49:15.392Z] [STDOUT] [2026-09-20 19:49:15.390] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.393Z] [STDOUT] [2026-09-20 19:49:15.393] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19225 QP=32.00 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=22501 bytes
+[2026-09-20 19:49:15.393] [trace]   
+[2026-09-21T02:49:15.395Z] [STDOUT] [2026-09-20 19:49:15.394] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19226 QP=28.00 NAL=2 Slice:P Poc:2   I:1    P:36   SKIP:2003 size=304 bytes
+[2026-09-20 19:49:15.394] [trace]   
+[2026-09-21T02:49:15.397Z] [STDOUT] [2026-09-20 19:49:15.397] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19225 QP=0.01 NAL=3 Slice:I Poc:0   I:2040 P:0    SKIP:0    size=1836 bytes
+[2026-09-20 19:49:15.397] [trace]   
+[2026-09-21T02:49:15.401Z] [STDOUT] [2026-09-20 19:49:15.401] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.401] [trace]   
+[2026-09-21T02:49:15.402Z] [STDOUT] [2026-09-20 19:49:15.401] [trace]   side_data_mixer: processing from 17628 to 17628
+[2026-09-21T02:49:15.402Z] [STDOUT] [2026-09-20 19:49:15.402] [trace]   side_data_mixer: processing from 17629 to 17629
+[2026-09-21T02:49:15.403Z] [STDOUT] [2026-09-20 19:49:15.402] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19227 QP=29.00 NAL=2 Slice:P Poc:4   I:12   P:263  SKIP:1765 size=1680 bytes
+[2026-09-20 19:49:15.402] [trace]   
+[2026-09-21T02:49:15.404Z] [STDOUT] [2026-09-20 19:49:15.403] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42283241, out pts 42241
+[2026-09-20 19:49:15.403] [trace]   
+[2026-09-20 19:49:15.403] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42240 to pts 42240
+[2026-09-20 19:49:15.403] [trace]   
+[2026-09-21T02:49:15.405Z] [STDOUT] [2026-09-20 19:49:15.404] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.404] [trace]   
+[2026-09-21T02:49:15.405Z] [STDOUT] [2026-09-20 19:49:15.404] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.404] [trace]   
+[2026-09-21T02:49:15.405Z] [STDOUT] [2026-09-20 19:49:15.405] [trace]   [ffmpeg] [h264 @ 0x7e102ccee200] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.405] [trace]   
+[2026-09-21T02:49:15.406Z] [STDOUT] [2026-09-20 19:49:15.406] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42284242, out pts 42242
+[2026-09-20 19:49:15.406] [trace]   
+[2026-09-21T02:49:15.406Z] [STDOUT] [2026-09-20 19:49:15.406] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42241 to pts 42241
+[2026-09-20 19:49:15.406] [trace]   
+[2026-09-21T02:49:15.407Z] [STDOUT] [2026-09-20 19:49:15.407] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.411Z] [STDOUT] [2026-09-20 19:49:15.411] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19226 QP=28.16 NAL=2 Slice:P Poc:2   I:37   P:446  SKIP:1557 size=3887 bytes
+[2026-09-20 19:49:15.411] [trace]   
+[2026-09-21T02:49:15.412Z] [STDOUT] [2026-09-20 19:49:15.412] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.414Z] [STDOUT] [2026-09-20 19:49:15.414] [trace]   side_data_mixer: processing from 17638 to 17638
+[2026-09-21T02:49:15.415Z] [STDOUT] [2026-09-20 19:49:15.415] [trace]   side_data_mixer: processing from 17639 to 17639
+[2026-09-21T02:49:15.416Z] [STDOUT] [2026-09-20 19:49:15.415] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.415] [trace]   
+[2026-09-20 19:49:15.415] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.415] [trace]   
+[2026-09-20 19:49:15.415] [trace]   [ffmpeg] [h264 @ 0x7e103462ecc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.415] [trace]   
+[2026-09-21T02:49:15.419Z] [STDOUT] [2026-09-20 19:49:15.418] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46810764, out pts 46764
+[2026-09-20 19:49:15.418] [trace]   
+[2026-09-20 19:49:15.418] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46763 to pts 46763
+[2026-09-20 19:49:15.418] [trace]   
+[2026-09-21T02:49:15.419Z] [STDOUT] [2026-09-20 19:49:15.419] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19226 QP=0.00 NAL=2 Slice:P Poc:2   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.419] [trace]   
+[2026-09-21T02:49:15.420Z] [STDOUT] [2026-09-20 19:49:15.419] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.419] [trace]   
+[2026-09-21T02:49:15.420Z] [STDOUT] [2026-09-20 19:49:15.420] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46811765, out pts 46765
+[2026-09-20 19:49:15.420] [trace]   
+[2026-09-21T02:49:15.421Z] [STDOUT] [2026-09-20 19:49:15.420] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46764 to pts 46764
+[2026-09-20 19:49:15.420] [trace]   
+[2026-09-21T02:49:15.421Z] [STDOUT] [2026-09-20 19:49:15.421] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.424Z] [STDOUT] [2026-09-20 19:49:15.423] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19227 QP=33.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=93 bytes
+[2026-09-20 19:49:15.423] [trace]   
+[2026-09-21T02:49:15.427Z] [STDOUT] [2026-09-20 19:49:15.427] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19228 QP=27.00 NAL=2 Slice:P Poc:6   I:7    P:350  SKIP:1683 size=1569 bytes
+[2026-09-20 19:49:15.427] [trace]   
+[2026-09-21T02:49:15.430Z] [STDOUT] [2026-09-20 19:49:15.429] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19227 QP=0.00 NAL=2 Slice:P Poc:4   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.429] [trace]   
+[2026-09-21T02:49:15.434Z] [STDOUT] [2026-09-20 19:49:15.433] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19229 QP=28.00 NAL=2 Slice:P Poc:8   I:0    P:1    SKIP:2039 size=94 bytes
+[2026-09-20 19:49:15.433] [trace]   
+[2026-09-21T02:49:15.434Z] [STDOUT] [2026-09-20 19:49:15.434] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.434] [trace]   
+[2026-09-21T02:49:15.435Z] [STDOUT] [2026-09-20 19:49:15.434] [trace]   side_data_mixer: processing from 17630 to 17630
+[2026-09-21T02:49:15.435Z] [STDOUT] [2026-09-20 19:49:15.435] [trace]   side_data_mixer: processing from 17631 to 17631
+[2026-09-21T02:49:15.437Z] [STDOUT] [2026-09-20 19:49:15.436] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42285243, out pts 42243
+[2026-09-20 19:49:15.436] [trace]   
+[2026-09-21T02:49:15.437Z] [STDOUT] [2026-09-20 19:49:15.436] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42242 to pts 42242
+[2026-09-20 19:49:15.436] [trace]   
+[2026-09-21T02:49:15.439Z] [STDOUT] [2026-09-20 19:49:15.438] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.443Z] [STDOUT] [2026-09-20 19:49:15.442] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19228 QP=31.00 NAL=2 Slice:P Poc:6   I:0    P:7    SKIP:2033 size=193 bytes
+[2026-09-20 19:49:15.442] [trace]   
+[2026-09-21T02:49:15.444Z] [STDOUT] [2026-09-20 19:49:15.443] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.443] [trace]   
+[2026-09-20 19:49:15.443] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.443] [trace]   
+[2026-09-20 19:49:15.443] [trace]   [ffmpeg] [h264 @ 0x7e102cd01bc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.443] [trace]   
+[2026-09-21T02:49:15.444Z] [STDOUT] [2026-09-20 19:49:15.444] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42286244, out pts 42244
+[2026-09-20 19:49:15.444] [trace]   
+[2026-09-21T02:49:15.445Z] [STDOUT] [2026-09-20 19:49:15.444] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42243 to pts 42243
+[2026-09-20 19:49:15.444] [trace]   
+[2026-09-21T02:49:15.448Z] [STDOUT] [2026-09-20 19:49:15.447] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.448Z] [STDOUT] [2026-09-20 19:49:15.448] [trace]   side_data_mixer: processing from 17640 to 17640
+[2026-09-21T02:49:15.448Z] [STDOUT] [2026-09-20 19:49:15.448] [trace]   side_data_mixer: processing from 17641 to 17641
+[2026-09-21T02:49:15.449Z] [STDOUT] [2026-09-20 19:49:15.448] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.452Z] [STDOUT] [2026-09-20 19:49:15.451] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19229 QP=29.00 NAL=2 Slice:P Poc:8   I:2    P:136  SKIP:1902 size=1061 bytes
+[2026-09-20 19:49:15.451] [trace]   
+[2026-09-21T02:49:15.452Z] [STDOUT] [2026-09-20 19:49:15.452] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19228 QP=0.00 NAL=2 Slice:P Poc:6   I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.452] [trace]   
+[2026-09-21T02:49:15.454Z] [STDOUT] [2026-09-20 19:49:15.454] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.454] [trace]   
+[2026-09-21T02:49:15.455Z] [STDOUT] [2026-09-20 19:49:15.454] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19230 QP=24.23 NAL=2 Slice:P Poc:10  I:24   P:652  SKIP:1364 size=4391 bytes
+[2026-09-20 19:49:15.454] [trace]   
+[2026-09-20 19:49:15.454] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.454] [trace]   
+[2026-09-20 19:49:15.454] [trace]   [ffmpeg] [h264 @ 0x7e10342433c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.454] [trace]   
+[2026-09-21T02:49:15.456Z] [STDOUT] [2026-09-20 19:49:15.455] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46812766, out pts 46766
+[2026-09-20 19:49:15.455] [trace]   
+[2026-09-21T02:49:15.456Z] [STDOUT] [2026-09-20 19:49:15.455] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46765 to pts 46765
+[2026-09-20 19:49:15.455] [trace]   
+[2026-09-21T02:49:15.459Z] [STDOUT] [2026-09-20 19:49:15.456] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.456] [trace]   
+[2026-09-21T02:49:15.459Z] [STDOUT] [2026-09-20 19:49:15.459] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46813767, out pts 46767
+[2026-09-20 19:49:15.459] [trace]   
+[2026-09-21T02:49:15.460Z] [STDOUT] [2026-09-20 19:49:15.459] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46766 to pts 46766
+[2026-09-20 19:49:15.459] [trace]   
+[2026-09-21T02:49:15.462Z] [STDOUT] [2026-09-20 19:49:15.461] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19231 QP=30.00 NAL=2 Slice:P Poc:12  I:17   P:237  SKIP:1786 size=1733 bytes
+[2026-09-20 19:49:15.461] [trace]   
+[2026-09-21T02:49:15.462Z] [STDOUT] [2026-09-20 19:49:15.461] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19229 QP=0.00 NAL=2 Slice:P Poc:8   I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.461] [trace]   
+[2026-09-21T02:49:15.468Z] [STDOUT] [2026-09-20 19:49:15.468] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.468] [trace]   
+[2026-09-21T02:49:15.469Z] [STDOUT] [2026-09-20 19:49:15.468] [trace]   side_data_mixer: processing from 17632 to 17632
+[2026-09-21T02:49:15.469Z] [STDOUT] [2026-09-20 19:49:15.469] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42287245, out pts 42245
+[2026-09-20 19:49:15.469] [trace]   
+[2026-09-20 19:49:15.469] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42244 to pts 42244
+[2026-09-20 19:49:15.469] [trace]   
+[2026-09-21T02:49:15.470Z] [STDOUT] [2026-09-20 19:49:15.469] [trace]   side_data_mixer: processing from 17633 to 17633
+[2026-09-21T02:49:15.470Z] [STDOUT] [2026-09-20 19:49:15.469] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.475Z] [STDOUT] [2026-09-20 19:49:15.474] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19230 QP=27.00 NAL=2 Slice:P Poc:10  I:54   P:696  SKIP:1290 size=4962 bytes
+[2026-09-20 19:49:15.474] [trace]   
+[2026-09-21T02:49:15.475Z] [STDOUT] [2026-09-20 19:49:15.475] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.475] [trace]   
+[2026-09-21T02:49:15.476Z] [STDOUT] [2026-09-20 19:49:15.475] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.475] [trace]   
+[2026-09-20 19:49:15.475] [trace]   [ffmpeg] [h264 @ 0x7e102c12af00] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.475] [trace]   
+[2026-09-21T02:49:15.477Z] [STDOUT] [2026-09-20 19:49:15.476] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42288246, out pts 42246
+[2026-09-20 19:49:15.476] [trace]   
+[2026-09-21T02:49:15.477Z] [STDOUT] [2026-09-20 19:49:15.476] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42245 to pts 42245
+[2026-09-20 19:49:15.476] [trace]   
+[2026-09-21T02:49:15.481Z] [STDOUT] [2026-09-20 19:49:15.481] [trace]   side_data_mixer: processing from 17642 to 17642
+[2026-09-21T02:49:15.482Z] [STDOUT] [2026-09-20 19:49:15.481] [trace]   side_data_mixer: processing from 17643 to 17643
+[2026-09-21T02:49:15.483Z] [STDOUT] [2026-09-20 19:49:15.482] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19231 QP=27.00 NAL=2 Slice:P Poc:12  I:0    P:5    SKIP:2035 size=105 bytes
+[2026-09-20 19:49:15.482] [trace]   
+[2026-09-21T02:49:15.483Z] [STDOUT] [2026-09-20 19:49:15.482] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.485Z] [STDOUT] [2026-09-20 19:49:15.485] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.486Z] [STDOUT] [2026-09-20 19:49:15.485] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.485] [trace]   
+[2026-09-20 19:49:15.485] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.485] [trace]   
+[2026-09-20 19:49:15.485] [trace]   [ffmpeg] [h264 @ 0x7e1034635740] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.485] [trace]   
+[2026-09-21T02:49:15.488Z] [STDOUT] [2026-09-20 19:49:15.488] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46814768, out pts 46768
+[2026-09-20 19:49:15.488] [trace]   
+[2026-09-21T02:49:15.489Z] [STDOUT] [2026-09-20 19:49:15.488] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46767 to pts 46767
+[2026-09-20 19:49:15.488] [trace]   
+[2026-09-21T02:49:15.489Z] [STDOUT] [2026-09-20 19:49:15.489] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19230 QP=0.00 NAL=2 Slice:P Poc:10  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.489] [trace]   
+[2026-09-20 19:49:15.489] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.489] [trace]   
+[2026-09-21T02:49:15.491Z] [STDOUT] [2026-09-20 19:49:15.490] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46815769, out pts 46769
+[2026-09-20 19:49:15.490] [trace]   
+[2026-09-21T02:49:15.491Z] [STDOUT] [2026-09-20 19:49:15.490] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46768 to pts 46768
+[2026-09-20 19:49:15.490] [trace]   
+[2026-09-21T02:49:15.491Z] [STDOUT] [2026-09-20 19:49:15.491] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19232 QP=30.00 NAL=2 Slice:P Poc:14  I:0    P:13   SKIP:2027 size=223 bytes
+[2026-09-20 19:49:15.491] [trace]   
+[2026-09-21T02:49:15.497Z] [STDOUT] [2026-09-20 19:49:15.497] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19231 QP=0.00 NAL=2 Slice:P Poc:12  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.497] [trace]   
+[2026-09-21T02:49:15.499Z] [STDOUT] [2026-09-20 19:49:15.499] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19233 QP=29.00 NAL=2 Slice:P Poc:16  I:18   P:299  SKIP:1723 size=2179 bytes
+[2026-09-20 19:49:15.499] [trace]   
+[2026-09-21T02:49:15.501Z] [STDOUT] [2026-09-20 19:49:15.501] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.501] [trace]   
+[2026-09-21T02:49:15.502Z] [STDOUT] [2026-09-20 19:49:15.501] [trace]   side_data_mixer: processing from 17634 to 17634
+[2026-09-21T02:49:15.502Z] [STDOUT] [2026-09-20 19:49:15.502] [trace]   side_data_mixer: processing from 17635 to 17635
+[2026-09-21T02:49:15.503Z] [STDOUT] [2026-09-20 19:49:15.503] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42289247, out pts 42247
+[2026-09-20 19:49:15.503] [trace]   
+[2026-09-21T02:49:15.503Z] [STDOUT] [2026-09-20 19:49:15.503] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42246 to pts 42246
+[2026-09-20 19:49:15.503] [trace]   
+[2026-09-21T02:49:15.505Z] [STDOUT] [2026-09-20 19:49:15.504] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.508Z] [STDOUT] [2026-09-20 19:49:15.508] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19232 QP=25.02 NAL=2 Slice:P Poc:14  I:62   P:699  SKIP:1279 size=4917 bytes
+[2026-09-20 19:49:15.508] [trace]   
+[2026-09-21T02:49:15.509Z] [STDOUT] [2026-09-20 19:49:15.509] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.509] [trace]   
+[2026-09-21T02:49:15.509Z] [STDOUT] [2026-09-20 19:49:15.509] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.509] [trace]   
+[2026-09-21T02:49:15.509Z] [STDOUT] [2026-09-20 19:49:15.509] [trace]   [ffmpeg] [h264 @ 0x7e102c12c240] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.509] [trace]   
+[2026-09-21T02:49:15.510Z] [STDOUT] [2026-09-20 19:49:15.510] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42290248, out pts 42248
+[2026-09-20 19:49:15.510] [trace]   
+[2026-09-20 19:49:15.510] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42247 to pts 42247
+[2026-09-20 19:49:15.510] [trace]   
+[2026-09-21T02:49:15.514Z] [STDOUT] [2026-09-20 19:49:15.513] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.514Z] [STDOUT] [2026-09-20 19:49:15.513] [trace]   side_data_mixer: processing from 17644 to 17644
+[2026-09-20 19:49:15.513] [trace]   side_data_mixer: processing from 17645 to 17645
+[2026-09-21T02:49:15.515Z] [STDOUT] [2026-09-20 19:49:15.515] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19233 QP=25.00 NAL=2 Slice:P Poc:16  I:10   P:328  SKIP:1702 size=3823 bytes
+[2026-09-20 19:49:15.515] [trace]   
+[2026-09-21T02:49:15.519Z] [STDOUT] [2026-09-20 19:49:15.518] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.518] [trace]   
+[2026-09-20 19:49:15.518] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.518] [trace]   
+[2026-09-21T02:49:15.519Z] [STDOUT] [2026-09-20 19:49:15.519] [trace]   [ffmpeg] [h264 @ 0x7e1034266180] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.519] [trace]   
+[2026-09-21T02:49:15.520Z] [STDOUT] [2026-09-20 19:49:15.519] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46816770, out pts 46770
+[2026-09-20 19:49:15.519] [trace]   
+[2026-09-21T02:49:15.520Z] [STDOUT] [2026-09-20 19:49:15.519] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46769 to pts 46769
+[2026-09-20 19:49:15.519] [trace]   
+[2026-09-21T02:49:15.521Z] [STDOUT] [2026-09-20 19:49:15.521] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.521] [trace]   
+[2026-09-21T02:49:15.521Z] [STDOUT] [2026-09-20 19:49:15.521] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.522Z] [STDOUT] [2026-09-20 19:49:15.521] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19232 QP=0.00 NAL=2 Slice:P Poc:14  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.521] [trace]   
+[2026-09-21T02:49:15.522Z] [STDOUT] [2026-09-20 19:49:15.522] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46817771, out pts 46771
+[2026-09-20 19:49:15.522] [trace]   
+[2026-09-21T02:49:15.522Z] [STDOUT] [2026-09-20 19:49:15.522] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46770 to pts 46770
+[2026-09-20 19:49:15.522] [trace]   
+[2026-09-21T02:49:15.526Z] [STDOUT] [2026-09-20 19:49:15.525] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19234 QP=28.00 NAL=2 Slice:P Poc:18  I:1    P:158  SKIP:1881 size=802 bytes
+[2026-09-20 19:49:15.525] [trace]   
+[2026-09-21T02:49:15.530Z] [STDOUT] [2026-09-20 19:49:15.529] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19233 QP=0.00 NAL=2 Slice:P Poc:16  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.529] [trace]   
+[2026-09-21T02:49:15.532Z] [STDOUT] [2026-09-20 19:49:15.532] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19235 QP=28.00 NAL=2 Slice:P Poc:20  I:7    P:325  SKIP:1708 size=2146 bytes
+[2026-09-20 19:49:15.532] [trace]   
+[2026-09-21T02:49:15.534Z] [STDOUT] [2026-09-20 19:49:15.534] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.534] [trace]   
+[2026-09-21T02:49:15.535Z] [STDOUT] [2026-09-20 19:49:15.534] [trace]   side_data_mixer: processing from 17636 to 17636
+[2026-09-21T02:49:15.535Z] [STDOUT] [2026-09-20 19:49:15.535] [trace]   side_data_mixer: processing from 17637 to 17637
+[2026-09-21T02:49:15.535Z] [STDOUT] [2026-09-20 19:49:15.535] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42291249, out pts 42249
+[2026-09-20 19:49:15.535] [trace]   
+[2026-09-21T02:49:15.536Z] [STDOUT] [2026-09-20 19:49:15.535] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42248 to pts 42248
+[2026-09-20 19:49:15.535] [trace]   
+[2026-09-20 19:49:15.535] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.541Z] [STDOUT] [2026-09-20 19:49:15.540] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19234 QP=26.00 NAL=2 Slice:P Poc:18  I:0    P:0    SKIP:2040 size=165 bytes
+[2026-09-20 19:49:15.540] [trace]   
+[2026-09-21T02:49:15.543Z] [STDOUT] [2026-09-20 19:49:15.542] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.542] [trace]   
+[2026-09-20 19:49:15.542] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.542] [trace]   
+[2026-09-21T02:49:15.543Z] [STDOUT] [2026-09-20 19:49:15.542] [trace]   [ffmpeg] [h264 @ 0x7e102c271c40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.542] [trace]   
+[2026-09-21T02:49:15.544Z] [STDOUT] [2026-09-20 19:49:15.543] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42292250, out pts 42250
+[2026-09-20 19:49:15.543] [trace]   
+[2026-09-21T02:49:15.544Z] [STDOUT] [2026-09-20 19:49:15.543] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42249 to pts 42249
+[2026-09-20 19:49:15.543] [trace]   
+[2026-09-21T02:49:15.545Z] [STDOUT] [2026-09-20 19:49:15.545] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.548Z] [STDOUT] [2026-09-20 19:49:15.547] [trace]   side_data_mixer: processing from 17646 to 17646
+[2026-09-21T02:49:15.548Z] [STDOUT] [2026-09-20 19:49:15.548] [trace]   side_data_mixer: processing from 17647 to 17647
+[2026-09-21T02:49:15.548Z] [STDOUT] [2026-09-20 19:49:15.548] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.550Z] [STDOUT] [2026-09-20 19:49:15.550] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19235 QP=25.00 NAL=2 Slice:P Poc:20  I:0    P:8    SKIP:2032 size=126 bytes
+[2026-09-20 19:49:15.550] [trace]   
+[2026-09-21T02:49:15.551Z] [STDOUT] [2026-09-20 19:49:15.551] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19234 QP=0.00 NAL=2 Slice:P Poc:18  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.551] [trace]   
+[2026-09-21T02:49:15.552Z] [STDOUT] [2026-09-20 19:49:15.551] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19236 QP=27.00 NAL=2 Slice:P Poc:22  I:1    P:178  SKIP:1861 size=874 bytes
+[2026-09-20 19:49:15.551] [trace]   
+[2026-09-21T02:49:15.552Z] [STDOUT] [2026-09-20 19:49:15.552] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.552] [trace]   
+[2026-09-21T02:49:15.552Z] [STDOUT] [2026-09-20 19:49:15.552] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.552] [trace]   
+[2026-09-21T02:49:15.552Z] [STDOUT] [2026-09-20 19:49:15.552] [trace]   [ffmpeg] [h264 @ 0x7e1034352cc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.552] [trace]   
+[2026-09-21T02:49:15.554Z] [STDOUT] [2026-09-20 19:49:15.553] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46818772, out pts 46772
+[2026-09-20 19:49:15.553] [trace]   
+[2026-09-20 19:49:15.553] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46771 to pts 46771
+[2026-09-20 19:49:15.553] [trace]   
+[2026-09-21T02:49:15.554Z] [STDOUT] [2026-09-20 19:49:15.554] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.554] [trace]   
+[2026-09-21T02:49:15.556Z] [STDOUT] [2026-09-20 19:49:15.556] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46819773, out pts 46773
+[2026-09-20 19:49:15.556] [trace]   
+[2026-09-21T02:49:15.557Z] [STDOUT] [2026-09-20 19:49:15.556] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46772 to pts 46772
+[2026-09-20 19:49:15.556] [trace]   
+[2026-09-21T02:49:15.558Z] [STDOUT] [2026-09-20 19:49:15.558] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19235 QP=0.00 NAL=2 Slice:P Poc:20  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.558] [trace]   
+[2026-09-21T02:49:15.560Z] [STDOUT] [2026-09-20 19:49:15.559] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19237 QP=28.00 NAL=2 Slice:P Poc:24  I:12   P:314  SKIP:1714 size=2098 bytes
+[2026-09-20 19:49:15.559] [trace]   
+[2026-09-21T02:49:15.568Z] [STDOUT] [2026-09-20 19:49:15.567] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.567] [trace]   
+[2026-09-21T02:49:15.568Z] [STDOUT] [2026-09-20 19:49:15.568] [trace]   side_data_mixer: processing from 17638 to 17638
+[2026-09-21T02:49:15.569Z] [STDOUT] [2026-09-20 19:49:15.568] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42293251, out pts 42251
+[2026-09-20 19:49:15.568] [trace]   
+[2026-09-21T02:49:15.569Z] [STDOUT] [2026-09-20 19:49:15.569] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42250 to pts 42250
+[2026-09-20 19:49:15.569] [trace]   
+[2026-09-20 19:49:15.569] [trace]   side_data_mixer: processing from 17639 to 17639
+[2026-09-21T02:49:15.569Z] [STDOUT] [2026-09-20 19:49:15.569] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.574Z] [STDOUT] [2026-09-20 19:49:15.573] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19236 QP=24.00 NAL=2 Slice:P Poc:22  I:12   P:518  SKIP:1510 size=2441 bytes
+[2026-09-20 19:49:15.573] [trace]   
+[2026-09-21T02:49:15.575Z] [STDOUT] [2026-09-20 19:49:15.575] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.575] [trace]   
+[2026-09-21T02:49:15.575Z] [STDOUT] [2026-09-20 19:49:15.575] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.575] [trace]   
+[2026-09-20 19:49:15.575] [trace]   [ffmpeg] [h264 @ 0x7e102c20e500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.575] [trace]   
+[2026-09-21T02:49:15.576Z] [STDOUT] [2026-09-20 19:49:15.576] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42294252, out pts 42252
+[2026-09-20 19:49:15.576] [trace]   
+[2026-09-21T02:49:15.576Z] [STDOUT] [2026-09-20 19:49:15.576] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42251 to pts 42251
+[2026-09-20 19:49:15.576] [trace]   
+[2026-09-21T02:49:15.580Z] [STDOUT] [2026-09-20 19:49:15.579] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.582Z] [STDOUT] [2026-09-20 19:49:15.580] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.580] [trace]   
+[2026-09-21T02:49:15.582Z] [STDOUT] [2026-09-20 19:49:15.580] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.580] [trace]   
+[2026-09-20 19:49:15.581] [trace]   [ffmpeg] [h264 @ 0x7e1034333280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.581] [trace]   
+[2026-09-21T02:49:15.582Z] [STDOUT] [2026-09-20 19:49:15.581] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19237 QP=24.00 NAL=2 Slice:P Poc:24  I:0    P:13   SKIP:2027 size=137 bytes
+[2026-09-20 19:49:15.581] [trace]   
+[2026-09-21T02:49:15.583Z] [STDOUT] [2026-09-20 19:49:15.582] [trace]   side_data_mixer: processing from 17648 to 17648
+[2026-09-21T02:49:15.583Z] [STDOUT] [2026-09-20 19:49:15.582] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46820774, out pts 46774
+[2026-09-20 19:49:15.582] [trace]   
+[2026-09-20 19:49:15.582] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46773 to pts 46773
+[2026-09-20 19:49:15.582] [trace]   
+[2026-09-20 19:49:15.582] [trace]   side_data_mixer: processing from 17649 to 17649
+[2026-09-21T02:49:15.584Z] [STDOUT] [2026-09-20 19:49:15.583] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.583] [trace]   
+[2026-09-21T02:49:15.584Z] [STDOUT] [2026-09-20 19:49:15.584] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.587Z] [STDOUT] [2026-09-20 19:49:15.587] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46821775, out pts 46775
+[2026-09-20 19:49:15.587] [trace]   
+[2026-09-21T02:49:15.587Z] [STDOUT] [2026-09-20 19:49:15.587] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46774 to pts 46774
+[2026-09-20 19:49:15.587] [trace]   
+[2026-09-20 19:49:15.587] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19236 QP=0.00 NAL=2 Slice:P Poc:22  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.587] [trace]   
+[2026-09-21T02:49:15.590Z] [STDOUT] [2026-09-20 19:49:15.589] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19238 QP=27.00 NAL=2 Slice:P Poc:26  I:0    P:152  SKIP:1888 size=759 bytes
+[2026-09-20 19:49:15.589] [trace]   
+[2026-09-21T02:49:15.595Z] [STDOUT] [2026-09-20 19:49:15.595] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19237 QP=0.00 NAL=2 Slice:P Poc:24  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.595] [trace]   
+[2026-09-21T02:49:15.597Z] [STDOUT] [2026-09-20 19:49:15.597] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19239 QP=25.00 NAL=2 Slice:P Poc:28  I:10   P:572  SKIP:1458 size=3430 bytes
+[2026-09-20 19:49:15.597] [trace]   
+[2026-09-21T02:49:15.602Z] [STDOUT] [2026-09-20 19:49:15.601] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.601] [trace]   
+[2026-09-21T02:49:15.602Z] [STDOUT] [2026-09-20 19:49:15.602] [trace]   side_data_mixer: processing from 17640 to 17640
+[2026-09-21T02:49:15.602Z] [STDOUT] [2026-09-20 19:49:15.602] [trace]   side_data_mixer: processing from 17641 to 17641
+[2026-09-21T02:49:15.603Z] [STDOUT] [2026-09-20 19:49:15.603] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42295253, out pts 42253
+[2026-09-20 19:49:15.603] [trace]   
+[2026-09-21T02:49:15.603Z] [STDOUT] [2026-09-20 19:49:15.603] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42252 to pts 42252
+[2026-09-20 19:49:15.603] [trace]   
+[2026-09-21T02:49:15.605Z] [STDOUT] [2026-09-20 19:49:15.605] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.609Z] [STDOUT] [2026-09-20 19:49:15.609] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.609] [trace]   
+[2026-09-20 19:49:15.609] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.609] [trace]   
+[2026-09-21T02:49:15.610Z] [STDOUT] [2026-09-20 19:49:15.609] [trace]   [ffmpeg] [h264 @ 0x7e102c132500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.609] [trace]   
+[2026-09-20 19:49:15.610] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19238 QP=24.00 NAL=2 Slice:P Poc:26  I:0    P:0    SKIP:2040 size=168 bytes
+[2026-09-20 19:49:15.610] [trace]   
+[2026-09-21T02:49:15.610Z] [STDOUT] [2026-09-20 19:49:15.610] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42296254, out pts 42254
+[2026-09-20 19:49:15.610] [trace]   
+[2026-09-21T02:49:15.610Z] [STDOUT] [2026-09-20 19:49:15.610] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42253 to pts 42253
+[2026-09-20 19:49:15.610] [trace]   
+[2026-09-21T02:49:15.616Z] [STDOUT] [2026-09-20 19:49:15.614] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:15.615] [trace]   side_data_mixer: processing from 17650 to 17650
+[2026-09-21T02:49:15.616Z] [STDOUT] [2026-09-20 19:49:15.615] [trace]   side_data_mixer: processing from 17651 to 17651
+[2026-09-21T02:49:15.620Z] [STDOUT] [2026-09-20 19:49:15.619] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.619] [trace]   
+[2026-09-21T02:49:15.620Z] [STDOUT] [2026-09-20 19:49:15.619] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19238 QP=0.00 NAL=2 Slice:P Poc:26  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.619] [trace]   
+[2026-09-20 19:49:15.619] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.619] [trace]   
+[2026-09-20 19:49:15.620] [trace]   [ffmpeg] [h264 @ 0x7e103435d500] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.620] [trace]   
+[2026-09-21T02:49:15.621Z] [STDOUT] [2026-09-20 19:49:15.621] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.621Z] [STDOUT] [2026-09-20 19:49:15.621] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46822776, out pts 46776
+[2026-09-20 19:49:15.621] [trace]   
+[2026-09-20 19:49:15.621] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46775 to pts 46775
+[2026-09-20 19:49:15.621] [trace]   
+[2026-09-21T02:49:15.623Z] [STDOUT] [2026-09-20 19:49:15.622] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.622] [trace]   
+[2026-09-21T02:49:15.626Z] [STDOUT] [2026-09-20 19:49:15.625] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19239 QP=24.00 NAL=2 Slice:P Poc:28  I:0    P:0    SKIP:2040 size=90 bytes
+[2026-09-20 19:49:15.625] [trace]   
+[2026-09-21T02:49:15.626Z] [STDOUT] [2026-09-20 19:49:15.625] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46823777, out pts 46777
+[2026-09-20 19:49:15.625] [trace]   
+[2026-09-20 19:49:15.626] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46776 to pts 46776
+[2026-09-20 19:49:15.626] [trace]   
+[2026-09-21T02:49:15.627Z] [STDOUT] [2026-09-20 19:49:15.626] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19240 QP=25.00 NAL=2 Slice:P Poc:30  I:1    P:110  SKIP:1929 size=647 bytes
+[2026-09-20 19:49:15.626] [trace]   
+[2026-09-21T02:49:15.629Z] [STDOUT] [2026-09-20 19:49:15.629] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19239 QP=0.00 NAL=2 Slice:P Poc:28  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.629] [trace]   
+[2026-09-21T02:49:15.634Z] [STDOUT] [2026-09-20 19:49:15.633] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19241 QP=27.00 NAL=2 Slice:P Poc:32  I:12   P:268  SKIP:1760 size=2459 bytes
+[2026-09-20 19:49:15.633] [trace]   
+[2026-09-21T02:49:15.635Z] [STDOUT] [2026-09-20 19:49:15.634] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.634] [trace]   
+[2026-09-21T02:49:15.635Z] [STDOUT] [2026-09-20 19:49:15.635] [trace]   side_data_mixer: processing from 17642 to 17642
+[2026-09-21T02:49:15.635Z] [STDOUT] [2026-09-20 19:49:15.635] [trace]   side_data_mixer: processing from 17643 to 17643
+[2026-09-21T02:49:15.636Z] [STDOUT] [2026-09-20 19:49:15.636] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42297255, out pts 42255
+[2026-09-20 19:49:15.636] [trace]   
+[2026-09-21T02:49:15.636Z] [STDOUT] [2026-09-20 19:49:15.636] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42254 to pts 42254
+[2026-09-20 19:49:15.636] [trace]   
+[2026-09-21T02:49:15.637Z] [STDOUT] [2026-09-20 19:49:15.637] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.637] [trace]   
+[2026-09-21T02:49:15.638Z] [STDOUT] [2026-09-20 19:49:15.637] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.637] [trace]   
+[2026-09-21T02:49:15.638Z] [STDOUT] [2026-09-20 19:49:15.638] [trace]   [ffmpeg] [h264 @ 0x7e102c211d40] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.638] [trace]   
+[2026-09-21T02:49:15.638Z] [STDOUT] [2026-09-20 19:49:15.638] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.639Z] [STDOUT] [2026-09-20 19:49:15.639] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42298256, out pts 42256
+[2026-09-20 19:49:15.639] [trace]   
+[2026-09-21T02:49:15.639Z] [STDOUT] [2026-09-20 19:49:15.639] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42255 to pts 42255
+[2026-09-20 19:49:15.639] [trace]   
+[2026-09-21T02:49:15.642Z] [STDOUT] [2026-09-20 19:49:15.642] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19240 QP=23.01 NAL=2 Slice:P Poc:30  I:86   P:689  SKIP:1265 size=4663 bytes
+[2026-09-20 19:49:15.642] [trace]   
+[2026-09-21T02:49:15.645Z] [STDOUT] [2026-09-20 19:49:15.645] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.648Z] [STDOUT] [2026-09-20 19:49:15.647] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.647] [trace]   
+[2026-09-21T02:49:15.649Z] [STDOUT] [2026-09-20 19:49:15.647] [trace]   side_data_mixer: processing from 17652 to 17652
+[2026-09-20 19:49:15.648] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.648] [trace]   
+[2026-09-20 19:49:15.648] [trace]   [ffmpeg] [h264 @ 0x7e1034340fc0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.648] [trace]   
+[2026-09-20 19:49:15.648] [trace]   side_data_mixer: processing from 17653 to 17653
+[2026-09-21T02:49:15.651Z] [STDOUT] [2026-09-20 19:49:15.650] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46824778, out pts 46778
+[2026-09-20 19:49:15.650] [trace]   
+[2026-09-20 19:49:15.650] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46777 to pts 46777
+[2026-09-20 19:49:15.650] [trace]   
+[2026-09-20 19:49:15.650] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.651Z] [STDOUT] [2026-09-20 19:49:15.650] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19240 QP=0.00 NAL=2 Slice:P Poc:30  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.650] [trace]   
+[2026-09-21T02:49:15.653Z] [STDOUT] [2026-09-20 19:49:15.652] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.652] [trace]   
+[2026-09-21T02:49:15.654Z] [STDOUT] [2026-09-20 19:49:15.654] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46825779, out pts 46779
+[2026-09-20 19:49:15.654] [trace]   
+[2026-09-21T02:49:15.656Z] [STDOUT] [2026-09-20 19:49:15.654] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19241 QP=24.00 NAL=2 Slice:P Poc:32  I:1    P:1    SKIP:2038 size=101 bytes
+[2026-09-20 19:49:15.654] [trace]   
+[2026-09-20 19:49:15.654] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46778 to pts 46778
+[2026-09-20 19:49:15.654] [trace]   
+[2026-09-21T02:49:15.656Z] [STDOUT] [2026-09-20 19:49:15.654] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19242 QP=26.00 NAL=2 Slice:P Poc:34  I:2    P:146  SKIP:1892 size=818 bytes
+[2026-09-20 19:49:15.654] [trace]   
+[2026-09-21T02:49:15.659Z] [STDOUT] [2026-09-20 19:49:15.659] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19241 QP=0.00 NAL=2 Slice:P Poc:32  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.659] [trace]   
+[2026-09-21T02:49:15.662Z] [STDOUT] [2026-09-20 19:49:15.662] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19243 QP=28.00 NAL=2 Slice:P Poc:36  I:13   P:311  SKIP:1716 size=2350 bytes
+[2026-09-20 19:49:15.662] [trace]   
+[2026-09-21T02:49:15.668Z] [STDOUT] [2026-09-20 19:49:15.667] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.667] [trace]   
+[2026-09-21T02:49:15.668Z] [STDOUT] [2026-09-20 19:49:15.668] [trace]   side_data_mixer: processing from 17644 to 17644
+[2026-09-21T02:49:15.668Z] [STDOUT] [2026-09-20 19:49:15.668] [trace]   side_data_mixer: processing from 17645 to 17645
+[2026-09-21T02:49:15.669Z] [STDOUT] [2026-09-20 19:49:15.669] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42299257, out pts 42257
+[2026-09-20 19:49:15.669] [trace]   
+[2026-09-21T02:49:15.669Z] [STDOUT] [2026-09-20 19:49:15.669] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42256 to pts 42256
+[2026-09-20 19:49:15.669] [trace]   
+[2026-09-21T02:49:15.670Z] [STDOUT] [2026-09-20 19:49:15.670] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.673Z] [STDOUT] [2026-09-20 19:49:15.673] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19242 QP=25.00 NAL=2 Slice:P Poc:34  I:0    P:21   SKIP:2019 size=273 bytes
+[2026-09-20 19:49:15.673] [trace]   
+[2026-09-21T02:49:15.676Z] [STDOUT] [2026-09-20 19:49:15.675] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.675] [trace]   
+[2026-09-21T02:49:15.676Z] [STDOUT] [2026-09-20 19:49:15.675] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.675] [trace]   
+[2026-09-21T02:49:15.676Z] [STDOUT] [2026-09-20 19:49:15.675] [trace]   [ffmpeg] [h264 @ 0x7e102c13a4c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.675] [trace]   
+[2026-09-21T02:49:15.677Z] [STDOUT] [2026-09-20 19:49:15.677] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42300258, out pts 42258
+[2026-09-20 19:49:15.677] [trace]   
+[2026-09-21T02:49:15.677Z] [STDOUT] [2026-09-20 19:49:15.677] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42257 to pts 42257
+[2026-09-20 19:49:15.677] [trace]   
+[2026-09-21T02:49:15.681Z] [STDOUT] [2026-09-20 19:49:15.681] [trace]   side_data_mixer: processing from 17654 to 17654
+[2026-09-21T02:49:15.682Z] [STDOUT] [2026-09-20 19:49:15.681] [trace]   side_data_mixer: processing from 17655 to 17655
+[2026-09-20 19:49:15.681] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.683Z] [STDOUT] [2026-09-20 19:49:15.682] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.684Z] [STDOUT] [2026-09-20 19:49:15.684] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19243 QP=26.00 NAL=2 Slice:P Poc:36  I:0    P:3    SKIP:2037 size=111 bytes
+[2026-09-20 19:49:15.684] [trace]   
+[2026-09-21T02:49:15.686Z] [STDOUT] [2026-09-20 19:49:15.685] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.685] [trace]   
+[2026-09-21T02:49:15.686Z] [STDOUT] [2026-09-20 19:49:15.685] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.685] [trace]   
+[2026-09-20 19:49:15.685] [trace]   [ffmpeg] [h264 @ 0x7e103409fe80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.685] [trace]   
+[2026-09-21T02:49:15.686Z] [STDOUT] [2026-09-20 19:49:15.685] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19242 QP=0.00 NAL=2 Slice:P Poc:34  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.685] [trace]   
+[2026-09-21T02:49:15.688Z] [STDOUT] [2026-09-20 19:49:15.688] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19244 QP=26.00 NAL=2 Slice:P Poc:38  I:2    P:226  SKIP:1812 size=1308 bytes
+[2026-09-20 19:49:15.688] [trace]   
+[2026-09-21T02:49:15.690Z] [STDOUT] [2026-09-20 19:49:15.690] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46826780, out pts 46780
+[2026-09-20 19:49:15.690] [trace]   
+[2026-09-21T02:49:15.691Z] [STDOUT] [2026-09-20 19:49:15.690] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46779 to pts 46779
+[2026-09-20 19:49:15.690] [trace]   
+[2026-09-21T02:49:15.692Z] [STDOUT] [2026-09-20 19:49:15.691] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.691] [trace]   
+[2026-09-21T02:49:15.694Z] [STDOUT] [2026-09-20 19:49:15.694] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19243 QP=0.00 NAL=2 Slice:P Poc:36  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.694] [trace]   
+[2026-09-21T02:49:15.694Z] [STDOUT] [2026-09-20 19:49:15.694] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46827781, out pts 46781
+[2026-09-20 19:49:15.694] [trace]   
+[2026-09-21T02:49:15.695Z] [STDOUT] [2026-09-20 19:49:15.694] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46780 to pts 46780
+[2026-09-20 19:49:15.694] [trace]   
+[2026-09-21T02:49:15.696Z] [STDOUT] [2026-09-20 19:49:15.696] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19245 QP=28.00 NAL=2 Slice:P Poc:40  I:18   P:337  SKIP:1685 size=2618 bytes
+[2026-09-20 19:49:15.696] [trace]   
+[2026-09-21T02:49:15.702Z] [STDOUT] [2026-09-20 19:49:15.701] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.701] [trace]   
+[2026-09-21T02:49:15.702Z] [STDOUT] [2026-09-20 19:49:15.702] [trace]   side_data_mixer: processing from 17646 to 17646
+[2026-09-21T02:49:15.702Z] [STDOUT] [2026-09-20 19:49:15.702] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42301259, out pts 42259
+[2026-09-20 19:49:15.702] [trace]   
+[2026-09-21T02:49:15.703Z] [STDOUT] [2026-09-20 19:49:15.702] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42258 to pts 42258
+[2026-09-20 19:49:15.702] [trace]   
+[2026-09-21T02:49:15.703Z] [STDOUT] [2026-09-20 19:49:15.702] [trace]   side_data_mixer: processing from 17647 to 17647
+[2026-09-21T02:49:15.703Z] [STDOUT] [2026-09-20 19:49:15.703] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.707Z] [STDOUT] [2026-09-20 19:49:15.707] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19244 QP=27.00 NAL=2 Slice:P Poc:38  I:0    P:4    SKIP:2036 size=191 bytes
+[2026-09-20 19:49:15.707] [trace]   
+[2026-09-21T02:49:15.713Z] [STDOUT] [2026-09-20 19:49:15.712] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.712] [trace]   
+[2026-09-20 19:49:15.712] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.712] [trace]   
+[2026-09-20 19:49:15.712] [trace]   [ffmpeg] [h264 @ 0x7e102c6694c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.712] [trace]   
+[2026-09-21T02:49:15.714Z] [STDOUT] [2026-09-20 19:49:15.714] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19245 QP=27.00 NAL=2 Slice:P Poc:40  I:0    P:1    SKIP:2039 size=100 bytes
+[2026-09-20 19:49:15.714] [trace]   
+[2026-09-21T02:49:15.716Z] [STDOUT] [2026-09-20 19:49:15.714] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-20 19:49:15.715] [trace]   side_data_mixer: processing from 17656 to 17656
+[2026-09-21T02:49:15.716Z] [STDOUT] [2026-09-20 19:49:15.715] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42302260, out pts 42260
+[2026-09-20 19:49:15.715] [trace]   
+[2026-09-20 19:49:15.716] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42259 to pts 42259
+[2026-09-20 19:49:15.716] [trace]   
+[2026-09-20 19:49:15.716] [trace]   side_data_mixer: processing from 17657 to 17657
+[2026-09-21T02:49:15.719Z] [STDOUT] [2026-09-20 19:49:15.718] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19244 QP=0.00 NAL=2 Slice:P Poc:38  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.718] [trace]   
+[2026-09-21T02:49:15.720Z] [STDOUT] [2026-09-20 19:49:15.720] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.723Z] [STDOUT] [2026-09-20 19:49:15.723] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.723] [trace]   
+[2026-09-21T02:49:15.723Z] [STDOUT] [2026-09-20 19:49:15.723] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.723] [trace]   
+[2026-09-21T02:49:15.723Z] [STDOUT] [2026-09-20 19:49:15.723] [trace]   [ffmpeg] [h264 @ 0x7e1034680440] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.723] [trace]   
+[2026-09-21T02:49:15.724Z] [STDOUT] [2026-09-20 19:49:15.724] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46828782, out pts 46782
+[2026-09-20 19:49:15.724] [trace]   
+[2026-09-21T02:49:15.724Z] [STDOUT] [2026-09-20 19:49:15.724] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46781 to pts 46781
+[2026-09-20 19:49:15.724] [trace]   
+[2026-09-21T02:49:15.726Z] [STDOUT] [2026-09-20 19:49:15.726] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.726] [trace]   
+[2026-09-21T02:49:15.727Z] [STDOUT] [2026-09-20 19:49:15.726] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46829783, out pts 46783
+[2026-09-20 19:49:15.726] [trace]   
+[2026-09-21T02:49:15.727Z] [STDOUT] [2026-09-20 19:49:15.727] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46782 to pts 46782
+[2026-09-20 19:49:15.727] [trace]   
+[2026-09-21T02:49:15.729Z] [STDOUT] [2026-09-20 19:49:15.728] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19246 QP=27.00 NAL=2 Slice:P Poc:42  I:3    P:146  SKIP:1891 size=713 bytes
+[2026-09-20 19:49:15.728] [trace]   
+[2026-09-21T02:49:15.730Z] [STDOUT] [2026-09-20 19:49:15.730] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19245 QP=0.00 NAL=2 Slice:P Poc:40  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.730] [trace]   
+[2026-09-21T02:49:15.735Z] [STDOUT] [2026-09-20 19:49:15.734] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.734] [trace]   
+[2026-09-20 19:49:15.734] [trace]   side_data_mixer: processing from 17648 to 17648
+[2026-09-21T02:49:15.735Z] [STDOUT] [2026-09-20 19:49:15.735] [trace]   side_data_mixer: processing from 17649 to 17649
+[2026-09-21T02:49:15.737Z] [STDOUT] [2026-09-20 19:49:15.737] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42303261, out pts 42261
+[2026-09-20 19:49:15.737] [trace]   
+[2026-09-21T02:49:15.737Z] [STDOUT] [2026-09-20 19:49:15.737] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42260 to pts 42260
+[2026-09-20 19:49:15.737] [trace]   
+[2026-09-21T02:49:15.738Z] [STDOUT] [2026-09-20 19:49:15.738] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19247 QP=28.00 NAL=2 Slice:P Poc:44  I:23   P:385  SKIP:1632 size=2825 bytes
+[2026-09-20 19:49:15.738] [trace]   
+[2026-09-21T02:49:15.740Z] [STDOUT] [2026-09-20 19:49:15.740] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.744Z] [STDOUT] [2026-09-20 19:49:15.743] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.743] [trace]   
+[2026-09-21T02:49:15.745Z] [STDOUT] [2026-09-20 19:49:15.743] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.743] [trace]   
+[2026-09-20 19:49:15.744] [trace]   [ffmpeg] [h264 @ 0x7e102c67a000] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.744] [trace]   
+[2026-09-21T02:49:15.745Z] [STDOUT] [2026-09-20 19:49:15.744] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42304262, out pts 42262
+[2026-09-20 19:49:15.744] [trace]   
+[2026-09-20 19:49:15.744] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42261 to pts 42261
+[2026-09-20 19:49:15.744] [trace]   
+[2026-09-21T02:49:15.746Z] [STDOUT] [2026-09-20 19:49:15.746] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.747Z] [STDOUT] [2026-09-20 19:49:15.746] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19246 QP=26.00 NAL=2 Slice:P Poc:42  I:0    P:3    SKIP:2037 size=183 bytes
+[2026-09-20 19:49:15.746] [trace]   
+[2026-09-21T02:49:15.749Z] [STDOUT] [2026-09-20 19:49:15.749] [trace]   side_data_mixer: processing from 17658 to 17658
+[2026-09-21T02:49:15.750Z] [STDOUT] [2026-09-20 19:49:15.749] [trace]   side_data_mixer: processing from 17659 to 17659
+[2026-09-21T02:49:15.751Z] [STDOUT] [2026-09-20 19:49:15.750] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19246 QP=0.00 NAL=2 Slice:P Poc:42  I:0    P:0    SKIP:2040 size=174 bytes
+[2026-09-20 19:49:15.750] [trace]   
+[2026-09-21T02:49:15.754Z] [STDOUT] [2026-09-20 19:49:15.753] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.753] [trace]   
+[2026-09-21T02:49:15.754Z] [STDOUT] [2026-09-20 19:49:15.753] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 0
+[2026-09-20 19:49:15.753] [trace]   
+[2026-09-20 19:49:15.753] [trace]   [ffmpeg] [h264 @ 0x7e1034645b80] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.753] [trace]   
+[2026-09-21T02:49:15.755Z] [STDOUT] [2026-09-20 19:49:15.755] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.760Z] [STDOUT] [2026-09-20 19:49:15.759] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46830784, out pts 46784
+[2026-09-20 19:49:15.759] [trace]   
+[2026-09-21T02:49:15.760Z] [STDOUT] [2026-09-20 19:49:15.759] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46783 to pts 46783
+[2026-09-20 19:49:15.759] [trace]   
+[2026-09-21T02:49:15.761Z] [STDOUT] [2026-09-20 19:49:15.760] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19248 QP=26.00 NAL=2 Slice:P Poc:46  I:8    P:272  SKIP:1760 size=1632 bytes
+[2026-09-20 19:49:15.760] [trace]   
+[2026-09-20 19:49:15.760] [trace]   [ffmpeg] [NULL @ 0x7e1034004280] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.760] [trace]   
+[2026-09-21T02:49:15.762Z] [STDOUT] [2026-09-20 19:49:15.762] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19247 QP=25.00 NAL=2 Slice:P Poc:44  I:0    P:33   SKIP:2007 size=201 bytes
+[2026-09-20 19:49:15.762] [trace]   
+[2026-09-21T02:49:15.762Z] [STDOUT] [2026-09-20 19:49:15.762] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Read frame with in pts 46831785, out pts 46785
+[2026-09-20 19:49:15.762] [trace]   
+[2026-09-21T02:49:15.762Z] [STDOUT] [2026-09-20 19:49:15.762] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e10343311c0] Writing frame with pts 46784 to pts 46784
+[2026-09-20 19:49:15.762] [trace]   
+[2026-09-21T02:49:15.763Z] [STDOUT] [2026-09-20 19:49:15.763] [trace]   [ffmpeg] [libx264 @ 0x7e107c9535c0] frame=19247 QP=0.00 NAL=2 Slice:P Poc:44  I:0    P:0    SKIP:2040 size=96 bytes
+[2026-09-20 19:49:15.763] [trace]   
+[2026-09-21T02:49:15.768Z] [STDOUT] [2026-09-20 19:49:15.767] [trace]   [ffmpeg] [libx264 @ 0x7e114c955180] frame=19249 QP=25.00 NAL=2 Slice:P Poc:48  I:6    P:367  SKIP:1667 size=2003 bytes
+[2026-09-20 19:49:15.767] [trace]   
+[2026-09-20 19:49:15.767] [trace]   [ffmpeg] [NULL @ 0x7e102c0040c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.767] [trace]   
+[2026-09-21T02:49:15.768Z] [STDOUT] [2026-09-20 19:49:15.768] [trace]   side_data_mixer: processing from 17650 to 17650
+[2026-09-20 19:49:15.768] [trace]   side_data_mixer: processing from 17651 to 17651
+[2026-09-21T02:49:15.770Z] [STDOUT] [2026-09-20 19:49:15.769] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42305263, out pts 42263
+[2026-09-20 19:49:15.769] [trace]   
+[2026-09-21T02:49:15.770Z] [STDOUT] [2026-09-20 19:49:15.769] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42262 to pts 42262
+[2026-09-20 19:49:15.769] [trace]   
+[2026-09-21T02:49:15.773Z] [STDOUT] [2026-09-20 19:49:15.773] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.776Z] [STDOUT] [2026-09-20 19:49:15.776] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 6(SEI), nal_ref_idc: 0
+[2026-09-20 19:49:15.776] [trace]   
+[2026-09-21T02:49:15.776Z] [STDOUT] [2026-09-20 19:49:15.776] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] nal_unit_type: 1(Coded slice of a non-IDR picture), nal_ref_idc: 2
+[2026-09-20 19:49:15.776] [trace]   
+[2026-09-21T02:49:15.776Z] [STDOUT] [2026-09-20 19:49:15.776] [trace]   [ffmpeg] [h264 @ 0x7e102c4b88c0] ct_type:0 pic_struct:4
+[2026-09-20 19:49:15.776] [trace]   
+[2026-09-21T02:49:15.777Z] [STDOUT] [2026-09-20 19:49:15.777] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Read frame with in pts 42306264, out pts 42264
+[2026-09-20 19:49:15.777] [trace]   
+[2026-09-21T02:49:15.778Z] [STDOUT] [2026-09-20 19:49:15.777] [trace]   [ffmpeg] [Parsed_fps_2 @ 0x7e102c218e40] Writing frame with pts 42263 to pts 42263
+[2026-09-20 19:49:15.777] [trace]   
+[2026-09-21T02:49:15.778Z] [STDOUT] [2026-09-20 19:49:15.778] [trace]   [ffmpeg] [libx264 @ 0x7e10ac953580] frame=19248 QP=24.00 NAL=2 Slice:P Poc:46  I:1    P:94   SKIP:1945 size=568 bytes
+[2026-09-20 19:49:15.778] [trace]   
+[2026-09-21T02:49:15.780Z] [STDOUT] [2026-09-20 19:49:15.780] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more
+[2026-09-21T02:49:15.782Z] [STDOUT] [2026-09-20 19:49:15.781] [trace]   side_data_mixer: processing from 17660 to 17660
+[2026-09-20 19:49:15.782] [trace]   side_data_mixer: processing from 17661 to 17661
+[2026-09-21T02:49:15.786Z] [STDOUT] [2026-09-20 19:49:15.785] [trace]   ffmpeg_consumer: unqueued A53_CC side data: fc 80 80 fd 80 80 fa 00 00 fa 00 00 fa 00 00 fa and 44 bytes more

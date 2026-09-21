@@ -1,0 +1,132 @@
+{
+  "timestamp": "2026-09-21T02:24:30.988Z",
+  "slot": 3,
+  "appName": "CasparCG",
+  "kind": "gpu-crash-loop",
+  "exitCode": -1,
+  "signal": null,
+  "startCommand": "sh run.sh",
+  "workingDirectory": "/home/rlbadmin/casparcg/build/staging",
+  "startedAt": "2026-09-21T02:24:28.645Z",
+  "exitedAt": "2026-09-21T02:24:30.988Z",
+  "durationMs": 2343,
+  "pid": 2470996,
+  "shellPid": 2470966,
+  "executable": "sh",
+  "args": [
+    "run.sh"
+  ],
+  "runtime": {
+    "bcServerVersion": "1.0.0",
+    "nodeVersion": "v20.20.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "LANG": "en_US.UTF-8",
+    "DISPLAY": ":0",
+    "XDG_SESSION_TYPE": "x11"
+  },
+  "processScope": "child-process",
+  "classification": "cef-gpu-child-crash-loop",
+  "restartReason": "gpu-child-crash-loop",
+  "recentOutput": [
+    {
+      "t": "2026-09-21T02:24:28.643Z",
+      "type": "system",
+      "data": "Starting: sh run.sh\n"
+    },
+    {
+      "t": "2026-09-21T02:24:28.645Z",
+      "type": "system",
+      "data": "Spawned shell PID 2470966\n"
+    },
+    {
+      "t": "2026-09-21T02:24:28.714Z",
+      "type": "stdout",
+      "data": "[1] 2470996\nsh run.sh\n"
+    },
+    {
+      "t": "2026-09-21T02:24:28.790Z",
+      "type": "stdout",
+      "data": "Type \"q\" to close application.\n"
+    },
+    {
+      "t": "2026-09-21T02:24:28.956Z",
+      "type": "stdout",
+      "data": "Logging [trace] or higher severity to /home/rlbadmin/rlbmedia/Playout/log3/\n\n"
+    },
+    {
+      "t": "2026-09-21T02:24:28.956Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:28.956] [info]    ############################################################################\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.212Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.211] [info]    CasparCG Server is distributed by the Swedish Broadcasting Corporation (SVT)\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.212Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.211] [info]    under the GNU General Public License GPLv3 or higher.\n[2026-09-20 19:24:29.211] [info]    Please see LICENSE.TXT for details.\n[2026-09-20 19:24:29.211] [info]    http://www.casparcg.com/\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.212Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.211] [info]    ############################################################################\n[2026-09-20 19:24:29.212] [info]    Starting CasparCG Video and Graphics Playout Server 2.6.0 5c139026c Dev\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.214Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.212] [info]    \"/home/rlbadmin/casparcg/build/staging/casparcg.config\":\n[2026-09-20 19:24:29.212] [info]    -----------------------------------------\n[2026-09-20 19:24:29.212] [info]    <?xml version=\"1.0\" encoding=\"utf-8\"?>\n[2026-09-20 19:24:29.212] [info]    <configuration>\n[2026-09-20 19:24:29.212] [info]       <log-level>trace</log-level>\n[2026-09-20 19:24:29.212] [info]       <paths>\n[2026-09-20 19:24:29.212] [info]          <media-path>/home/rlbadmin/rlbmedia/Playout/Media</media-path>\n[2026-09-20 19:24:29.212] [info]          <log-path>/home/rlbadmin/rlbmedia/Playout/log3</log-path>\n[2026-09-20 19:24:29.212] [info]          <data-path>/home/rlbadmin/rlbmedia/Playout/data3</data-path>\n[2026-09-20 19:24:29.212] [info]          <template-path>/home/rlbadmin/rlbmedia/Playout/Templates</template-path>\n[2026-09-20 19:24:29.212] [info]       </paths>\n[2026-09-20 19:24:29.212] [info]       <lock-clear-phrase>[REDACTED]</lock-clear-phrase>\n[2026-09-20 19:24:29.212] [info]       <channels>\n[2026-09-20 19:24:29.212] [info]          --&gt;\n[2026-09-20 19:24:29.212] [info]          <channel>\n[2026-09-20 19:24:29.212] [info]             <video-mode>1080i5994</video-mode>\n[2026-09-20 19:24:29.212] [info]             <consumers>\n[2026-09-20 19:24:29.212] [info]                <decklink>\n[2026-09-20 19:24:29.212] [info]                   <device>1</device>\n[2026-09-20 19:24:29.212] [info]                   <embedded-audio>true</embedded-audio>\n[2026-09-20 19:24:29.212] [info]                   <latency>normal</latency>\n[2026-09-20 19:24:29.212] [info]                   <keyer>disabled</keyer>\n[2026-09-20 19:24:29.212] [info]                   <buffer-depth>3</buffer-depth>\n[2026-09-20 19:24:29.212] [info]                </decklink>\n[2026-09-20 19:24:29.212] [info]             </consumers>\n[2026-09-20 19:24:29.212] [info]          </channel>\n[2026-09-20 19:24:29.212] [info]          <channel>\n[2026-09-20 19:24:29.212] [info]             <video-mode>1080i5994</video-mode>\n[2026-09-20 19:24:29.212] [info]             <consumers>\n[2026-09-20 19:24:29.212] [info]                <decklink>\n[2026-09-20 19:24:29.212] [info]                   <device>2</device>\n[2026-09-20 19:24:29.212] [info]                   <embedded-audio>true</embedded-audio>\n[2026-09-20 19:24:29.212] [info]                   <latency>normal</latency>\n[2026-09-20 19:24:29.212] [info]                   <keyer>disabled</keyer>\n[2026-09-20 19:24:29.212] [info]                   <buffer-depth>3</buffer-depth>\n[2026-09-20 19:24:29.212] [info]                </decklink>\n[2026-09-20 19:24:29.212] [info]             </consumers>\n[2026-09-20 19:24:29.212] [info]          </channel>\n[2026-09-20 19:24:29.212] [info]          <channel>\n[2026-09-20 19:24:29.212] [info]             <video-mode>1080i5994</video-mode>\n[2026-09-20 19:24:29.212] [info]             <consumers>\n[2026-09-20 19:24:29.212] [info]                <decklink>\n[2026-09-20 19:24:29.212] [info]                   <device>3</device>\n[2026-09-20 19:24:29.212] [info]                   <embedded-audio>true</embedded-audio>\n[2026-09-20 19:24:29.212] [info]                   <latency>normal</latency>\n[2026-09-20 19:24:29.212] [info]                   <keyer>disabled</keyer>\n[2026-09-20 19:24:29.212] [info]                   <buffer-depth>3</buffer-depth>\n[2026-09-20 19:24:29.212] [info]                </decklink>\n[2026-09-20 19:24:29.212] [info]             </consumers>\n[2026-09-20 19:24:29.212] [info]          </channel>\n[2026-09-20 19:24:29.212] [info]          <channel>\n[2026-09-20 19:24:29.212] [info]             <video-mode>1080i5994</video-mode>\n[2026-09-20 19:24:29.212] [info]             <consumers>\n[2026-09-20 19:24:29.212] [info]                <decklink>\n[2026-09-20 19:24:29.212] [info]                   <device>4</device>\n[2026-09-20 19:24:29.212] [info]                   <embedded-audio>true</embedded-audio>\n[2026-09-20 19:24:29.212] [info]                   <latency>normal</latency>\n[2026-09-20 19:24:29.212] [info]                   <keyer>disabled</keyer>\n[2026-09-20 19:24:29.212] [info]                   <buffer-depth>3</buffer-depth>\n[2026-09-20 19:24:29.212] [info]                </decklink>"
+    },
+    {
+      "t": "2026-09-21T02:24:29.217Z",
+      "type": "stdout",
+      "data": "\n[2026-09-20 19:24:29.212] [info]             </consumers>\n[2026-09-20 19:24:29.212] [info]          </channel>\n[2026-09-20 19:24:29.212] [info]       </channels>\n[2026-09-20 19:24:29.212] [info]       <controllers>\n[2026-09-20 19:24:29.212] [info]          <tcp>\n[2026-09-20 19:24:29.212] [info]             <port>5250</port>\n[2026-09-20 19:24:29.212] [info]             <protocol>AMCP</protocol>\n[2026-09-20 19:24:29.212] [info]          </tcp>\n[2026-09-20 19:24:29.212] [info]       </controllers>\n[2026-09-20 19:24:29.212] [info]       <amcp>\n[2026-09-20 19:24:29.212] [info]          <media-server>\n[2026-09-20 19:24:29.212] [info]             <host>localhost</host>\n[2026-09-20 19:24:29.212] [info]             <port>8000</port>\n[2026-09-20 19:24:29.212] [info]          </media-server>\n[2026-09-20 19:24:29.212] [info]       </amcp>\n[2026-09-20 19:24:29.212] [info]       <osc>\n[2026-09-20 19:24:29.212] [info]          <default-port>6250</default-port>\n[2026-09-20 19:24:29.212] [info]          <disable-send-to-amcp-clients>false [true|false]</disable-send-to-amcp-clients>\n[2026-09-20 19:24:29.212] [info]          <predefined-clients>\n[2026-09-20 19:24:29.212] [info]             <predefined-client>\n[2026-09-20 19:24:29.212] [info]                <address>127.0.0.1</address>\n[2026-09-20 19:24:29.212] [info]                <port>7250</port>\n[2026-09-20 19:24:29.212] [info]             </predefined-client>\n[2026-09-20 19:24:29.212] [info]             <predefined-client>\n[2026-09-20 19:24:29.212] [info]                <address>127.0.0.1</address>\n[2026-09-20 19:24:29.212] [info]                <port>7251</port>\n[2026-09-20 19:24:29.212] [info]             </predefined-client>\n[2026-09-20 19:24:29.212] [info]          </predefined-clients>\n[2026-09-20 19:24:29.212] [info]       </osc>\n[2026-09-20 19:24:29.212] [info]    </configuration>\n[2026-09-20 19:24:29.212] [info]    -----------------------------------------\n[2026-09-20 19:24:29.213] [info]    Initialized video modes.\n[2026-09-20 19:24:29.213] [info]    Initialized accelerator.\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.429Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.428] [info]    Initializing OpenGL Device (sfml).\n[2026-09-20 19:24:29.428] [info]    Initializing OpenGL Device.\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.448Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.441] [info]    Initialized OpenGL 4.5.0 NVIDIA 580.173.02 NVIDIA Corporation\n"
+    },
+    {
+      "t": "2026-09-21T02:24:29.794Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.484] [info]    Initialized OpenGL Accelerated GPU Image Mixer for channel 1\n[2026-09-20 19:24:29.486] [info]    video_channel[1|1080i5994] Successfully Initialized.\n[2026-09-20 19:24:29.486] [info]    Initialized OpenGL Accelerated GPU Image Mixer for channel 2\n[2026-09-20 19:24:29.487] [info]    video_channel[2|1080i5994] Successfully Initialized.\n[2026-09-20 19:24:29.487] [info]    Initialized OpenGL Accelerated GPU Image Mixer for channel 3\n[2026-09-20 19:24:29.487] [info]    video_channel[3|1080i5994] Successfully Initialized.\n[2026-09-20 19:24:29.488] [info]    Initialized OpenGL Accelerated GPU Image Mixer for channel 4\n[2026-09-20 19:24:29.488] [info]    video_channel[4|1080i5994] Successfully Initialized.\n[2026-09-20 19:24:29.488] [info]    Initialized channels.\n[2026-09-20 19:24:29.488] [info]    Initialized command repository.\n[2026-09-20 19:24:29.488] [info]    Initialized image module.\n[2026-09-20 19:24:29.488] [info]    Initialized ffmpeg module.\n[2026-09-20 19:24:29.488] [info]    Initialized oal module.\n[2026-09-20 19:24:29.513] [info]    Decklink devices found:\n[2026-09-20 19:24:29.513] [info]     - DeckLink Duo 2 Mini [1] (2949423456)\n[2026-09-20 19:24:29.513] [info]     - DeckLink Duo 2 Mini [2] (2949423457)\n[2026-09-20 19:24:29.513] [info]     - DeckLink Duo 2 Mini [3] (2949423458)\n[2026-09-20 19:24:29.513] [info]     - DeckLink Duo 2 Mini [4] (2949423459)\n[2026-09-20 19:24:29.513] [info]    Initialized decklink module.\n[2026-09-20 19:24:29.513] [info]    Initialized screen module.\n[2026-09-20 19:24:29.514] [info]    Initialized newtek module.\n[2026-09-20 19:24:29.514] [info]    Initialized artnet module.\n[2026-09-20 19:24:29.514] [info]    [html] Using CEF cache path: /home/rlbadmin/casparcg/build/staging/cef-cache\n"
+    },
+    {
+      "t": "2026-09-21T02:24:30.136Z",
+      "type": "stdout",
+      "data": "[2026-09-20 19:24:29.903] [info]    Initialized html module.\n[2026-09-20 19:24:29.903] [info]    Initialized modules.\n[2026-09-20 19:24:29.905] [info]    DeckLink Duo 2 Mini [1-1|1080i5994] Enabled embedded-audio.\n[2026-09-20 19:24:29.905] [info]    DeckLink Duo 2 Mini [1-1|1080i5994] Disabled low-latency mode.\n[2026-09-20 19:24:29.905] [info]    DeckLink Duo 2 Mini [1-1|1080i5994] Keyer disabled.\n[2026-09-20 19:24:29.927] [info]    DeckLink Duo 2 Mini [1-1|1080i5994] Initialized.\n[2026-09-20 19:24:29.929] [info]    DeckLink Duo 2 Mini [2-2|1080i5994] Enabled embedded-audio.\n[2026-09-20 19:24:29.929] [info]    DeckLink Duo 2 Mini [2-2|1080i5994] Disabled low-latency mode.\n[2026-09-20 19:24:29.929] [info]    DeckLink Duo 2 Mini [2-2|1080i5994] Keyer disabled.\n[2026-09-20 19:24:29.951] [info]    DeckLink Duo 2 Mini [2-2|1080i5994] Initialized.\n[2026-09-20 19:24:29.954] [info]    Device may not support video-format: 1080i59.94\n[2026-09-20 19:24:29.954] [debug]   [decklink_consumer] Destroying on asynchronous destruction thread.\n[2026-09-20 19:24:29.954] [debug]   [decklink_consumer] Uninitializing.\n[2026-09-20 19:24:29.954] [info]    [decklink_consumer] Uninitialized.\n[2026-09-20 19:24:29.954] [error]   Exception: /home/rlbadmin/casparcg/src/modules/decklink/consumer/decklink_consumer.cpp(879): Throw in function void caspar::decklink::decklink_consumer::enable_video()\n[2026-09-20 19:24:29.954] [error]   Dynamic exception type: boost::wrapexcept<caspar::caspar_exception>\n[2026-09-20 19:24:29.954] [error]   [caspar::tag_msg_info*] = DeckLink Duo 2 Mini [3-3|1080i5994] Could not enable primary video output.\n[2026-09-20 19:24:29.954] [error]   [caspar::tag_stacktrace_info*] =  0# 0x0000649284DA8C8E in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    1# 0x0000649285021856 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    2# 0x0000649285025B2C in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    3# 0x00006492850270CD in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    4# 0x0000649284DC8A0D in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    5# 0x0000751994EA1FB3 in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.954] [error]    6# 0x000064928501BF7B in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    7# 0x0000649284E55E40 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    8# 0x00007519952ECDB4 in /lib/x86_64-linux-gnu/libstdc++.so.6\n[2026-09-20 19:24:29.954] [error]    9# 0x0000751994E9CB84 in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.954] [error]   10# 0x0000751994F29ECC in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.954] [error]   \n[2026-09-20 19:24:29.954] [error]   \n\n[2026-09-20 19:24:29.954] [error]    0# 0x0000649284D94437 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    1# 0x0000649284DBD0B5 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    2# 0x0000649284DC2F37 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    3# 0x0000649284D85299 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    4# main in bin/casparcg\n[2026-09-20 19:24:29.954] [error]    5# 0x0000751994E2A1CA in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.954] [error]    6# __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.954] [error]    7# 0x0000649284D81AB5 in bin/casparcg\n[2026-09-20 19:24:29.954] [error]   \n[2026-09-20 19:24:29.957] [info]    Device may not support video-format: 1080i59.94\n[2026-09-20 19:24:29.958] [debug]   [decklink_consumer] Destroying on asynchronous destruction thread.\n[2026-09-20 19:24:29.958] [debug]   [decklink_consumer] Uninitializing.\n[2026-09-20 19:24:29.958] [info]    [decklink_consumer] Uninitialized.\n[2026-09-20 19:24:29.958] [error]   Exception: /home/rlbadmin/casparcg/src/modules/decklink/consumer/decklink_consumer.cpp(879): Throw in function void caspar::decklink::decklink_consumer::enable_video()\n[2026-09-20 19:24:29.958] [error]   Dynamic exception type: boost::wrapexcept<caspar::caspar_exception>\n[2026-09-20 19:24:29.958] [error]   [caspar::tag_msg_info*] = DeckLink Duo 2 Mini [4-4|1080i5994] Could not e"
+    },
+    {
+      "t": "2026-09-21T02:24:30.137Z",
+      "type": "stdout",
+      "data": "nable primary video output.\n[2026-09-20 19:24:29.958] [error]   [caspar::tag_stacktrace_info*] =  0# 0x0000649284DA8C8E in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    1# 0x0000649285021856 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    2# 0x0000649285025B2C in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    3# 0x00006492850270CD in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    4# 0x0000649284DC8A0D in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    5# 0x0000751994EA1FB3 in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.958] [error]    6# 0x000064928501BF7B in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    7# 0x0000649284E55E40 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    8# 0x00007519952ECDB4 in /lib/x86_64-linux-gnu/libstdc++.so.6\n[2026-09-20 19:24:29.958] [error]    9# 0x0000751994E9CB84 in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.958] [error]   10# 0x0000751994F29ECC in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.958] [error]   \n[2026-09-20 19:24:29.958] [error]   \n\n[2026-09-20 19:24:29.958] [error]    0# 0x0000649284D94437 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    1# 0x0000649284DBD0B5 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    2# 0x0000649284DC2F37 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    3# 0x0000649284D85299 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    4# main in bin/casparcg\n[2026-09-20 19:24:29.958] [error]    5# 0x0000751994E2A1CA in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.958] [error]    6# __libc_start_main in /lib/x86_64-linux-gnu/libc.so.6\n[2026-09-20 19:24:29.958] [error]    7# 0x0000649284D81AB5 in bin/casparcg\n[2026-09-20 19:24:29.958] [error]   \n[2026-09-20 19:24:29.958] [info]    Initialized startup producers.\n[2026-09-20 19:24:29.958] [info]    Initialized controllers.\n[2026-09-20 19:24:29.958] [info]    Initialized osc.\n[2026-09-20 19:24:29.993] [info]    DeckLink Duo 2 Mini [1-1|1080i5994] Reference signal: not detected.\n[2026-09-20 19:24:30.014] [info]    DeckLink Duo 2 Mini [2-2|1080i5994] Reference signal: not detected.\n"
+    },
+    {
+      "t": "2026-09-21T02:24:30.178Z",
+      "type": "stdout",
+      "data": "[2470997:2471067:0920/192430.167988:ERROR:content/browser/gpu/gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=139\n"
+    },
+    {
+      "t": "2026-09-21T02:24:30.986Z",
+      "type": "stdout",
+      "data": "[2470997:2471067:0920/192430.561654:ERROR:content/browser/gpu/gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=139\n[2470997:2471067:0920/192430.961640:ERROR:content/browser/gpu/gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=139\n"
+    },
+    {
+      "t": "2026-09-21T02:24:30.986Z",
+      "type": "system",
+      "data": "Detected GPU crash loop (3 GPU-process errors within 120s) - process is alive but rendering is dead\n"
+    }
+  ],
+  "truncated": false
+}
