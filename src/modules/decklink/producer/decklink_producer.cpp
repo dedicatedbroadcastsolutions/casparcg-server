@@ -213,19 +213,16 @@ struct Filter
         }
 
         if (type == AVMEDIA_TYPE_VIDEO) {
-            sink = create_buffersink(graph.get(), "out", av_opt_array_ref{pix_fmt});
+            sink = create_buffersink(graph.get(), "out", {pix_fmt});
         } else if (type == AVMEDIA_TYPE_AUDIO) {
-            std::optional<av_opt_array_ref<AVChannelLayout>> channel_layouts;
+            av_opt_array_ref<AVChannelLayout> channel_layouts;
             // TODO - we might want to force the filter to produce 16 channels
             // But this segfaults (changing the property name causes it to fail with an error)
             // As 16 channel packets are fed into the filter, with the filter set to the same, that is what we get out
             //
             // channel_layouts = {get_channel_layout_default(format_desc.audio_channels)};
-            sink = create_abuffersink(graph.get(),
-                                      "out",
-                                      av_opt_array_ref{AV_SAMPLE_FMT_S32},
-                                      av_opt_array_ref{format_desc.audio_sample_rate},
-                                      channel_layouts);
+            sink = create_abuffersink(
+                graph.get(), "out", {AV_SAMPLE_FMT_S32}, {format_desc.audio_sample_rate}, channel_layouts);
         } else {
             CASPAR_THROW_EXCEPTION(ffmpeg_error_t()
                                    << boost::errinfo_errno(EINVAL) << msg_info_t("invalid output media type"));

@@ -677,7 +677,7 @@ struct Filter
         if (media_type == AVMEDIA_TYPE_VIDEO) {
             sink = create_buffersink(graph.get(),
                                      "out",
-                                     av_opt_array_ref{
+                                     {
                                          AV_PIX_FMT_RGB24,
                                          AV_PIX_FMT_BGR24,
                                          AV_PIX_FMT_BGRA,
@@ -707,11 +707,7 @@ struct Filter
                                          AV_PIX_FMT_GBRAP16,
                                      });
         } else if (media_type == AVMEDIA_TYPE_AUDIO) {
-            sink = create_abuffersink(graph.get(),
-                                      "out",
-                                      av_opt_array_ref{AV_SAMPLE_FMT_S32},
-                                      av_opt_array_ref{format_desc.audio_sample_rate},
-                                      std::nullopt);
+            sink = create_abuffersink(graph.get(), "out", {AV_SAMPLE_FMT_S32}, {format_desc.audio_sample_rate});
         } else {
             CASPAR_THROW_EXCEPTION(ffmpeg_error_t()
                                    << boost::errinfo_errno(EINVAL) << msg_info_t("invalid output media type"));

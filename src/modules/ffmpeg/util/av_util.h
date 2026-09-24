@@ -93,7 +93,8 @@ class av_opt_array_ref final
         : av_opt_array_ref(data.begin(), data.size())
     {
     }
-    template <typename = std::enable_if<std::is_integral_v<T> || std::is_enum_v<T>>>
+    template <typename U = void,
+              typename   = std::enable_if_t<std::is_void_v<U> && (std::is_integral_v<T> || std::is_enum_v<T>)>>
     static constexpr av_opt_array_ref terminated(const T* data, T terminator)
     {
         if (!data) {
@@ -105,7 +106,7 @@ class av_opt_array_ref final
         return av_opt_array_ref(data, size);
     }
     template <typename F,
-              typename = std::enable_if<std::is_same_v<bool, decltype(std::declval<F&>()(std::declval<const T&>()))>>>
+              typename = std::enable_if_t<std::is_same_v<bool, decltype(std::declval<F&>()(std::declval<const T&>()))>>>
     static constexpr av_opt_array_ref terminated(const T* data, F&& is_terminator)
     {
         if (!data) {
@@ -137,12 +138,12 @@ void            set_channel_layouts(AVFilterContext* target, av_opt_array_ref<AV
 AVChannelLayout get_channel_layout_default(int nb_channels);
 
 AVFilterContext*
-create_buffersink(AVFilterGraph* graph, const char* name, std::optional<av_opt_array_ref<AVPixelFormat>> pixel_formats);
+create_buffersink(AVFilterGraph* graph, const char* name, av_opt_array_ref<AVPixelFormat> pixel_formats = {});
 
-AVFilterContext* create_abuffersink(AVFilterGraph*                                   graph,
-                                    const char*                                      name,
-                                    std::optional<av_opt_array_ref<AVSampleFormat>>  sample_formats,
-                                    std::optional<av_opt_array_ref<int>>             sample_rates,
-                                    std::optional<av_opt_array_ref<AVChannelLayout>> channel_layouts);
+AVFilterContext* create_abuffersink(AVFilterGraph*                    graph,
+                                    const char*                       name,
+                                    av_opt_array_ref<AVSampleFormat>  sample_formats  = {},
+                                    av_opt_array_ref<int>             sample_rates    = {},
+                                    av_opt_array_ref<AVChannelLayout> channel_layouts = {});
 
 }} // namespace caspar::ffmpeg
