@@ -49,6 +49,40 @@
 #include <accelerator/d3d/d3d_device.h>
 #endif
 
+#if defined(__linux__)
+#include <algorithm>
+#include <cstdint>
+#include <malloc.h>
+
+// Workaround for a confirmed Chromium/CEF bug (chromiumembedded/cef#3963, upstream Chromium bug
+// https://issues.chromium.org/issues/401168177) that we independently root-caused to the same
+// deterministic SIGILL (UD2) on the "MemoryInfra" thread inside libcef.so. CEF binaries built
+// against an old sysroot glibc (<2.33) compile base::trace_event::MallocDumpProvider::OnMemoryDump()
+// to call the deprecated 32-bit `mallinfo()` instead of `mallinfo2()`. Once the heap arena exceeds
+// ~2GB, mallinfo()'s `int` fields overflow to negative, tripping an internal sanity check that
+// executes an intentional illegal instruction - crashing the whole process. Since the main
+// executable's symbols take precedence over a shared library's during dynamic linking, defining our
+// own `mallinfo()` here forwards to the 64-bit-safe `mallinfo2()` and clamps each field instead of
+// letting it wrap negative, without needing to rebuild/replace libcef.so itself.
+extern "C" struct mallinfo mallinfo(void)
+{
+    struct mallinfo2 m2 = mallinfo2();
+    struct mallinfo   m {};
+    auto              clamp = [](size_t v) { return static_cast<int>(std::min<size_t>(v, INT32_MAX)); };
+    m.arena                 = clamp(m2.arena);
+    m.ordblks               = clamp(m2.ordblks);
+    m.smblks                = clamp(m2.smblks);
+    m.hblks                 = clamp(m2.hblks);
+    m.hblkhd                = clamp(m2.hblkhd);
+    m.usmblks               = clamp(m2.usmblks);
+    m.fsmblks               = clamp(m2.fsmblks);
+    m.uordblks              = clamp(m2.uordblks);
+    m.fordblks              = clamp(m2.fordblks);
+    m.keepcost              = clamp(m2.keepcost);
+    return m;
+}
+#endif
+
 namespace caspar::html {
 
 std::unique_ptr<executor> g_cef_executor;
