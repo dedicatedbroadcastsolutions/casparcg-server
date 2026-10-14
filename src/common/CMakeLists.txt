@@ -3,6 +3,7 @@ project (common)
 
 set(SOURCES
 		diagnostics/graph.cpp
+		diagnostics/graph_log_sink.cpp
 
 		gl/gl_check.cpp
 
@@ -32,6 +33,7 @@ else ()
 endif ()
 set(HEADERS
 		diagnostics/graph.h
+		diagnostics/graph_log_sink.h
 
 		gl/gl_check.h
 

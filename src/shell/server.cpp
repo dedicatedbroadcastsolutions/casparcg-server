@@ -25,6 +25,7 @@
 #include <accelerator/accelerator.h>
 
 #include <common/bit_depth.h>
+#include <common/diagnostics/graph_log_sink.h>
 #include <common/env.h>
 #include <common/except.h>
 #include <common/memory.h>
@@ -125,6 +126,7 @@ struct server::impl
         , shutdown_server_now_(std::move(shutdown_server_now))
     {
         caspar::core::diagnostics::osd::register_sink();
+        caspar::diagnostics::register_log_sink();
     }
 
     void start()
