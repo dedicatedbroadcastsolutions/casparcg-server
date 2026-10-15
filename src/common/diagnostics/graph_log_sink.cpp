@@ -25,29 +25,54 @@
 #include "../memory.h"
 #include "../utf.h"
 
+#include <algorithm>
 #include <chrono>
+#include <cmath>
+#include <condition_variable>
+#include <cstdint>
+#include <iomanip>
 #include <map>
+#include <memory>
 #include <mutex>
+#include <sstream>
 #include <string>
+#include <thread>
+#include <vector>
 
 namespace caspar { namespace diagnostics {
 
 namespace {
 
-// How long a tag can keep occurring before its next summary line is logged.
 constexpr auto kSummaryInterval = std::chrono::seconds(5);
 
 class log_sink : public spi::graph_sink
 {
     struct tag_state
     {
-        std::chrono::steady_clock::time_point last_logged;
-        int                                    occurrences_since_log = 0;
+        tag_severity  severity = tag_severity::INFO;
+        std::uint64_t count    = 0;
     };
 
-    mutable std::mutex                mutex_;
-    std::wstring                      text_;
-    std::map<std::string, tag_state>  tags_;
+    struct value_state
+    {
+        std::uint64_t count   = 0;
+        double        minimum = 0;
+        double        maximum = 0;
+        double        mean    = 0;
+
+        void add(double value)
+        {
+            minimum = count == 0 ? value : std::min(minimum, value);
+            maximum = count == 0 ? value : std::max(maximum, value);
+            mean += (value - mean) / static_cast<double>(++count);
+        }
+    };
+
+    std::mutex                            mutex_;
+    std::wstring                          text_;
+    std::map<std::string, tag_state>      tags_;
+    std::map<std::string, value_state>    values_;
+    std::chrono::steady_clock::time_point last_report_ = std::chrono::steady_clock::now();
 
   public:
     void activate() override {}
@@ -58,49 +83,109 @@ class log_sink : public spi::graph_sink
         text_ = value;
     }
 
-    void set_value(const std::string& /*name*/, double /*value*/) override {}
+    void set_value(const std::string& name, double value) override
+    {
+        if (!std::isfinite(value))
+            return;
+        std::lock_guard<std::mutex> lock(mutex_);
+        values_[name].add(value);
+    }
     void set_color(const std::string& /*name*/, int /*color*/) override {}
     void auto_reset() override {}
 
     void set_tag(tag_severity severity, const std::string& name) override
     {
-        // SILENT tags (e.g. html_producer's "nothing new this tick") are intentionally not
-        // noteworthy - only WARNING/INFO are meant to flag an actual performance issue.
         if (severity == tag_severity::SILENT)
             return;
 
         std::lock_guard<std::mutex> lock(mutex_);
-
-        auto  now   = std::chrono::steady_clock::now();
-        auto& state = tags_[name];
-
-        ++state.occurrences_since_log;
-
-        // First time this tag has ever fired for this graph: log it immediately so an operator
-        // sees it as soon as it happens, not only in a later periodic summary.
-        bool first_occurrence = state.last_logged.time_since_epoch().count() == 0;
-        if (!first_occurrence && (now - state.last_logged) < kSummaryInterval)
-            return;
-
-        log(severity, name, state.occurrences_since_log);
-        state.last_logged          = now;
-        state.occurrences_since_log = 0;
+        auto&                       state = tags_[name];
+        if (state.count == 0 || severity == tag_severity::WARNING)
+            state.severity = severity;
+        ++state.count;
     }
 
-  private:
-    void log(tag_severity severity, const std::string& name, int occurrences)
+    void report(bool final)
     {
-        std::wstring message = text_ + L" " + u16(name);
-        if (occurrences > 1) {
-            message += L" (x" + std::to_wstring(occurrences) + L" in the last " +
-                      std::to_wstring(kSummaryInterval.count()) + L"s)";
+        std::wstring                       text;
+        std::map<std::string, tag_state>   tags;
+        std::map<std::string, value_state> values;
+        double                             elapsed;
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            const auto                  now = std::chrono::steady_clock::now();
+            if (!final && now - last_report_ < kSummaryInterval)
+                return;
+            elapsed      = std::chrono::duration<double>(now - last_report_).count();
+            last_report_ = now;
+            text         = text_;
+            tags.swap(tags_);
+            values.swap(values_);
         }
 
-        if (severity == tag_severity::WARNING) {
-            CASPAR_LOG(warning) << message;
-        } else {
-            CASPAR_LOG(info) << message;
+        if (!tags.empty() || !values.empty()) {
+            std::wostringstream message;
+            message << text << L" diagnostics interval-seconds=" << std::fixed << std::setprecision(3) << elapsed;
+            for (const auto& entry : tags) {
+                message << L" " << u16(entry.first) << L"{severity="
+                        << (entry.second.severity == tag_severity::WARNING ? L"warning" : L"info") << L",count="
+                        << entry.second.count << L"}";
+            }
+            for (const auto& entry : values) {
+                const auto& value = entry.second;
+                message << L" " << u16(entry.first) << L"{min=" << value.minimum << L",avg=" << value.mean << L",max="
+                        << value.maximum << L",samples=" << value.count << L"}";
+            }
+            CASPAR_LOG(debug) << message.str();
         }
+    }
+};
+
+class log_reporter
+{
+    std::mutex                             mutex_;
+    std::condition_variable                condition_;
+    bool                                   stopping_ = false;
+    std::vector<std::shared_ptr<log_sink>> sinks_;
+    std::thread                            thread_;
+
+  public:
+    log_reporter()
+        : thread_([this] {
+            std::unique_lock<std::mutex> lock(mutex_);
+            while (!stopping_) {
+                condition_.wait_for(lock, std::chrono::seconds(1), [this] { return stopping_; });
+                auto sinks = sinks_;
+                // Only the registry owns retired sinks before the snapshot is taken.
+                sinks_.erase(std::remove_if(
+                                 sinks_.begin(), sinks_.end(), [](const auto& sink) { return sink.use_count() == 2; }),
+                             sinks_.end());
+                const bool stopping = stopping_;
+                lock.unlock();
+                for (const auto& sink : sinks)
+                    sink->report(stopping || sink.use_count() == 1);
+                lock.lock();
+            }
+        })
+    {
+    }
+
+    ~log_reporter()
+    {
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            stopping_ = true;
+        }
+        condition_.notify_one();
+        thread_.join();
+    }
+
+    spl::shared_ptr<spi::graph_sink> create_sink()
+    {
+        auto                        sink = std::make_shared<log_sink>();
+        std::lock_guard<std::mutex> lock(mutex_);
+        sinks_.push_back(sink);
+        return spl::shared_ptr<spi::graph_sink>(std::move(sink));
     }
 };
 
@@ -108,7 +193,8 @@ class log_sink : public spi::graph_sink
 
 void register_log_sink()
 {
-    spi::register_sink_factory([] { return spl::make_shared<log_sink>(); });
+    auto reporter = std::make_shared<log_reporter>();
+    spi::register_sink_factory([reporter] { return reporter->create_sink(); });
 }
 
 }} // namespace caspar::diagnostics

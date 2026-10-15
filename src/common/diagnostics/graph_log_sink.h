@@ -21,12 +21,7 @@
 
 namespace caspar { namespace diagnostics {
 
-// Registers a graph_sink that mirrors WARNING/INFO-severity set_tag() calls (e.g. "late-frame",
-// "dropped-frame", "underflow", "audio-buffer-overflow") into the text log, so performance issues
-// are visible there and not only in the visual diagnostics overlay. Rate-limited per (graph
-// instance, tag name): the first occurrence logs immediately, further occurrences within the same
-// window are counted and summarized in the next periodic log line, rather than spamming one line
-// per occurrence.
+// Reports one combined debug summary per graph every five seconds on a background thread.
 void register_log_sink();
 
 }} // namespace caspar::diagnostics
