@@ -44,33 +44,25 @@
 #include <include/cef_api_hash.h>
 #include <include/cef_app.h>
 #include <include/cef_version.h>
+#include <include/cef_version_info.h>
 
 #ifdef WIN32
 #include <accelerator/d3d/d3d_device.h>
 #endif
 
+// Malinfo patch start - Remove once fixed upstream.
 #if defined(__linux__)
 #include <algorithm>
 #include <cstdint>
+#include <dlfcn.h>
 #include <malloc.h>
 
-// Workaround for a confirmed Chromium/CEF bug (chromiumembedded/cef#3963, upstream Chromium bug
-// https://issues.chromium.org/issues/401168177) that we independently root-caused to the same
-// deterministic SIGILL (UD2) on the "MemoryInfra" thread inside libcef.so. CEF binaries built
-// against an old sysroot glibc (<2.33) compile base::trace_event::MallocDumpProvider::OnMemoryDump()
-// to call the deprecated 32-bit `mallinfo()` instead of `mallinfo2()`. Once the heap arena exceeds
-// ~2GB, mallinfo()'s `int` fields overflow to negative, tripping an internal sanity check that
-// executes an intentional illegal instruction - crashing the whole process. Since the main
-// executable's symbols take precedence over a shared library's during dynamic linking, defining our
-// own `mallinfo()` here forwards to the 64-bit-safe `mallinfo2()` and clamps each field instead of
-// letting it wrap negative, without needing to rebuild/replace libcef.so itself.
+// Work around CEF's Linux mallinfo() overflow by forwarding to mallinfo2() with int-safe field clamps.
 extern "C" struct mallinfo mallinfo(void)
 {
     struct mallinfo2 m2 = mallinfo2();
     struct mallinfo   m {};
-    // Clamp to INT32_MAX/2 rather than INT32_MAX: the dump provider sums pairs of these fields
-    // (e.g. arena + hblkhd) as signed ints, so two fields at the full INT32_MAX would still
-    // overflow/wrap negative when added together and re-trigger the same crash.
+    // Keep arena + hblkhd below INT32_MAX to avoid overflow in CEF's signed-int sum.
     auto clamp = [](size_t v) { return static_cast<int>(std::min<size_t>(v, INT32_MAX / 2)); };
     m.arena                 = clamp(m2.arena);
     m.ordblks               = clamp(m2.ordblks);
@@ -85,6 +77,7 @@ extern "C" struct mallinfo mallinfo(void)
     return m;
 }
 #endif
+// Malinfo patch end section one - Remove once fixed upstream.
 
 namespace caspar::html {
 
@@ -276,19 +269,28 @@ bool intercept_command_line(int argc, char** argv)
 
 void init(const core::module_dependencies& dependencies)
 {
+// Malinfo patch section 2 start - Remove once fixed upstream.
+#if defined(__linux__)
+    // Verify the override resolves before CEF initializes.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    if (reinterpret_cast<void*>(dlsym(RTLD_DEFAULT, "mallinfo")) == reinterpret_cast<void*>(&mallinfo)) {
+#pragma GCC diagnostic pop
+        CASPAR_LOG(info) << L"[html] mallinfo() override installed";
+    } else {
+        CASPAR_LOG(warning) << L"[html] mallinfo() override did NOT install; CEF mallinfo() SIGILL (cef#3963) may occur";
+    }
+#endif
+// Malinfo patch section 2 end - Remove once fixed upstream.
     dependencies.producer_registry->register_producer_factory(L"HTML Producer", html::create_producer);
 
-    // CasparCG builds against CEF's unversioned/experimental API, which is only guaranteed compatible with
-    // the exact library build the headers came from (see cef_api_hash.h). This is normally guaranteed by
-    // linking a bundled libcef, but USE_SYSTEM_CEF instead relies on the installed casparcg-cef-142 package
-    // matching what CasparCG was last built against - which can silently drift after a package update without
-    // a rebuild. Surface that loudly here instead of it only manifesting later as an unexplained crash.
+    // Validate the selected CEF API against the loaded library, including after system package updates.
     const char* actual_hash = cef_api_hash(CEF_API_VERSION, 0);
     if (!actual_hash || std::strcmp(actual_hash, CEF_API_HASH_PLATFORM) != 0) {
         CASPAR_LOG(error) << L"[html] CEF API hash mismatch: this build of CasparCG does not match the "
                              L"installed CEF library/version. This is a known cause of crashes (including "
                              L"SIGILL) inside libcef.so. Rebuild CasparCG against the currently-installed "
-                             L"casparcg-cef-142/-dev packages (or reinstall the package version this build "
+                             L"casparcg-cef-api15000-dev package (or reinstall the runtime version this build "
                              L"expects) to resolve. built-against="
                           << CEF_API_HASH_PLATFORM << L" installed=" << (actual_hash ? actual_hash : "(null)");
     }
@@ -324,6 +326,12 @@ void init(const core::module_dependencies& dependencies)
         CASPAR_LOG(error) << "[html] Failed to initialize CEF";
         return;
     }
+
+    // The loaded libcef can be newer than the headers we were built with, as long as it supports our API version
+    CASPAR_LOG(info) << "[html] Using CEF " << cef_version_info(0) << "." << cef_version_info(1) << "."
+                     << cef_version_info(2) << " (Chromium " << cef_version_info(4) << "." << cef_version_info(5)
+                     << "." << cef_version_info(6) << "." << cef_version_info(7) << "), API version "
+                     << cef_api_version() << ". Built against CEF " << CEF_VERSION;
 
     g_cef_executor->begin_invoke([&] { CefRunMessageLoop(); });
     dependencies.cg_registry->register_cg_producer(
