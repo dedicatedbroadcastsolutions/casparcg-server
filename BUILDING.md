@@ -88,6 +88,40 @@ Before beginning, check the build options section below, to decide if you want t
 
 If all goes to plan, a folder called 'staging' has been created with everything you need to run CasparCG server.
 
+### Consumer output delay
+
+DeckLink, NDI, and preconfigured FFmpeg consumers accept a `<delay>` element.
+Use an integer for whole video frames (for example, `5`) or a time value such as
+`200ms`. Values are rounded to whole frames and clamped between zero and the
+number of whole frames in one second. On interlaced channels, one frame includes
+both fields. Out-of-range values produce a warning.
+
+The delay is additional to the consumer's existing buffering. During startup,
+the first real video frame and its audio are repeated until the delay buffer is
+filled; after that, audio, video, and frame side data follow the delayed frames.
+The buffer advances once per input field/frame, independently of encoder speed.
+Removing the consumer discards its pending delayed frames.
+
+NDI also accepts `DELAY 5` or `DELAY 200ms` with AMCP `ADD`. DeckLink and FFmpeg
+currently expose delay through XML configuration only.
+
+NDI's send queue is bounded independently of the delay buffer. Configure its
+capacity with `<buffer-size>` or AMCP `BUFFER_SIZE` (default 16 fields). The
+minimum is 1 for progressive video; interlaced video requires at least 2 and
+rounds the capacity down to an even number. Adjustments produce a warning.
+When full, new complete frames are dropped and reported by the `dropped-frame`
+diagnostics tag. The effective capacity is reported as `ndi/buffer_size`.
+The existing startup cushion is retained, reduced only for capacities below
+8 fields.
+
+Run the hardware-independent delay regression checks with:
+
+```
+cmake -S tests -B build/consumer-tests
+cmake --build build/consumer-tests --parallel
+ctest --test-dir build/consumer-tests --output-on-failure
+```
+
 ## Build options
 
 -DENABLE_HTML=OFF - useful if you lack CEF, and would like to build without that module.
