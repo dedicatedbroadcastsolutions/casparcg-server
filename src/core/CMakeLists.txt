@@ -38,6 +38,7 @@ set(SOURCES
 set(HEADERS
 		consumer/frame_consumer.h
 		consumer/frame_consumer_registry.h
+		consumer/frame_delay.h
 		consumer/output.h
 
 		diagnostics/call_context.h

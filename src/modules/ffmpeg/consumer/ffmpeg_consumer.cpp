@@ -35,6 +35,7 @@
 #include <common/timespan.h>
 
 #include <core/consumer/channel_info.h>
+#include <core/consumer/frame_delay.h>
 #include <core/frame/frame.h>
 #include <core/frame/frame_side_data.h>
 #include <core/video_format.h>
@@ -398,8 +399,7 @@ struct ffmpeg_consumer : public core::frame_consumer
     std::string path_;
     std::string args_;
     timespan    delay_;
-    int         delay_frames_ = 0;
-    bool        primed_       = false; // set once the first real frame has been duplicated in
+    core::frame_delay delayed_frames_;
 
     std::exception_ptr exception_;
     std::mutex         exception_mutex_;
@@ -453,8 +453,7 @@ struct ffmpeg_consumer : public core::frame_consumer
         format_desc_   = format_desc;
         channel_index_ = channel_info.index;
 
-        delay_frames_ = std::clamp<int>(delay_.in_frames(format_desc_.fps), 0, static_cast<int>(format_desc_.fps));
-        frame_buffer_.set_capacity((realtime_ ? 1 : 64) + delay_frames_);
+        delayed_frames_.reset(delay_, format_desc_.hz, format_desc_.field_count);
 
         graph_->set_text(print());
 
@@ -643,25 +642,12 @@ struct ffmpeg_consumer : public core::frame_consumer
             }
         }
 
+        frame = delayed_frames_.push(std::move(frame));
         if (!frame_buffer_.try_push({frame, video_pts, audio_pts})) {
             graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
         }
         video_pts += 1;
         audio_pts += frame.audio_data().size() / format_desc_.audio_channels;
-
-        // Hold this output delay_frames_ behind the others: duplicate the very first real frame
-        // (each duplicate still gets its own monotonically increasing pts) instead of pushing a
-        // default-constructed one, since a falsy frame here means "close the encoder" (see
-        // Stream::send()'s av_buffersrc_close branch), not "nothing to show yet".
-        if (!primed_) {
-            primed_ = true;
-            for (auto n = 0; n < delay_frames_; ++n) {
-                if (!frame_buffer_.try_push({frame, video_pts, audio_pts}))
-                    graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
-                video_pts += 1;
-                audio_pts += frame.audio_data().size() / format_desc_.audio_channels;
-            }
-        }
 
         graph_->set_value("input", static_cast<double>(frame_buffer_.size() + 0.001) / frame_buffer_.capacity());
 
