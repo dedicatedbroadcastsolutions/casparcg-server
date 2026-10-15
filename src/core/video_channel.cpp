@@ -155,7 +155,9 @@ struct video_channel::impl final
                     // Produce
                     caspar::timer produce_timer;
                     auto          stage_frames = (*stage_)(frame_counter_, background_routes, routesCb);
-                    graph_->set_value("produce-time", produce_timer.elapsed() * stage_frames.format_desc.hz * 0.5);
+                    const auto produce_seconds = produce_timer.elapsed();
+                    graph_->set_value("produce-time", produce_seconds * stage_frames.format_desc.hz * 0.5);
+                    graph_->set_value("produce-ms", produce_seconds * 1000.0);
 
                     // This is a little race prone, but at worst a new consumer will start with a frame of black
                     bool has_consumers = output_.consumer_count() > 0;
@@ -169,14 +171,20 @@ struct video_channel::impl final
                         has_consumers && stage_frames.format_desc.field_count == 2
                             ? mixer_(stage_frames.frames2, stage_frames.format_desc, stage_frames.nb_samples)
                             : const_frame{};
-                    graph_->set_value("mix-time", mix_timer.elapsed() * stage_frames.format_desc.hz * 0.5);
+                    const auto mix_seconds = mix_timer.elapsed();
+                    graph_->set_value("mix-time", mix_seconds * stage_frames.format_desc.hz * 0.5);
+                    graph_->set_value("mix-ms", mix_seconds * 1000.0);
 
                     // Consume
                     caspar::timer consume_timer;
                     output_(mixed_frame, mixed_frame2, stage_frames.format_desc);
-                    graph_->set_value("consume-time", consume_timer.elapsed() * stage_frames.format_desc.hz * 0.5);
+                    const auto consume_seconds = consume_timer.elapsed();
+                    graph_->set_value("consume-time", consume_seconds * stage_frames.format_desc.hz * 0.5);
+                    graph_->set_value("consume-ms", consume_seconds * 1000.0);
 
-                    graph_->set_value("frame-time", frame_timer.elapsed() * stage_frames.format_desc.hz * 0.5);
+                    const auto frame_seconds = frame_timer.elapsed();
+                    graph_->set_value("frame-time", frame_seconds * stage_frames.format_desc.hz * 0.5);
+                    graph_->set_value("frame-ms", frame_seconds * 1000.0);
 
                     monitor::state state = {};
                     state["stage"]       = stage_->state();
