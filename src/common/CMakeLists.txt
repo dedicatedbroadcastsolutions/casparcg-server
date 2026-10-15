@@ -38,6 +38,7 @@ set(HEADERS
 		gl/gl_check.h
 
 		os/filesystem.h
+		os/cpu_affinity.h
 		os/thread.h
 
 		array.h

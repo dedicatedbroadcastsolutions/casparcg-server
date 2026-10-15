@@ -88,6 +88,50 @@ Before beginning, check the build options section below, to decide if you want t
 
 If all goes to plan, a folder called 'staging' has been created with everything you need to run CasparCG server.
 
+## CPU affinity
+
+CPU affinity is optional. Add the following inside the configuration's
+`<configuration>` element, using CPU IDs appropriate for your system:
+
+```xml
+<cpu-affinity>
+    <realtime-cpus>0-9,20-29</realtime-cpus>
+    <background-cpus>10-19,30-39</background-cpus>
+</cpu-affinity>
+```
+
+`realtime-cpus` pins the video channel, OpenGL device, DeckLink output, and NDI
+send threads. `background-cpus` pins the FFmpeg producer, decoder, and audio/video
+filter workers. On Linux, FFmpeg's internal codec workers inherit the mask
+because it is applied before opening the decoder. Third-party thread pools on
+Windows are not guaranteed to inherit this mask.
+
+Choose the CPUs on the NUMA node hosting the GPU and output devices for realtime
+work; use tools such as `lscpu -e=CPU,NODE` on Linux to inspect your topology.
+This is thread scheduling affinity, not NUMA memory allocation or exclusive CPU
+reservation, and does not configure third-party GPU/driver thread pools.
+
+Lists accept nonnegative decimal IDs and ascending inclusive ranges, separated
+by commas. Whitespace around entries is allowed; duplicates are removed.
+Malformed or out-of-range entries fail configuration rather than being partly
+applied. Empty or omitted lists do not change affinity, including any mask
+inherited from the creating thread.
+
+Linux supports IDs below `CPU_SETSIZE` (typically 1024); CPUs must also be available
+within the process's container/cpuset restrictions. If the kernel only accepts
+part of a requested mask, the previous mask is restored and a warning is logged.
+Windows IDs are relative to each thread's current processor group and must fit
+its affinity mask (up to 64 CPUs on 64-bit builds). Cross-group pinning is not
+supported. OS failures are logged; they do not silently discard requested CPUs.
+
+Run the parser and Linux thread-affinity regression tests with:
+
+```
+cmake -S tests -B build/affinity-tests
+cmake --build build/affinity-tests --parallel
+ctest --test-dir build/affinity-tests --output-on-failure
+```
+
 ## Build options
 
 -DENABLE_HTML=OFF - useful if you lack CEF, and would like to build without that module.

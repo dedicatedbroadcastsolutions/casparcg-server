@@ -121,6 +121,13 @@ jobs:
                   DEBIAN_FRONTEND: noninteractive
                   APT_PREFIX: ${{ matrix.apt_prefix }}
 
+            - name: Test CPU affinity
+              if: ${{ matrix.family == 'ubuntu' && matrix.distribution == 'noble' }}
+              run: |
+                  cmake -S tests -B build/affinity-tests -DCMAKE_BUILD_TYPE=Debug
+                  cmake --build build/affinity-tests --parallel 2
+                  ctest --test-dir build/affinity-tests --output-on-failure
+
             - name: Run build
               if: ${{ matrix.family == 'ubuntu' || matrix.family == 'debian' }}
               run: |

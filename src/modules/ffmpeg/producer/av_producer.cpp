@@ -148,6 +148,7 @@ class Decoder
                                     input_receiver = std::move(input_channel.second),
                                     output_sender  = std::move(output_channel.first)]() mutable {
                 try {
+                    set_thread_affinity(env::background_cpu_affinity());
                     while (!thread.interruption_requested()) {
                         auto packet_opt = input_receiver.try_receive_blocking();
                         if (!packet_opt) {
@@ -246,6 +247,7 @@ class Decoder
                                 input_receiver      = std::move(input_channel.second),
                                 output_sender       = std::move(output_channel.first)]() mutable {
             try {
+                set_thread_affinity(env::background_cpu_affinity());
                 while (!thread.interruption_requested()) {
                     auto av_frame = alloc_frame();
                     auto ret      = avcodec_receive_frame(ctx.get(), av_frame.get());
@@ -903,6 +905,9 @@ struct AVProducer::Impl
 
     void run(std::optional<int64_t> firstSeek)
     {
+        set_thread_name(L"[ffmpeg::av_producer]");
+        set_thread_affinity(env::background_cpu_affinity());
+
         std::vector<int> audio_cadence = format_desc_.audio_cadence;
 
         input_.reset();
@@ -939,9 +944,6 @@ struct AVProducer::Impl
                 reset(input_->start_time != AV_NOPTS_VALUE ? input_->start_time : 0);
             }
         }
-
-        set_thread_name(L"[ffmpeg::av_producer]");
-        set_thread_affinity(env::background_cpu_affinity());
 
         boost::range::rotate(audio_cadence, std::end(audio_cadence) - 1);
 
