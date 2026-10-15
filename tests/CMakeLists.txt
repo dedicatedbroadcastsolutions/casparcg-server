@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.28)
+project(casparcg_affinity_tests LANGUAGES CXX)
+
+find_package(Boost 1.83 CONFIG REQUIRED COMPONENTS log log_setup thread locale filesystem)
+find_package(TBB REQUIRED)
+find_package(Threads REQUIRED)
+enable_testing()
+
+add_executable(cpu_affinity_test cpu_affinity_test.cpp ../src/common/utf.cpp ../src/common/log.cpp)
+if(MSVC)
+    target_sources(cpu_affinity_test PRIVATE ../src/common/os/windows/thread.cpp)
+    target_compile_definitions(cpu_affinity_test PRIVATE _WIN32_WINNT=0x0A00)
+else()
+    target_sources(cpu_affinity_test PRIVATE ../src/common/os/linux/thread.cpp)
+endif()
+target_compile_features(cpu_affinity_test PRIVATE cxx_std_20)
+target_compile_definitions(cpu_affinity_test PRIVATE BOOST_ALL_DYN_LINK)
+target_include_directories(cpu_affinity_test PRIVATE ../src)
+target_link_libraries(cpu_affinity_test PRIVATE Boost::log Boost::log_setup Boost::thread Boost::locale Boost::filesystem
+    TBB::tbb Threads::Threads ${CMAKE_DL_LIBS})
+add_test(NAME cpu_affinity COMMAND cpu_affinity_test)
+set_tests_properties(cpu_affinity PROPERTIES TIMEOUT 15)

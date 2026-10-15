@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "../../utf.h"
+#include "../../log.h"
 
 namespace caspar {
 
@@ -40,14 +41,28 @@ bool set_thread_affinity(const std::vector<int>& cpu_ids)
     if (cpu_ids.empty())
         return true;
 
-    // Only handles CPUs within the calling thread's processor group (i.e. up to 64 logical CPUs on that group).
+    GROUP_AFFINITY group;
+    if (!GetThreadGroupAffinity(GetCurrentThread(), &group)) {
+        CASPAR_LOG(warning) << "Cannot query thread processor group: Windows error " << GetLastError();
+        return false;
+    }
+    const auto active_cpus = GetActiveProcessorCount(group.Group);
     DWORD_PTR mask = 0;
     for (auto cpu_id : cpu_ids) {
-        if (cpu_id >= 0 && cpu_id < static_cast<int>(sizeof(DWORD_PTR) * 8))
-            mask |= (static_cast<DWORD_PTR>(1) << cpu_id);
+        if (cpu_id < 0 || cpu_id >= thread_affinity_capacity() || static_cast<DWORD>(cpu_id) >= active_cpus) {
+            CASPAR_LOG(warning) << "Cannot set thread CPU affinity: CPU ID " << cpu_id
+                               << " is unavailable in processor group " << group.Group;
+            return false;
+        }
+        mask |= (static_cast<DWORD_PTR>(1) << cpu_id);
     }
 
-    return mask != 0 && SetThreadAffinityMask(GetCurrentThread(), mask) != 0;
+    if (SetThreadAffinityMask(GetCurrentThread(), mask) != 0)
+        return true;
+    CASPAR_LOG(warning) << "Cannot set thread CPU affinity: Windows error " << GetLastError();
+    return false;
 }
+
+int thread_affinity_capacity() { return static_cast<int>(sizeof(DWORD_PTR) * 8); }
 
 } // namespace caspar
