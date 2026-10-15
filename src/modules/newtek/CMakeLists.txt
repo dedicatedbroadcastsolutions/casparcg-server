@@ -4,6 +4,7 @@ project (newtek)
 set(SOURCES
 		consumer/newtek_ndi_consumer.cpp
 		consumer/newtek_ndi_consumer.h
+		consumer/ndi_frame_buffer.h
 
 		producer/newtek_ndi_producer.cpp
 		producer/newtek_ndi_producer.h
