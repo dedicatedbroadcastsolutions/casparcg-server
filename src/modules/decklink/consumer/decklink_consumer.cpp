@@ -923,8 +923,10 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
                             L"]-ScheduledFrameCompleted");
         }
         try {
-            auto tick_time = tick_timer_.elapsed() * decklink_format_desc_.hz * 0.5;
+            const auto tick_seconds = tick_timer_.elapsed();
+            auto       tick_time    = tick_seconds * decklink_format_desc_.hz * 0.5;
             graph_->set_value("tick-time", tick_time);
+            graph_->set_value("callback-gap-ms", tick_seconds * 1000.0);
             tick_timer_.restart();
 
             reference_signal_detector_.detect_change([this]() { return print(); });
@@ -956,16 +958,28 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
             }
 
             {
-                UINT32 buffered;
-                output_->GetBufferedVideoFrameCount(&buffered);
-                graph_->set_value("buffered-video", static_cast<double>(buffered) / config_.buffer_depth());
+                UINT32 buffered = 0;
+                if (SUCCEEDED(output_->GetBufferedVideoFrameCount(&buffered))) {
+                    graph_->set_value("buffered-video", static_cast<double>(buffered) / config_.buffer_depth());
+                    graph_->set_value("buffered-video-frames", buffered);
+                } else {
+                    graph_->set_tag(diagnostics::tag_severity::WARNING, "video-buffer-query-failed");
+                }
 
                 if (config_.embedded_audio) {
-                    output_->GetBufferedAudioSampleFrameCount(&buffered);
-                    graph_->set_value("buffered-audio",
-                                      static_cast<double>(buffered) /
-                                          (decklink_format_desc_.audio_cadence[0] * decklink_format_desc_.field_count *
-                                           config_.buffer_depth()));
+                    if (SUCCEEDED(output_->GetBufferedAudioSampleFrameCount(&buffered))) {
+                        graph_->set_value("buffered-audio",
+                                          static_cast<double>(buffered) /
+                                              (decklink_format_desc_.audio_cadence[0] *
+                                               decklink_format_desc_.field_count * config_.buffer_depth()));
+                        graph_->set_value("buffered-audio-sample-frames", buffered);
+                        graph_->set_value("buffered-audio-ms",
+                                          buffered * 1000.0 / decklink_format_desc_.audio_sample_rate);
+                        if (buffered == 0)
+                            graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-buffer-empty");
+                    } else {
+                        graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-buffer-query-failed");
+                    }
                 }
             }
 
