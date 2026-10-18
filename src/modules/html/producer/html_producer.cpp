@@ -35,6 +35,7 @@
 #include <common/assert.h>
 #include <common/diagnostics/graph.h>
 #include <common/env.h>
+#include <common/except.h>
 #include <common/future.h>
 #include <common/os/filesystem.h>
 #include <common/timer.h>
@@ -125,6 +126,8 @@ class html_client
     bool                                 gpu_enabled_;
     bool                                 shared_texture_enable_;
     tbb::concurrent_queue<std::wstring>  javascript_before_load_;
+    std::mutex                          javascript_mutex_;
+    bool                                recovery_stopped_ = false;
     std::atomic<bool>                    loaded_;
     std::atomic<bool>                    not_found_;
     std::atomic<bool>                    closing_;
@@ -212,9 +215,14 @@ class html_client
 
     void reload()
     {
-        html::begin_invoke([this] {
+        html::invoke([this] {
             if (browser_ != nullptr) {
-                renderer_termination_times_.clear();
+                {
+                    std::lock_guard<std::mutex> lock(javascript_mutex_);
+                    renderer_termination_times_.clear();
+                    loaded_           = false;
+                    recovery_stopped_ = false;
+                }
                 browser_->Reload();
             }
         });
@@ -406,6 +414,12 @@ class html_client
 
     void execute_javascript(const std::wstring& javascript)
     {
+        std::lock_guard<std::mutex> lock(javascript_mutex_);
+        if (recovery_stopped_)
+            CASPAR_THROW_EXCEPTION(invalid_operation()
+                                   << msg_info(print() + L" renderer recovery stopped; "
+                                                        L"manual RELOAD or REMOVE/LOAD is required."));
+
         if (!loaded_) {
             javascript_before_load_.push(javascript);
         } else {
@@ -629,18 +643,29 @@ class html_client
                    renderer_crash_window_secs)
             renderer_termination_times_.pop_front();
 
-        if (renderer_termination_times_.size() >= max_renderer_reloads) {
-            CASPAR_LOG(error) << "[html_producer] " << print() << L" renderer process terminated (status: "
-                              << static_cast<int>(status) << L"); already reloaded after " << max_renderer_reloads
-                              << L" terminations within " << static_cast<int>(renderer_crash_window_secs)
-                              << L"s; giving up on automatic reload. Manual RELOAD or REMOVE/LOAD is required.";
-            return;
+        {
+            std::lock_guard<std::mutex> lock(javascript_mutex_);
+            if (recovery_stopped_)
+                return;
+
+            loaded_ = false;
+            if (renderer_termination_times_.size() >= max_renderer_reloads) {
+                recovery_stopped_ = true;
+                std::wstring javascript;
+                while (javascript_before_load_.try_pop(javascript)) {
+                }
+                CASPAR_LOG(error) << "[html_producer] " << print() << L" renderer process terminated (status: "
+                                  << static_cast<int>(status) << L"); already reloaded after " << max_renderer_reloads
+                                  << L" terminations within " << static_cast<int>(renderer_crash_window_secs)
+                                  << L"s; giving up on automatic reload and discarding pending JavaScript. "
+                                  << L"Further JavaScript commands will fail. Manual RELOAD or REMOVE/LOAD is required.";
+                return;
+            }
         }
 
         renderer_termination_times_.push_back(now);
         CASPAR_LOG(warning) << "[html_producer] " << print() << L" renderer process terminated (status: "
                             << static_cast<int>(status) << L"), reloading.";
-        loaded_ = false;
         browser->Reload();
     }
 
@@ -675,7 +700,11 @@ class html_client
 
     void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) override
     {
-        if (not_found_)
+        if (!frame->IsMain())
+            return;
+
+        std::lock_guard<std::mutex> lock(javascript_mutex_);
+        if (not_found_ || recovery_stopped_)
             return;
 
         loaded_ = true;
