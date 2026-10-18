@@ -55,6 +55,8 @@
 #include <tbb/concurrent_queue.h>
 #include <tbb/parallel_for.h>
 
+#include <chrono>
+#include <deque>
 #include <mutex>
 
 #include <include/cef_app.h>
@@ -127,11 +129,7 @@ class html_client
     std::atomic<bool>                    not_found_;
     std::atomic<bool>                    closing_;
 
-    // Bounds OnRenderProcessTerminated's auto-reload so a persistently crash-looping renderer
-    // (e.g. a reproducible CEF SIGILL - see GitHub issue #1812) can't spin this layer in a tight
-    // crash/respawn loop forever; see max_renderer_crashes below.
-    std::atomic<int> renderer_crash_count_;
-    caspar::timer     renderer_crash_window_;
+    std::deque<std::chrono::steady_clock::time_point> renderer_termination_times_;
 
     std::unique_ptr<ffmpeg::AudioResampler> audioResampler_;
 
@@ -210,15 +208,15 @@ class html_client
         loaded_    = false;
         not_found_ = false;
         closing_   = false;
-
-        renderer_crash_count_ = 0;
     }
 
     void reload()
     {
         html::begin_invoke([this] {
-            if (browser_ != nullptr)
+            if (browser_ != nullptr) {
+                renderer_termination_times_.clear();
                 browser_->Reload();
+            }
         });
     }
 
@@ -614,11 +612,7 @@ class html_client
 
     CefRefPtr<CefRequestHandler> GetRequestHandler() override { return this; }
 
-    // A crash/kill of the (separate-process) renderer leaves this browser instance permanently blank
-    // otherwise - respawn it the same way an explicit RELOAD would, rather than losing the layer for
-    // good. But if the renderer keeps crashing immediately after each respawn (e.g. a reproducible CEF
-    // bug), give up after a few attempts instead of busy-looping forever - see GitHub issue #1812.
-    static constexpr int    max_renderer_crashes       = 5;
+    static constexpr int    max_renderer_reloads       = 5;
     static constexpr double renderer_crash_window_secs = 60.0;
 
     void OnRenderProcessTerminated(CefRefPtr<CefBrowser> browser,
@@ -629,22 +623,24 @@ class html_client
         if (closing_)
             return;
 
-        if (renderer_crash_window_.elapsed() > renderer_crash_window_secs) {
-            renderer_crash_count_ = 0;
-            renderer_crash_window_.restart();
-        }
+        const auto now = std::chrono::steady_clock::now();
+        while (!renderer_termination_times_.empty() &&
+               std::chrono::duration<double>(now - renderer_termination_times_.front()).count() >=
+                   renderer_crash_window_secs)
+            renderer_termination_times_.pop_front();
 
-        if (++renderer_crash_count_ > max_renderer_crashes) {
+        if (renderer_termination_times_.size() >= max_renderer_reloads) {
             CASPAR_LOG(error) << "[html_producer] " << print() << L" renderer process terminated (status: "
-                              << static_cast<int>(status) << L") " << max_renderer_crashes
-                              << L" times within " << static_cast<int>(renderer_crash_window_secs)
-                              << L"s - giving up on automatic reload to avoid a crash loop; this layer "
-                                 L"needs a manual RELOAD (or REMOVE/LOAD) to recover.";
+                              << static_cast<int>(status) << L"); already reloaded after " << max_renderer_reloads
+                              << L" terminations within " << static_cast<int>(renderer_crash_window_secs)
+                              << L"s; giving up on automatic reload. Manual RELOAD or REMOVE/LOAD is required.";
             return;
         }
 
+        renderer_termination_times_.push_back(now);
         CASPAR_LOG(warning) << "[html_producer] " << print() << L" renderer process terminated (status: "
                             << static_cast<int>(status) << L"), reloading.";
+        loaded_ = false;
         browser->Reload();
     }
 
