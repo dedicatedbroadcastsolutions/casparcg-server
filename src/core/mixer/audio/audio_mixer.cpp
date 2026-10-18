@@ -148,8 +148,6 @@ struct audio_mixer::impl
             if (incomplete_samples != 0) {
                 graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-invalid-buffer");
                 item_size -= incomplete_samples;
-                if (item_size == 0)
-                    continue;
             }
 
             size_t         last_size = 0;
@@ -190,10 +188,13 @@ struct audio_mixer::impl
                     sample_value = static_cast<double>(last_ptr[n]);
                 } else if (n < last_size + item_size) {
                     sample_value = static_cast<double>(ptr[n - last_size]);
-                } else {
+                } else if (item_size >= channels_) {
                     // If we run out of samples, hold the last sample value per channel
                     const auto offset = item_size - channels_ + n % channels_;
                     sample_value = static_cast<double>(ptr[offset]);
+                } else if (last_size >= channels_) {
+                    const auto offset = last_size - channels_ + n % channels_;
+                    sample_value = static_cast<double>(last_ptr[offset]);
                 }
 
                 double applied_volume = item.transform.volume;

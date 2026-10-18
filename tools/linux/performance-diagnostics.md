@@ -47,9 +47,10 @@ by these measurements.
 
 The mixer discards trailing samples that do not form a complete interleaved
 channel frame and records `audio-invalid-buffer`. If no complete channel frame
-remains, that item's audio is discarded for the tick; other items still mix.
-Discarding the entire item also drops its cadence and volume history, so a
-returning tagged stream uses the normal cadence startup behavior.
+remains, valid cadence-buffered audio is still consumed, with per-channel hold
+if it runs short. Without any complete current or buffered audio, that item
+contributes silence. Other items still mix, and an invalid input does not reset
+the stream's cadence or volume history.
 
 Complete but short audio retains the existing last-sample-per-channel hold.
 `audio-buffer-underflow` records each item/tick requiring that hold after
@@ -67,7 +68,8 @@ ctest --test-dir build -R '^audio_mixer$' --output-on-failure
 
 The production-backed test covers incomplete channel frames, fixed and variable
 cadence, tagged and untagged streams, startup/carry-over, recovery after invalid
-input, output length, warning events, and unchanged volume ramps.
+input, queued-audio preservation on invalid input, output length, warning events,
+and unchanged volume ramps.
 
 Peak metering saturates the magnitude of signed 32-bit negative full scale to
 `INT32_MAX`, preserving the existing OSC integer type. This avoids signed
