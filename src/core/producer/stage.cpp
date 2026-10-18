@@ -47,6 +47,8 @@ namespace {
 // Exposes the mixer/transform properties applied via the MIXER family of AMCP commands (opacity, fill,
 // clip, etc.) as OSC state, in addition to the producer state layer::state() already provides.
 // See GitHub issue #37 - these were never sent over OSC, only queryable synchronously via AMCP.
+// Captured here but published only once their associated frame has actually been rendered/output,
+// by carrying it through the mixer's buffering pipeline (see mixer::transforms()).
 monitor::state transform_state(const frame_transform& transform)
 {
     monitor::state state;
@@ -76,10 +78,6 @@ struct stage::impl : public std::enable_shared_from_this<impl>
     std::map<int, layer>                layers_;
     std::map<int, tweened_transform>    tweens_;
     std::set<int>                       routeSources;
-
-    // Only the last transform actually sent to OSC subscribers for each layer, so unchanged mixer
-    // properties (opacity, fill, clip, etc.) aren't retransmitted every tick - see GitHub issue #37.
-    std::map<int, frame_transform> last_sent_transforms_;
 
     mutable std::mutex      format_desc_mutex_;
     core::video_format_desc format_desc_;
@@ -145,6 +143,7 @@ struct stage::impl : public std::enable_shared_from_this<impl>
     {
     }
 
+    /// Produces channel frames and captures their transforms without marking those settings as applied.
     const stage_frames operator()(uint64_t                                     frame_number,
                                   std::vector<int>&                            fetch_background,
                                   std::function<void(int, const layer_frame&)> routesCb)
@@ -247,19 +246,8 @@ struct stage::impl : public std::enable_shared_from_this<impl>
 
                 monitor::state state;
                 for (auto& p : layers_) {
-                    state["layer"][p.first] = p.second.state();
-
-                    auto transform = tweens_[p.first].fetch();
-                    auto last_sent = last_sent_transforms_.find(p.first);
-                    if (last_sent == last_sent_transforms_.end() || last_sent->second != transform) {
-                        state["layer"][p.first]["transform"] = transform_state(transform);
-                        last_sent_transforms_[p.first]        = transform;
-                    }
-                }
-
-                // Stop tracking layers that no longer exist, so this doesn't grow unbounded.
-                for (auto it = last_sent_transforms_.begin(); it != last_sent_transforms_.end();) {
-                    it = layers_.find(it->first) == layers_.end() ? last_sent_transforms_.erase(it) : std::next(it);
+                    state["layer"][p.first]                           = p.second.state();
+                    result.transforms["layer"][p.first]["transform"] = transform_state(tweens_[p.first].fetch());
                 }
 
                 state_ = std::move(state);
