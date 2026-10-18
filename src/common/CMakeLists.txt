@@ -9,6 +9,7 @@ set(SOURCES
 		base64.cpp
 		env.cpp
 		filesystem.cpp
+		locale.cpp
 		log.cpp
 		tweener.cpp
 		utf.cpp
@@ -49,6 +50,7 @@ set(HEADERS
 		except.h
 		filesystem.h
 		future.h
+		locale.h
 		log.h
 		memory.h
 		memshfl.h
