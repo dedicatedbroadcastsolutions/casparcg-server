@@ -43,6 +43,32 @@ between events within the same interval.
 No encoder thread counts, scheduling policy, or affinity defaults are changed
 by these measurements.
 
+## Mixer audio buffer validation
+
+The mixer discards trailing samples that do not form a complete interleaved
+channel frame and records `audio-invalid-buffer`. If no complete channel frame
+remains, that item's audio is discarded for the tick; other items still mix.
+Discarding the entire item also drops its cadence and volume history, so a
+returning tagged stream uses the normal cadence startup behavior.
+
+Complete but short audio retains the existing last-sample-per-channel hold.
+`audio-buffer-underflow` records each item/tick requiring that hold after
+available cadence-buffered audio is consumed. These diagnostics do not identify
+the upstream reason for short or malformed audio and do not establish a cause
+for persistent SDI silence.
+
+With a normal configured build, enable `BUILD_TESTING` and run:
+
+```sh
+cmake -S src -B build -DBUILD_TESTING=ON
+cmake --build build --target audio_mixer_test
+ctest --test-dir build -R '^audio_mixer$' --output-on-failure
+```
+
+The production-backed test covers incomplete channel frames, fixed and variable
+cadence, tagged and untagged streams, startup/carry-over, recovery after invalid
+input, output length, warning events, and unchanged volume ramps.
+
 ## External capture
 
 Run on the actual playout server, using its CasparCG PID in place of `PID`.
