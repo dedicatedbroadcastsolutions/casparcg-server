@@ -81,7 +81,7 @@ void check_buffers(const spl::shared_ptr<captured_graph>& sink)
                 submit(mixer, input, tagged ? &tag : nullptr);
                 const auto output   = mixer(desc, 4);
                 const auto complete = size - size % channels;
-                const auto prefix   = variable && tagged && complete ? channels : 0;
+                const auto prefix   = variable && tagged && size ? channels : 0;
 
                 require(output.size() == 4 * channels, "Mixer changed output length");
                 for (size_t n = 0; n < output.size(); ++n) {
@@ -95,7 +95,7 @@ void check_buffers(const spl::shared_ptr<captured_graph>& sink)
                 require(sink->warnings["audio-invalid-buffer"] - invalid_before == (size % channels != 0),
                         "Malformed buffer diagnostic missing or spurious");
                 require(sink->warnings["audio-buffer-underflow"] - under_before ==
-                            (complete > 0 && complete + prefix < output.size()),
+                            (size > 0 && complete + prefix < output.size()),
                         "Underflow diagnostic missing or spurious");
             }
         }
@@ -132,10 +132,28 @@ void check_cadence_and_recovery()
 
     submit(mixer, std::vector<int32_t>(4 * c, 300), &tag);
     output = mixer(desc, 4);
-    require(std::all_of(output.begin(), output.begin() + c, [](auto v) { return v == 0; }),
-            "Discarded stream did not reset cadence startup");
-    require(std::all_of(output.begin() + c, output.end(), [](auto v) { return v == 300; }),
+    require(std::all_of(output.begin(), output.end(), [](auto v) { return v == 300; }),
             "Valid audio did not recover after malformed input");
+}
+
+void check_buffered_audio_on_invalid_input()
+{
+    const auto  desc = format(true);
+    const auto  c    = desc.audio_channels;
+    const int   tag  = 0;
+    audio_mixer mixer(spl::make_shared<diagnostics::graph>());
+    submit(mixer, std::vector<int32_t>(4 * c, 100), &tag);
+    mixer(desc, 4);
+
+    submit(mixer, {999}, &tag);
+    auto output = mixer(desc, 4);
+    require(std::all_of(output.begin(), output.end(), [](auto v) { return v == 100; }),
+            "Malformed source discarded valid queued audio instead of preserving channel hold");
+
+    submit(mixer, std::vector<int32_t>(4 * c, 200), &tag);
+    output = mixer(desc, 4);
+    require(std::all_of(output.begin(), output.end(), [](auto v) { return v == 200; }),
+            "Malformed source reset an existing cadence stream");
 }
 
 void check_volume_ramp()
@@ -180,6 +198,7 @@ int main()
     try {
         const auto sink = spl::make_shared<captured_graph>();
         diagnostics::spi::register_sink_factory([sink] { return sink; });
+        check_buffered_audio_on_invalid_input();
         check_buffers(sink);
         check_cadence_and_recovery();
         check_volume_ramp();
