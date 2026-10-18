@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <stdexcept>
 #include <vector>
@@ -24,11 +25,12 @@ void require(bool condition, const char* message)
 
 struct captured_graph : diagnostics::spi::graph_sink
 {
-    std::map<std::string, int> warnings;
+    std::map<std::string, int>    warnings;
+    std::map<std::string, double> values;
 
     void activate() override {}
     void set_text(const std::wstring&) override {}
-    void set_value(const std::string&, double) override {}
+    void set_value(const std::string& name, double value) override { values[name] = value; }
     void set_color(const std::string&, int) override {}
     void auto_reset() override {}
     void set_tag(diagnostics::tag_severity severity, const std::string& name) override
@@ -150,6 +152,27 @@ void check_volume_ramp()
         require(output.data()[n] == 1200 - 200 * (n / desc.audio_channels), "Volume ramp changed");
 }
 
+void check_negative_full_scale(const spl::shared_ptr<captured_graph>& sink)
+{
+    const auto                 desc                = format(false);
+    const auto                 full_scale          = std::numeric_limits<int32_t>::max();
+    const auto                 negative_full_scale = std::numeric_limits<int32_t>::min();
+    audio_mixer                mixer(spl::make_shared<diagnostics::graph>());
+    const std::vector<int32_t> samples(4 * desc.audio_channels, negative_full_scale);
+    const auto                 clipping_before = sink->warnings["audio-clipping"];
+    submit(mixer, samples, nullptr);
+    const auto output = mixer(desc, 4);
+    require(std::all_of(output.begin(), output.end(), [=](auto v) { return v == negative_full_scale; }),
+            "Peak diagnostics changed negative full-scale audio");
+    require(sink->values["volume"] == 1.0, "Negative full-scale peak did not report full volume");
+    require(sink->warnings["audio-clipping"] == clipping_before + 1, "Negative full-scale clipping was missed");
+    const auto state  = mixer.state();
+    const auto volume = std::find_if(state.begin(), state.end(), [](const auto& p) { return p.first == "volume"; });
+    require(volume != state.end() && volume->second.size() == desc.audio_channels, "Volume telemetry shape changed");
+    for (const auto& value : volume->second)
+        require(boost::get<int32_t>(value) == full_scale, "Negative full-scale peak overflowed OSC telemetry");
+}
+
 } // namespace
 
 int main()
@@ -160,6 +183,7 @@ int main()
         check_buffers(sink);
         check_cadence_and_recovery();
         check_volume_ramp();
+        check_negative_full_scale(sink);
         std::cout << "Audio mixer regressions passed\n";
         return 0;
     } catch (const std::exception& e) {

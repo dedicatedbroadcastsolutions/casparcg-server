@@ -262,7 +262,11 @@ struct audio_mixer::impl
         auto max = std::vector<int32_t>(channels_, std::numeric_limits<int32_t>::min());
         for (size_t n = 0; n < result.size(); n += channels_) {
             for (int ch = 0; ch < channels_; ++ch) {
-                max[ch] = std::max(max[ch], std::abs(result[n + ch]));
+                const auto sample = result[n + ch];
+                const auto magnitude = sample == std::numeric_limits<int32_t>::min()
+                                           ? std::numeric_limits<int32_t>::max()
+                                           : std::abs(sample);
+                max[ch] = std::max(max[ch], magnitude);
             }
         }
 
