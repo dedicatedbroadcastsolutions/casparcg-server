@@ -21,7 +21,40 @@
 
 #include "monitor.h"
 
+#include <common/log.h>
+
+#include <iomanip>
+#include <utility>
+
 namespace caspar { namespace decklink {
+
+audio_schedule_monitor::audio_schedule_monitor(std::wstring label)
+    : label_(std::move(label))
+{
+}
+
+void audio_schedule_monitor::report(HRESULT             result,
+                                    BMDTimeValue        stream_time,
+                                    int                 sample_frames,
+                                    diagnostics::graph& graph)
+{
+    if (FAILED(result)) {
+        ++failures_;
+        graph.set_tag(diagnostics::tag_severity::WARNING, "audio-schedule-failed");
+        if (!last_error_ || *last_error_ != result) {
+            CASPAR_LOG(error) << label_ << L" ScheduleAudioSamples failed (HRESULT=0x" << std::hex
+                              << static_cast<std::uint32_t>(result) << std::dec << L", stream-time=" << stream_time
+                              << L", sample-frames=" << sample_frames << L"). Audio may be missing; "
+                              << L"continuing the output timeline without restarting the device.";
+        }
+        last_error_ = result;
+    } else if (last_error_) {
+        CASPAR_LOG(info) << label_ << L" ScheduleAudioSamples is accepting audio again after " << failures_
+                         << L" failed submissions. This does not confirm audible output.";
+        last_error_.reset();
+        failures_ = 0;
+    }
+}
 
 core::monitor::state get_state_for_port(const port_configuration&      port_config,
                                         const core::video_format_desc& channel_format)

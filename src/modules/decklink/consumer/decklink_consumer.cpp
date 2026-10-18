@@ -679,6 +679,7 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
 
     std::atomic<bool>              abort_request_{false};
     std::shared_ptr<decklink_vanc> vanc_;
+    audio_schedule_monitor        audio_schedule_monitor_;
 
   public:
     decklink_consumer(const configuration& config, core::video_format_desc channel_format_desc, int channel_index)
@@ -687,6 +688,7 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         , format_strategy_(create_format_strategy(config))
         , channel_format_desc_(std::move(channel_format_desc))
         , decklink_format_desc_(get_decklink_format(config.primary, channel_format_desc_))
+        , audio_schedule_monitor_(print())
     {
         graph_->set_color("tick-time", diagnostics::color(0.0f, 0.6f, 0.9f));
         graph_->set_color("late-frame", diagnostics::color(0.6f, 0.3f, 0.3f));
@@ -694,6 +696,7 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         graph_->set_color("flushed-frame", diagnostics::color(0.4f, 0.3f, 0.8f));
         graph_->set_color("buffered-audio", diagnostics::color(0.9f, 0.9f, 0.5f));
         graph_->set_color("buffered-video", diagnostics::color(0.2f, 0.9f, 0.9f));
+        graph_->set_color("audio-schedule-failed", diagnostics::color(0.8f, 0.2f, 0.2f));
 
         if (config.duplex != configuration::duplex_t::default_duplex) {
             set_duplex(iface_cast<IDeckLinkAttributes_v10_11>(decklink_),
@@ -1069,15 +1072,16 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
 
         audio_container_.push_back(std::move(audio));
 
-        if (FAILED(output_->ScheduleAudioSamples(audio_container_.back().data(),
-                                                 nb_samples,
-                                                 audio_scheduled_,
-                                                 decklink_format_desc_.audio_sample_rate,
-                                                 nullptr))) {
-            CASPAR_LOG(error) << print() << L" Failed to schedule audio.";
-        }
+        // A null sampleFramesWritten requests a blocking, all-samples submission.
+        const auto result = output_->ScheduleAudioSamples(audio_container_.back().data(),
+                                                          nb_samples,
+                                                          audio_scheduled_,
+                                                          decklink_format_desc_.audio_sample_rate,
+                                                          nullptr);
+        audio_schedule_monitor_.report(result, audio_scheduled_, nb_samples, *graph_);
 
-        audio_scheduled_ += nb_samples; // TODO - what if there are too many/few samples in this frame?
+        // Keep later audio aligned with video even when this interval could not be submitted.
+        audio_scheduled_ += nb_samples;
     }
 
     void schedule_next_video(std::shared_ptr<void> image_data, int nb_samples, BMDTimeValue display_time)
