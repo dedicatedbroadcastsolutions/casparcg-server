@@ -69,6 +69,16 @@ target_include_directories(decklink PRIVATE
 target_precompile_headers(decklink PRIVATE "StdAfx.h")
 
 set_target_properties(decklink PROPERTIES FOLDER modules)
+
+if(BUILD_TESTING)
+	add_executable(decklink_monitor_test consumer/monitor_test.cpp)
+	target_compile_features(decklink_monitor_test PRIVATE cxx_std_20)
+	target_include_directories(decklink_monitor_test PRIVATE ../..)
+	target_link_libraries(decklink_monitor_test PRIVATE decklink ${Boost_LIBRARIES})
+	add_test(NAME decklink_monitor COMMAND decklink_monitor_test)
+	set_tests_properties(decklink_monitor PROPERTIES TIMEOUT 30)
+endif()
+
 source_group(sources ./*)
 source_group(sources\\consumer consumer/*)
 source_group(sources\\interop interop/*)

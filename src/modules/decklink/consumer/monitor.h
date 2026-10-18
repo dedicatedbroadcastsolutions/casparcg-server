@@ -21,12 +21,31 @@
 
 #pragma once
 
+#include "../decklink_api.h"
 #include "config.h"
 
 #include <core/monitor/monitor.h>
 
+#include <common/diagnostics/graph.h>
+
+#include <cstdint>
+#include <optional>
+
 namespace caspar { namespace decklink {
 
 core::monitor::state get_state_for_config(const configuration& config, const core::video_format_desc& channel_format);
+
+class audio_schedule_monitor
+{
+    std::optional<HRESULT> last_error_;
+    std::uint64_t         failures_ = 0;
+    std::wstring          label_;
+
+  public:
+    explicit audio_schedule_monitor(std::wstring label);
+
+    /// Counts every failed submission while logging only error transitions and resumed SDK acceptance.
+    void report(HRESULT result, BMDTimeValue stream_time, int sample_frames, diagnostics::graph& graph);
+};
 
 }} // namespace caspar::decklink

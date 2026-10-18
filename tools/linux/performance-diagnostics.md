@@ -43,6 +43,40 @@ between events within the same interval.
 No encoder thread counts, scheduling policy, or affinity defaults are changed
 by these measurements.
 
+## DeckLink audio submission failures
+
+Every failed `ScheduleAudioSamples` call records an `audio-schedule-failed`
+warning event. The first failure, and any change of HRESULT during a failure
+burst, logs the device/channel label, hexadecimal HRESULT, requested stream
+timestamp (in audio sample frames), and sample-frame count. Repeated identical
+failures do not log a line per frame; the diagnostics summaries retain their
+counts. The next successful submission logs the number of failed calls in the
+burst once. Successful SDK submission does not confirm audible SDI output.
+
+The null `sampleFramesWritten` argument retains the SDK's blocking,
+all-samples submission mode; this is not a partial-write retry implementation.
+The audio timestamp continues to advance with video after a failed submission.
+Rolling it back would schedule later audio against an older video interval;
+the failed interval is not silently retried at a different time.
+
+This is reporting hardening, not automatic recovery. It does not flush audio,
+restart the device, change video pacing, or attempt to detect silence from
+successful submissions. Device reinitialization needs hardware validation and
+safe callback teardown before it can be used as a recovery policy.
+
+With `BUILD_TESTING` enabled:
+
+```sh
+cmake --build build --target decklink_monitor_test
+ctest --test-dir build -R '^decklink_monitor$' --output-on-failure
+```
+
+The test exercises the production error reporter with injected HRESULTs:
+healthy calls, 100 identical failures, changed errors, resumption, a new burst,
+and independent devices. It verifies text-log suppression and exact diagnostic
+counts without DeckLink hardware; it does not simulate or validate driver
+recovery.
+
 ## External capture
 
 Run on the actual playout server, using its CasparCG PID in place of `PID`.
