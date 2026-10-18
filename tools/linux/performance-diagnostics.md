@@ -69,6 +69,11 @@ The production-backed test covers incomplete channel frames, fixed and variable
 cadence, tagged and untagged streams, startup/carry-over, recovery after invalid
 input, output length, warning events, and unchanged volume ramps.
 
+Peak metering saturates the magnitude of signed 32-bit negative full scale to
+`INT32_MAX`, preserving the existing OSC integer type. This avoids signed
+absolute-value overflow and reports full volume/clipping without changing the
+audio samples. The regression also checks the peak value and OSC vector shape.
+
 ## External capture
 
 Run on the actual playout server, using its CasparCG PID in place of `PID`.
