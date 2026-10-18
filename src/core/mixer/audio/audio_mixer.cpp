@@ -72,6 +72,8 @@ struct audio_mixer::impl
         graph_->set_color("volume", diagnostics::color(1.0f, 0.8f, 0.1f));
         graph_->set_color("audio-clipping", diagnostics::color(0.3f, 0.6f, 0.3f));
         graph_->set_color("audio-buffer-overflow", diagnostics::color(0.6f, 0.3f, 0.3f));
+        graph_->set_color("audio-buffer-underflow", diagnostics::color(0.8f, 0.4f, 0.1f));
+        graph_->set_color("audio-invalid-buffer", diagnostics::color(0.8f, 0.2f, 0.2f));
         transform_stack_.push(core::audio_transform());
     }
 
@@ -142,6 +144,14 @@ struct audio_mixer::impl
             auto item_size = item.samples.size();
             auto dst_size  = result.size();
 
+            const auto incomplete_samples = item_size % channels_;
+            if (incomplete_samples != 0) {
+                graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-invalid-buffer");
+                item_size -= incomplete_samples;
+                if (item_size == 0)
+                    continue;
+            }
+
             size_t         last_size = 0;
             const int32_t* last_ptr  = nullptr;
 
@@ -169,6 +179,9 @@ struct audio_mixer::impl
             // Store current volume for next frame
             next_volumes[item.tag] = item.transform.volume;
 
+            if (last_size + item_size < dst_size)
+                graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-buffer-underflow");
+
             // Sample collection and volume application loop
             for (auto n = 0; n < dst_size; ++n) {
                 double sample_value = 0.0;
@@ -179,11 +192,7 @@ struct audio_mixer::impl
                     sample_value = static_cast<double>(ptr[n - last_size]);
                 } else {
                     // If we run out of samples, hold the last sample value per channel
-                    int channel_pos = n % channels_;
-                    int offset      = int(item_size) - (channels_ - channel_pos);
-                    if (offset < 0) {
-                        offset = channel_pos;
-                    }
+                    const auto offset = item_size - channels_ + n % channels_;
                     sample_value = static_cast<double>(ptr[offset]);
                 }
 
