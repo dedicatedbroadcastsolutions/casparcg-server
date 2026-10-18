@@ -50,8 +50,8 @@ You can figure out which files you need by looking at each of the `ExternalProje
 
 We only officially support Ubuntu LTS releases, other distros may work but often run into build issues. We are happy to accept PRs to resolve these issues, but are unlikely to write fixes ourselves.
 
-We currently document two approaches to building CasparCG. The recommended way is to use the `deb` packaging we have in the repository, but we only provide that for Ubuntu LTS releases.
-Other deb based distros can work with some tweaks to one of those, other distros will need something else which is not documented here.
+We currently document two approaches to building CasparCG. The recommended way is to use the `deb` packaging we have in the repository for Ubuntu and Debian.
+For native builds on other distributions, follow the Development steps below.
 
 We also provide a script to produce a build in docker, but this is not recommended unless absolutely necessary. The resulting builds are often rather brittle depending on where they are used.
 
@@ -80,13 +80,26 @@ Before beginning, check the build options section below, to decide if you want t
 1. `git clone --single-branch --branch master https://github.com/CasparCG/server casparcg-server-master`
 2. `cd casparcg-server-master`
 3. Install dependencies, this can be done with `sudo ./tools/linux/install-dependencies`
-4. If using system CEF (default & recommended), `sudo add-apt-repository ppa:casparcg/ppa` and `sudo apt-get install casparcg-cef-api15000-dev`
-5. `mkdir build && cd build`
-6. `cmake ../src` You can add any of the build options from below to this command
-7. `cmake --build . --parallel`
-8. `cmake --install . --prefix staging`
+4. `mkdir build && cd build`
+5. `cmake ../src` You can add any of the build options from below to this command
+6. `cmake --build . --parallel`
+7. `cmake --install . --prefix staging`
 
 If all goes to plan, a folder called 'staging' has been created with everything you need to run CasparCG server.
+
+The dependency installer handles Ubuntu 24.04/26.04, Debian Trixie/Sid, Arch Linux, Fedora Rawhide, and openSUSE Leap 16.0/Tumbleweed, including CEF setup. It adds the CasparCG PPA on Ubuntu and performs a full system upgrade on Arch. Build as your normal user after installing dependencies.
+HTML is enabled by default. Compatible packaged CEF is used on Ubuntu, Arch, and Fedora; Debian and openSUSE default to prebuilt CEF binaries with only the wrapper compiled locally. The downloaded archive is x86-64 only; Ubuntu ARM64 requires its matching PPA package.
+These builds require CMake 3.28 or newer and Boost 1.83 or newer. Non-Ubuntu targets are experimental.
+
+Fedora CI uses Rawhide because Fedora 44/45 currently package CEF 146, which is
+older than the required API 15000. Like Arch, the Fedora job builds with system
+CEF and checks the installed binary's RPATH/RUNPATH, library resolution, and
+relocations without setting `LD_LIBRARY_PATH`.
+
+Debian CI checks compilation only: it downloads prebuilt CEF, compiles its wrapper,
+and builds CasparCG with HTML enabled. It does not install or package the bundled
+CEF runtime, so these jobs do not produce `.deb` artifacts. Native development
+installs still include the bundled runtime when `USE_SYSTEM_CEF=OFF`.
 
 ### Regression tests
 
@@ -107,7 +120,9 @@ The test uses local UDP sockets and does not require a GPU or broadcast hardware
 
 -DUSE_STATIC_BOOST=ON - (Linux only, default OFF) statically link against Boost.
 
--DUSE_SYSTEM_CEF=OFF - (Linux only, default ON) use the version of CEF from your OS. This expects to be using builds from https://launchpad.net/~casparcg/+archive/ubuntu/ppa
+-DUSE_SYSTEM_CEF=OFF - (Linux only, default OFF on Debian/openSUSE and ON elsewhere) use pinned prebuilt CEF binaries instead of a compatible system CEF package.
+
+-DENABLE_VULKAN=ON - (Linux only, default OFF) enable Vulkan support; requires a compatible Vulkan SDK.
 
 -DENABLE_AVX2=ON (Linux only, default OFF) Enable the AVX and AVX2 instruction sets (requires a CPU that supports it)
 
