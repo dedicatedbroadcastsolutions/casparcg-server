@@ -243,6 +243,7 @@ class Decoder
             } catch (...) {
                 CASPAR_LOG_CURRENT_EXCEPTION();
             }
+            input.close();
             eof.store(true);
             output_sender.close();
         });
