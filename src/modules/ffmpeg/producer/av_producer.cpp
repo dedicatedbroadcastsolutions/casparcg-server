@@ -264,6 +264,8 @@ class Decoder
 
     void push(std::shared_ptr<AVPacket> packet)
     {
+        if (eof.load())
+            return;
         input.try_send_blocking(packet); // ignore if we fail to send
     }
 
