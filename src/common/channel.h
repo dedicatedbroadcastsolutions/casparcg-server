@@ -83,7 +83,7 @@ class Receiver final
         if (!state_)
             return true;
         auto lock = boost::unique_lock(state_->lock_);
-        return state_->queue_.empty() && state_->sender_destroyed_;
+        return state_->queue_.empty() && (state_->sender_closed_ || state_->sender_destroyed_);
     }
     bool empty() const
     {
@@ -144,6 +144,7 @@ class Receiver final
         const std::string debug_name_;
 #endif
         bool sender_destroyed_   = false;
+        bool sender_closed_      = false;
         bool receiver_destroyed_ = false;
 
         TryReceiveResult try_receive_locked()
@@ -153,7 +154,7 @@ class Receiver final
                 CASPAR_LOG(trace) << "channel state: " << debug_name_
                                   << ": try_receive_locked: empty, sender_destroyed_ == " << sender_destroyed_;
 #endif
-                return {std::nullopt, sender_destroyed_};
+                return {std::nullopt, sender_closed_ || sender_destroyed_};
             }
             TryReceiveResult retval{std::move(queue_.front()), false};
             queue_.pop();
@@ -166,12 +167,15 @@ class Receiver final
 
         TrySendResult try_send_locked(T&& v)
         {
-            if ((queue_.size() >= capacity_ && !capacity_is_hint_) || receiver_destroyed_) {
+            if ((queue_.size() >= capacity_ && !capacity_is_hint_) || sender_closed_ || sender_destroyed_ ||
+                receiver_destroyed_) {
 #ifdef CASPARCG_DEBUG_CHANNEL
                 CASPAR_LOG(trace) << "channel state: " << debug_name_
-                                  << ": try_send_locked: full, receiver_destroyed_ == " << receiver_destroyed_;
+                                  << ": try_send_locked: full, sender_closed_ == " << sender_closed_
+                                  << ", sender_destroyed_ == " << sender_destroyed_
+                                  << ", receiver_destroyed_ == " << receiver_destroyed_;
 #endif
-                return {std::move(v), receiver_destroyed_};
+                return {std::move(v), sender_closed_ || sender_destroyed_ || receiver_destroyed_};
             }
             queue_.push(std::move(v));
             cond_.notify_all();
@@ -201,6 +205,7 @@ class Receiver final
         template <bool is_sender>
         struct Deleter final
         {
+            // Both endpoint deleters own the same state; the second destruction deletes it.
             void operator()(State* state) noexcept
             {
                 if (!state)
@@ -262,14 +267,23 @@ class Sender final
         if (!state_)
             return true;
         auto lock = boost::unique_lock(state_->lock_);
-        return state_->receiver_destroyed_;
+        return state_->sender_closed_ || state_->sender_destroyed_ || state_->receiver_destroyed_;
+    }
+    void close()
+    {
+        if (!state_)
+            return;
+        auto lock = boost::unique_lock(state_->lock_);
+        state_->sender_closed_ = true;
+        state_->cond_.notify_all();
     }
     bool full() const
     {
         if (!state_)
             return true;
         auto lock = boost::unique_lock(state_->lock_);
-        return state_->receiver_destroyed_ || state_->queue_.size() >= state_->capacity_;
+        return state_->sender_closed_ || state_->sender_destroyed_ || state_->receiver_destroyed_ ||
+               state_->queue_.size() >= state_->capacity_;
     }
     std::size_t capacity() const
     {

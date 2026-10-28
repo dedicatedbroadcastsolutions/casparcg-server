@@ -104,6 +104,7 @@ class Decoder
 
     AVStream* st       = nullptr;
     int64_t   next_pts = AV_NOPTS_VALUE;
+    std::atomic<bool> eof{false};
 
     Sender<std::shared_ptr<AVPacket>>  input;
     Receiver<std::shared_ptr<AVFrame>> output;
@@ -242,6 +243,8 @@ class Decoder
             } catch (...) {
                 CASPAR_LOG_CURRENT_EXCEPTION();
             }
+            eof.store(true);
+            output_sender.close();
         });
     }
 
@@ -257,7 +260,7 @@ class Decoder
         }
     }
 
-    bool want_packet() const { return !input.full(); }
+    bool want_packet() const { return !eof.load() && !input.full(); }
 
     void push(std::shared_ptr<AVPacket> packet)
     {
