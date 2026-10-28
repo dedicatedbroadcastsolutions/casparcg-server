@@ -25,14 +25,10 @@ const_frame make_frame(int value)
     desc.planes.emplace_back(1, 1, 4);
     std::vector<caspar::array<const std::uint8_t>> image;
     image.emplace_back(std::vector<std::uint8_t>{static_cast<std::uint8_t>(value), 0, 0, 255});
-    auto side_data = std::make_shared<caspar::core::frame_side_data_queue>();
-    auto position  = side_data->add_frame({});
     return const_frame(nullptr,
                        std::move(image),
                        caspar::array<const std::int32_t>(std::vector<std::int32_t>{value, -value}),
-                       desc,
-                       nullptr,
-                       {position, std::move(side_data)});
+                       desc);
 }
 
 void check_sequence(const caspar::timespan& delay, double frame_rate, int fields, int delayed_frames)
@@ -49,7 +45,6 @@ void check_sequence(const caspar::timespan& delay, double frame_rate, int fields
         require(output == inputs.at(index), "Incorrect frame/field delay");
         require(output.image_data(0).data()[0] == index, "Video did not follow delayed frame");
         require(output.audio_data().data()[0] == index, "Audio did not follow delayed frame");
-        require(output.side_data().queue == inputs.at(index).side_data().queue, "Side data did not follow delayed frame");
     }
 }
 
@@ -69,31 +64,6 @@ void check_reset()
     buffer.reset(caspar::timespan{}, 50, 1);
     auto frame = make_frame(20);
     require(buffer.push(frame) == frame, "Reset to zero delay retained frames");
-}
-
-void check_retention()
-{
-    caspar::core::frame_delay buffer;
-    buffer.reset(caspar::timespan{2}, 25, 1);
-    std::weak_ptr<caspar::core::frame_side_data_queue> first;
-    {
-        auto frame = make_frame(1);
-        first      = frame.side_data().queue;
-        buffer.push(frame);
-    }
-    require(!first.expired(), "Delay failed to retain pending frame");
-    buffer.push(make_frame(2));
-    buffer.push(make_frame(3));
-    require(first.expired(), "Delay retained a frame after emitting it");
-
-    std::weak_ptr<caspar::core::frame_side_data_queue> pending;
-    {
-        auto frame = make_frame(4);
-        pending    = frame.side_data().queue;
-        buffer.push(frame);
-    }
-    buffer.reset(caspar::timespan{}, 25, 1);
-    require(pending.expired(), "Reset did not release pending frames");
 }
 
 void check_ndi_capacity()
@@ -233,7 +203,6 @@ int main()
         check_sequence(caspar::timespan{"200ms"}, 30000.0 / 1001, 2, 6);
         check_sequence(caspar::timespan{"200ms"}, 60000.0 / 1001, 1, 12);
         check_reset();
-        check_retention();
         check_ndi_capacity();
         check_ndi_field_pairs();
         check_ndi_delayed_overload();

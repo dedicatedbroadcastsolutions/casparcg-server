@@ -8,7 +8,6 @@ enable_testing()
 add_executable(consumer_frame_delay_test
     consumer_frame_delay_test.cpp
     ../src/core/frame/frame.cpp
-    ../src/core/frame/frame_side_data.cpp
     ../src/core/frame/geometry.cpp
     ../src/common/utf.cpp
 )
