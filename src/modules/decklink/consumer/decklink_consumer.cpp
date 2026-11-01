@@ -683,6 +683,18 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
     std::uint64_t                                        audio_recovery_attempts_                 = 0;
     std::optional<std::chrono::steady_clock::time_point> audio_last_recovery_attempt_;
 
+    // Updated every frame by track_scheduling_lead() and referenced in the log messages above, to help
+    // tell apart a DeckLink SDK/driver-side stall from a CasparCG-side scheduling bug: both "lead" values
+    // should stay roughly constant (around 1.0) during healthy playback, since each is replenished 1-for-1
+    // every frame. If only audio_lead_frames_ grows unbounded while video_lead_frames_ and
+    // last_playback_speed_ stay normal, the device's audio pipeline specifically has stalled even though
+    // CasparCG's own scheduling position is correct - pointing at the SDK/driver rather than CasparCG. If
+    // both leads grow together, or last_playback_speed_ drops to 0, the whole device (or CasparCG's own
+    // scheduling) has stalled, not just audio.
+    double audio_lead_frames_   = 1.0;
+    double video_lead_frames_   = 1.0;
+    double last_playback_speed_ = 1.0;
+
     boost::circular_buffer<std::vector<int32_t>> audio_container_{static_cast<unsigned long>(buffer_size_ + 1)};
 
     spl::shared_ptr<diagnostics::graph> graph_;
@@ -717,6 +729,8 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         graph_->set_color("audio-schedule-failed", diagnostics::color(1.0f, 0.0f, 0.0f));
         graph_->set_color("audio-buffer-starved", diagnostics::color(1.0f, 0.5f, 0.0f));
         graph_->set_color("audio-recovered", diagnostics::color(0.0f, 1.0f, 0.0f));
+        graph_->set_color("audio-lead", diagnostics::color(0.9f, 0.5f, 0.9f));
+        graph_->set_color("video-lead", diagnostics::color(0.5f, 0.5f, 0.9f));
 
         if (config.duplex != configuration::duplex_t::default_duplex) {
             set_duplex(iface_cast<IDeckLinkAttributes_v10_11>(decklink_),
@@ -991,6 +1005,8 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
                                            config_.buffer_depth()));
                     handle_audio_buffer_level(buffered);
                 }
+
+                track_scheduling_lead();
             }
 
             core::const_frame frame1 = pop();
@@ -1089,6 +1105,38 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         audio_scheduled_ += nb_samples; // TODO - what if there are too many/few samples in this frame?
     }
 
+    // To help distinguish a DeckLink SDK/driver-side audio stall from a CasparCG-side scheduling bug, this
+    // compares what we believe we have scheduled (video_scheduled_/audio_scheduled_) against the device's
+    // own reported hardware playback position (GetScheduledStreamTime()). Both leads should stay roughly
+    // constant around 1.0 during healthy playback, since each is replenished 1-for-1 every frame. If only
+    // audio_lead_frames_ grows unbounded while video_lead_frames_ and last_playback_speed_ stay normal,
+    // the device's audio pipeline specifically has stalled even though CasparCG's own scheduling position
+    // is correct - pointing at the SDK/driver rather than CasparCG. If both leads grow together, or
+    // last_playback_speed_ drops to 0, the whole device (or CasparCG's own scheduling) has stalled, not
+    // just audio. These are logged alongside each detected failure/recovery below for exactly this
+    // comparison.
+    void track_scheduling_lead()
+    {
+        BMDTimeValue hw_time = 0;
+        double       speed   = 0.0;
+
+        if (SUCCEEDED(output_->GetScheduledStreamTime(decklink_format_desc_.time_scale, &hw_time, &speed))) {
+            video_lead_frames_ =
+                static_cast<double>(video_scheduled_ - hw_time) / decklink_format_desc_.duration / buffer_size_;
+            last_playback_speed_ = speed;
+            graph_->set_value("video-lead", video_lead_frames_);
+        }
+
+        if (config_.embedded_audio &&
+            SUCCEEDED(output_->GetScheduledStreamTime(decklink_format_desc_.audio_sample_rate, &hw_time, &speed))) {
+            const auto nominal_samples_per_frame =
+                decklink_format_desc_.audio_cadence[0] * decklink_format_desc_.field_count;
+            audio_lead_frames_ =
+                static_cast<double>(audio_scheduled_ - hw_time) / nominal_samples_per_frame / buffer_size_;
+            graph_->set_value("audio-lead", audio_lead_frames_);
+        }
+    }
+
     // Some DeckLink driver/hardware combinations have been observed (see e.g.
     // https://github.com/CasparCG/help/issues/24 and the "decklink audio" thread on the forum) to stop
     // actually playing out embedded audio after many hours of continuous operation. Previously this
@@ -1109,7 +1157,9 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
                 CASPAR_LOG(error) << print() << L" ScheduleAudioSamples failed (HRESULT=0x" << std::hex
                                   << static_cast<std::uint32_t>(result) << std::dec << L", stream-time="
                                   << audio_scheduled_ << L", sample-frames=" << nb_samples
-                                  << L"). Audio may be missing on the SDI output.";
+                                  << L"). Audio may be missing on the SDI output. audio-lead=" << audio_lead_frames_
+                                  << L", video-lead=" << video_lead_frames_ << L", playback-speed="
+                                  << last_playback_speed_ << L".";
             }
             audio_schedule_last_error_ = result;
 
@@ -1169,7 +1219,13 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
             CASPAR_LOG(error)
                 << print() << L" DeckLink reports 0 buffered audio samples for " << starvation_threshold
                 << L" consecutive frames despite audio being submitted every frame; the device has likely "
-                   L"stopped playing out audio even though ScheduleAudioSamples() is not failing.";
+                   L"stopped playing out audio even though ScheduleAudioSamples() is not failing. "
+                   L"audio-lead="
+                << audio_lead_frames_ << L", video-lead=" << video_lead_frames_ << L", playback-speed="
+                << last_playback_speed_
+                << L". (audio-lead diverging while video-lead/playback-speed stay near 1.0 points at the "
+                   L"DeckLink SDK/driver rather than CasparCG; both diverging together, or playback-speed "
+                   L"dropping to 0, suggests a wider stall instead.)";
         }
 
         std::wstringstream reason;
@@ -1192,7 +1248,8 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         ++audio_recovery_attempts_;
 
         CASPAR_LOG(warning) << print() << L" " << reason << L" Resetting the DeckLink audio output (attempt #"
-                            << audio_recovery_attempts_ << L").";
+                            << audio_recovery_attempts_ << L"). audio-lead=" << audio_lead_frames_ << L", video-lead="
+                            << video_lead_frames_ << L", playback-speed=" << last_playback_speed_ << L".";
 
         // Re-enabling the audio output resets the device's internal audio FIFO, without touching video
         // output or the shared scheduling clock (audio_scheduled_/video_scheduled_ are left untouched, so
