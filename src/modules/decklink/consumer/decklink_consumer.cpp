@@ -46,9 +46,13 @@
 
 #include <boost/circular_buffer.hpp>
 
+#include <algorithm>
 #include <atomic>
+#include <chrono>
+#include <cmath>
 #include <common/prec_timer.h>
 #include <condition_variable>
+#include <cstdint>
 #include <future>
 #include <memory>
 #include <mutex>
@@ -663,6 +667,22 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
     long long video_scheduled_ = 0;
     long long audio_scheduled_ = 0;
 
+    // Tracks two independent signals of a persistently broken DeckLink audio pipeline (observed in the
+    // field to otherwise require a manual restart), so it can be detected and recovered from
+    // automatically:
+    //  - ScheduleAudioSamples() itself returning a failure HRESULT, handled by
+    //    handle_audio_schedule_result().
+    //  - The device reporting an empty audio buffer for a sustained period despite samples being
+    //    submitted every frame, handled by handle_audio_buffer_level(). This covers reports (e.g.
+    //    https://github.com/CasparCG/help/issues/24) where ScheduleAudioSamples() keeps "succeeding" but
+    //    audio never actually reaches the output.
+    // Both funnel into request_audio_output_reset().
+    std::uint64_t                                        audio_schedule_consecutive_failures_ = 0;
+    std::optional<HRESULT>                               audio_schedule_last_error_;
+    std::uint64_t                                        audio_buffer_starved_consecutive_frames_ = 0;
+    std::uint64_t                                        audio_recovery_attempts_                 = 0;
+    std::optional<std::chrono::steady_clock::time_point> audio_last_recovery_attempt_;
+
     boost::circular_buffer<std::vector<int32_t>> audio_container_{static_cast<unsigned long>(buffer_size_ + 1)};
 
     spl::shared_ptr<diagnostics::graph> graph_;
@@ -694,6 +714,9 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
         graph_->set_color("flushed-frame", diagnostics::color(0.4f, 0.3f, 0.8f));
         graph_->set_color("buffered-audio", diagnostics::color(0.9f, 0.9f, 0.5f));
         graph_->set_color("buffered-video", diagnostics::color(0.2f, 0.9f, 0.9f));
+        graph_->set_color("audio-schedule-failed", diagnostics::color(1.0f, 0.0f, 0.0f));
+        graph_->set_color("audio-buffer-starved", diagnostics::color(1.0f, 0.5f, 0.0f));
+        graph_->set_color("audio-recovered", diagnostics::color(0.0f, 1.0f, 0.0f));
 
         if (config.duplex != configuration::duplex_t::default_duplex) {
             set_duplex(iface_cast<IDeckLinkAttributes_v10_11>(decklink_),
@@ -966,6 +989,7 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
                                       static_cast<double>(buffered) /
                                           (decklink_format_desc_.audio_cadence[0] * decklink_format_desc_.field_count *
                                            config_.buffer_depth()));
+                    handle_audio_buffer_level(buffered);
                 }
             }
 
@@ -1055,15 +1079,134 @@ struct decklink_consumer final : public IDeckLinkVideoOutputCallback
 
         audio_container_.push_back(std::move(audio));
 
-        if (FAILED(output_->ScheduleAudioSamples(audio_container_.back().data(),
-                                                 nb_samples,
-                                                 audio_scheduled_,
-                                                 decklink_format_desc_.audio_sample_rate,
-                                                 nullptr))) {
-            CASPAR_LOG(error) << print() << L" Failed to schedule audio.";
-        }
+        const auto result = output_->ScheduleAudioSamples(audio_container_.back().data(),
+                                                          nb_samples,
+                                                          audio_scheduled_,
+                                                          decklink_format_desc_.audio_sample_rate,
+                                                          nullptr);
+        handle_audio_schedule_result(result, nb_samples);
 
         audio_scheduled_ += nb_samples; // TODO - what if there are too many/few samples in this frame?
+    }
+
+    // Some DeckLink driver/hardware combinations have been observed (see e.g.
+    // https://github.com/CasparCG/help/issues/24 and the "decklink audio" thread on the forum) to stop
+    // actually playing out embedded audio after many hours of continuous operation. Previously this
+    // either went completely unlogged, or (if ScheduleAudioSamples() itself failed) only logged a single
+    // "Failed to schedule audio." message, and otherwise silently continued - leaving the channel without
+    // audio until the whole server process was restarted by an operator. handle_audio_schedule_result()
+    // and handle_audio_buffer_level() below detect the two distinct signatures this has been reported to
+    // take, and both funnel into request_audio_output_reset() once they persist for longer than a
+    // momentary hiccup, mirroring what operators have found works as a manual workaround (re-adding the
+    // consumer) - without disturbing video playback.
+    void handle_audio_schedule_result(HRESULT result, int nb_samples)
+    {
+        if (FAILED(result)) {
+            ++audio_schedule_consecutive_failures_;
+            graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-schedule-failed");
+
+            if (!audio_schedule_last_error_ || *audio_schedule_last_error_ != result) {
+                CASPAR_LOG(error) << print() << L" ScheduleAudioSamples failed (HRESULT=0x" << std::hex
+                                  << static_cast<std::uint32_t>(result) << std::dec << L", stream-time="
+                                  << audio_scheduled_ << L", sample-frames=" << nb_samples
+                                  << L"). Audio may be missing on the SDI output.";
+            }
+            audio_schedule_last_error_ = result;
+
+            // Ignore brief, isolated failures - only react once they persist for longer than about 2
+            // seconds worth of frames, to avoid resetting the audio output over a single momentary glitch.
+            const auto failure_threshold =
+                static_cast<std::uint64_t>(std::max(1.0, std::round(decklink_format_desc_.hz * 2.0)));
+            if (audio_schedule_consecutive_failures_ >= failure_threshold) {
+                std::wstringstream reason;
+                reason << L"ScheduleAudioSamples has failed for " << audio_schedule_consecutive_failures_
+                       << L" consecutive frames.";
+                request_audio_output_reset(reason.str());
+            }
+        } else if (audio_schedule_consecutive_failures_ > 0) {
+            CASPAR_LOG(info) << print() << L" ScheduleAudioSamples is accepting audio again after "
+                             << audio_schedule_consecutive_failures_
+                             << L" failed submissions. This does not confirm audible output.";
+            audio_schedule_consecutive_failures_ = 0;
+            audio_schedule_last_error_.reset();
+            graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-recovered");
+        }
+    }
+
+    // Covers the failure signature most commonly reported in the field: ScheduleAudioSamples() keeps
+    // returning success every frame (so handle_audio_schedule_result() above never sees an error), yet the
+    // device reports zero buffered audio samples - i.e. it has stopped actually consuming/playing out the
+    // samples we keep submitting. GetBufferedAudioSampleFrameCount() is queried once per frame by the
+    // caller, immediately before this is called.
+    void handle_audio_buffer_level(UINT32 buffered_sample_frames)
+    {
+        if (buffered_sample_frames > 0) {
+            if (audio_buffer_starved_consecutive_frames_ > 0) {
+                CASPAR_LOG(info) << print()
+                                 << L" DeckLink is buffering audio again after reporting an empty audio "
+                                    L"buffer for "
+                                 << audio_buffer_starved_consecutive_frames_
+                                 << L" consecutive frames. This does not confirm audible output.";
+                graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-recovered");
+            }
+            audio_buffer_starved_consecutive_frames_ = 0;
+            return;
+        }
+
+        ++audio_buffer_starved_consecutive_frames_;
+        graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-buffer-starved");
+
+        // Require a longer sustained run than the ScheduleAudioSamples()-failure signal above, since an
+        // empty buffer reading is weaker/more indirect evidence of a genuinely stuck device - a brand new
+        // consumer briefly reads 0 before its preroll is reflected, and a single slow frame could plausibly
+        // drain it momentarily under load.
+        const auto starvation_threshold =
+            static_cast<std::uint64_t>(std::max(1.0, std::round(decklink_format_desc_.hz * 3.0)));
+        if (audio_buffer_starved_consecutive_frames_ < starvation_threshold)
+            return;
+
+        if (audio_buffer_starved_consecutive_frames_ == starvation_threshold) {
+            CASPAR_LOG(error)
+                << print() << L" DeckLink reports 0 buffered audio samples for " << starvation_threshold
+                << L" consecutive frames despite audio being submitted every frame; the device has likely "
+                   L"stopped playing out audio even though ScheduleAudioSamples() is not failing.";
+        }
+
+        std::wstringstream reason;
+        reason << L"The DeckLink audio buffer has been empty for " << audio_buffer_starved_consecutive_frames_
+               << L" consecutive frames.";
+        request_audio_output_reset(reason.str());
+    }
+
+    void request_audio_output_reset(const std::wstring& reason)
+    {
+        // This runs on the DeckLink SDK's ScheduledFrameCompleted callback thread, so it is only reached
+        // for a bounded number of frames (rate-limited below) and only after a sustained failure run, to
+        // keep any added latency this introduces to the video scheduling path rare and short-lived.
+
+        const auto now = std::chrono::steady_clock::now();
+        if (audio_last_recovery_attempt_ && now - *audio_last_recovery_attempt_ < std::chrono::seconds(10))
+            return; // Rate-limit attempts, in case the underlying problem cannot be recovered from this way.
+
+        audio_last_recovery_attempt_ = now;
+        ++audio_recovery_attempts_;
+
+        CASPAR_LOG(warning) << print() << L" " << reason << L" Resetting the DeckLink audio output (attempt #"
+                            << audio_recovery_attempts_ << L").";
+
+        // Re-enabling the audio output resets the device's internal audio FIFO, without touching video
+        // output or the shared scheduling clock (audio_scheduled_/video_scheduled_ are left untouched, so
+        // audio stays aligned with the still-running video once scheduling resumes on the next frame).
+        // Whether this actually restores audible output is confirmed by handle_audio_schedule_result() /
+        // handle_audio_buffer_level() above, once ScheduleAudioSamples() and the buffer level recover.
+        try {
+            output_->DisableAudioOutput();
+            enable_audio();
+        } catch (...) {
+            CASPAR_LOG(error) << print()
+                              << L" Failed to reset the DeckLink audio output; will retry once the failures "
+                                 L"persist past the next rate-limit window.";
+        }
     }
 
     void schedule_next_video(std::shared_ptr<void> image_data, int nb_samples, BMDTimeValue display_time)
