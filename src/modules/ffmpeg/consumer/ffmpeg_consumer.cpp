@@ -66,8 +66,10 @@ extern "C" {
 
 #include <tbb/concurrent_queue.h>
 #include <tbb/parallel_for.h>
-#include <tbb/parallel_invoke.h>
 
+#include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <memory>
 #include <optional>
 #include <thread>
@@ -76,7 +78,6 @@ namespace caspar { namespace ffmpeg {
 
 // TODO multiple output streams
 // TODO multiple output files
-// TODO run video filter, video encoder, audio filter, audio encoder in separate threads.
 // TODO realtime with smaller buffer?
 
 struct Stream
@@ -293,22 +294,24 @@ struct Stream
         }
     }
 
-    void send(std::tuple<core::const_frame, std::int64_t, std::int64_t>& data,
-              const core::video_format_desc&                             format_desc,
-              std::function<void(std::shared_ptr<AVPacket>)>             cb)
+    // Each Stream (video or audio) now only ever needs its own pts, since admission is no
+    // longer coupled between the two (see ffmpeg_consumer below).
+    void send(std::tuple<core::const_frame, std::int64_t>& data,
+              const core::video_format_desc&               format_desc,
+              std::function<void(std::shared_ptr<AVPacket>)> cb)
     {
         std::shared_ptr<AVFrame>  frame;
         std::shared_ptr<AVPacket> pkt;
 
-        const auto [in_frame, video_pts, audio_pts] = data;
+        const auto [in_frame, pts] = data;
 
         if (in_frame) {
             if (enc->codec_type == AVMEDIA_TYPE_VIDEO) {
                 frame      = make_av_video_frame(in_frame, format_desc);
-                frame->pts = video_pts;
+                frame->pts = pts;
             } else if (enc->codec_type == AVMEDIA_TYPE_AUDIO) {
                 frame      = make_av_audio_frame(in_frame, format_desc);
-                frame->pts = audio_pts;
+                frame->pts = pts;
             } else {
                 // TODO
             }
@@ -345,6 +348,67 @@ struct Stream
     }
 };
 
+namespace {
+
+// Parses "-<name> <value>" out of the raw ffmpeg-consumer argument string. Used for the handful
+// of options that size queues before initialize()'s background thread has even started parsing
+// the rest of the arguments (mirroring how realtime_ already picks a queue capacity eagerly in
+// the ffmpeg_consumer constructor today).
+int parse_consumer_int_option(const std::string& args, const std::string& name, int default_value, int min_value, int max_value)
+{
+    const boost::regex expr("-" + name + "\\s+(\\d+)");
+    boost::smatch      match;
+    if (boost::regex_search(args, match, expr)) {
+        try {
+            return std::clamp(std::stoi(match[1].str()), min_value, max_value);
+        } catch (...) {
+            // Malformed value; fall through to the default.
+        }
+    }
+    return default_value;
+}
+
+// Tracks whether a producer (frame admission or packet write) is in the middle of a drop streak,
+// so that a rate-limited, clearly-worded log line is only emitted once a stall is sustained for a
+// meaningful amount of time, rather than for every isolated transient drop (which is already
+// visible, cheaply, as a diagnostics graph tag).
+struct drop_tracker
+{
+    bool                                   dropping = false;
+    std::chrono::steady_clock::time_point  streak_start;
+    std::chrono::steady_clock::time_point  last_log;
+    std::int64_t                           streak_units = 0; // e.g. dropped audio samples, or packets
+
+    template <typename Consumer>
+    void note_drop(const Consumer& self, const wchar_t* kind, std::int64_t units = 0)
+    {
+        const auto now = std::chrono::steady_clock::now();
+        if (!dropping) {
+            dropping     = true;
+            streak_start = now;
+            streak_units = 0;
+        }
+        streak_units += units;
+
+        constexpr auto sustained_threshold = std::chrono::milliseconds(250);
+        constexpr auto log_rate_limit      = std::chrono::seconds(10);
+
+        if (now - streak_start > sustained_threshold &&
+            (last_log.time_since_epoch().count() == 0 || now - last_log > log_rate_limit)) {
+            last_log = now;
+            CASPAR_LOG(warning)
+                << self.print() << L" Sustained " << kind << L" overload for "
+                << std::chrono::duration_cast<std::chrono::milliseconds>(now - streak_start).count()
+                << L"ms (" << streak_units << L" units lost so far) - the consumer cannot keep up with "
+                << kind << L", this is not a momentary hiccup.";
+        }
+    }
+
+    void note_ok() { dropping = false; }
+};
+
+} // namespace
+
 struct ffmpeg_consumer : public core::frame_consumer
 {
     core::monitor::state    state_;
@@ -363,8 +427,25 @@ struct ffmpeg_consumer : public core::frame_consumer
     std::exception_ptr exception_;
     std::mutex         exception_mutex_;
 
-    tbb::concurrent_bounded_queue<std::tuple<core::const_frame, std::int64_t, std::int64_t>> frame_buffer_;
-    std::thread                                                                              frame_thread_;
+    // Video and audio are admitted into independent bounded queues and processed on independent
+    // threads. A single shared queue (the previous design) coupled the two: once it filled up -
+    // e.g. because a video encode or a packet write briefly stalled - admitting a *video* frame
+    // failed, which silently discarded that same tuple's *audio* samples too, while video_pts/
+    // audio_pts still advanced to keep subsequent timestamps contiguous. That produced audible
+    // dropouts with no trace in packet timing, sequence numbers or decoder error counts, because
+    // only the *content* was lost, not the timestamp continuity. See send() below.
+    tbb::concurrent_bounded_queue<std::tuple<core::const_frame, std::int64_t>> video_frame_buffer_;
+    tbb::concurrent_bounded_queue<std::tuple<core::const_frame, std::int64_t>> audio_frame_buffer_;
+    std::thread                                                                frame_thread_;
+
+    int audio_queue_capacity_  = 0;
+    int packet_queue_capacity_ = 0;
+
+    drop_tracker video_frame_drops_;
+    drop_tracker audio_frame_drops_;
+
+    std::int64_t video_queue_high_water_ = 0;
+    std::int64_t audio_queue_high_water_ = 0;
 
     common::bit_depth depth_;
 
@@ -382,18 +463,37 @@ struct ffmpeg_consumer : public core::frame_consumer
     {
         state_["file/path"] = u8(path_);
 
-        frame_buffer_.set_capacity(realtime_ ? 1 : 64);
+        // Video is allowed to fall behind and drop frames under transient load, unchanged from
+        // before. Audio gets its own, independently sized queue, so that no longer also discards
+        // audio content. A deeper audio queue trades a bounded amount of extra worst-case
+        // monitoring latency for audio continuity under a transient stall; -audio-buffer <frames>
+        // lets an operator tune that trade-off (default: ~8 frames/fields in realtime mode, i.e.
+        // roughly 130ms at 59.94Hz). -packet-buffer <packets> similarly sizes the encoded-packet
+        // queue feeding the muxer/network writer. Neither is a substitute for fixing a sustained
+        // overload, which is reported via drop_tracker rather than hidden behind an ever-growing
+        // backlog.
+        audio_queue_capacity_  = parse_consumer_int_option(args_, "audio-buffer", realtime_ ? 8 : 64, 1, 256);
+        packet_queue_capacity_ = parse_consumer_int_option(args_, "packet-buffer", realtime_ ? 16 : 128, 1, 1024);
+
+        video_frame_buffer_.set_capacity(realtime_ ? 1 : 64);
+        audio_frame_buffer_.set_capacity(audio_queue_capacity_);
 
         diagnostics::register_graph(graph_);
-        graph_->set_color("frame-time", diagnostics::color(0.1f, 1.0f, 0.1f));
-        graph_->set_color("dropped-frame", diagnostics::color(0.3f, 0.6f, 0.3f));
-        graph_->set_color("input", diagnostics::color(0.7f, 0.4f, 0.4f));
+        graph_->set_color("video-frame-time", diagnostics::color(0.1f, 1.0f, 0.1f));
+        graph_->set_color("audio-frame-time", diagnostics::color(0.1f, 0.8f, 1.0f));
+        graph_->set_color("dropped-video-frame", diagnostics::color(0.6f, 0.3f, 0.3f));
+        graph_->set_color("dropped-audio-frame", diagnostics::color(1.0f, 0.2f, 0.2f));
+        graph_->set_color("dropped-video-packet", diagnostics::color(0.6f, 0.5f, 0.1f));
+        graph_->set_color("dropped-audio-packet", diagnostics::color(1.0f, 0.5f, 0.0f));
+        graph_->set_color("video-input", diagnostics::color(0.7f, 0.4f, 0.4f));
+        graph_->set_color("audio-input", diagnostics::color(0.4f, 0.4f, 0.9f));
     }
 
     ~ffmpeg_consumer()
     {
         if (frame_thread_.joinable()) {
-            frame_buffer_.push({core::const_frame{}, -1, -1});
+            video_frame_buffer_.push({core::const_frame{}, -1});
+            audio_frame_buffer_.push({core::const_frame{}, -1});
             frame_thread_.join();
         }
     }
@@ -425,6 +525,12 @@ struct ffmpeg_consumer : public core::frame_consumer
                             (*it)["VALUE"].matched ? (*it)["VALUE"].str().c_str() : "";
                     }
                 }
+
+                // Already consumed eagerly in the constructor (see audio_queue_capacity_ /
+                // packet_queue_capacity_); strip them here so they are neither forwarded to
+                // avcodec/avformat nor reported as unused below.
+                options.erase("audio-buffer");
+                options.erase("packet-buffer");
 
                 boost::filesystem::path full_path = path_;
 
@@ -500,7 +606,7 @@ struct ffmpeg_consumer : public core::frame_consumer
                 }
 
                 tbb::concurrent_bounded_queue<std::shared_ptr<AVPacket>> packet_buffer;
-                packet_buffer.set_capacity(realtime_ ? 1 : 128);
+                packet_buffer.set_capacity(packet_queue_capacity_);
                 auto packet_thread = std::thread([&] {
                     try {
                         CASPAR_SCOPE_EXIT
@@ -545,39 +651,150 @@ struct ffmpeg_consumer : public core::frame_consumer
                     }
                 };
 
-                auto packet_cb = [&](std::shared_ptr<AVPacket>&& pkt) { packet_buffer.push(std::move(pkt)); };
-
-                std::int64_t frame_number = 0;
-                while (true) {
-                    {
-                        std::lock_guard<std::mutex> lock(state_mutex_);
-                        state_["file/frame"] = frame_number++;
+                // Writing into the muxer never blocks the encode threads below: a stalled or
+                // momentarily backed-up write (e.g. transient network backpressure on the UDP
+                // socket) used to propagate straight back through a blocking push() here, into
+                // the single combined per-frame queue below it, and from there into dropped
+                // *admission* of new frames (including audio - see ffmpeg_consumer above). With
+                // try_push + per-media diagnostics, a muxer stall can now only ever drop that
+                // media type's own already-encoded packets.
+                drop_tracker video_packet_drops;
+                drop_tracker audio_packet_drops;
+                auto         video_packet_cb = [&](std::shared_ptr<AVPacket>&& pkt) {
+                    if (packet_buffer.try_push(pkt)) {
+                        video_packet_drops.note_ok();
+                    } else {
+                        graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-video-packet");
+                        video_packet_drops.note_drop(*this, L"video packet-write", 1);
                     }
+                };
+                auto audio_packet_cb = [&](std::shared_ptr<AVPacket>&& pkt) {
+                    if (packet_buffer.try_push(pkt)) {
+                        audio_packet_drops.note_ok();
+                    } else {
+                        graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-audio-packet");
+                        audio_packet_drops.note_drop(*this, L"audio packet-write", 1);
+                    }
+                };
 
-                    std::tuple<core::const_frame, std::int64_t, std::int64_t> data;
-                    frame_buffer_.pop(data);
-                    graph_->set_value("input",
-                                      static_cast<double>(frame_buffer_.size() + 0.001) / frame_buffer_.capacity());
-
-                    caspar::timer frame_timer;
-                    tbb::parallel_invoke(
-                        [&] {
-                            if (video_stream) {
-                                video_stream->send(data, format_desc, packet_cb);
-                            }
-                        },
-                        [&] {
-                            if (audio_stream) {
-                                audio_stream->send(data, format_desc, packet_cb);
-                            }
-                        });
-                    graph_->set_value("frame-time", frame_timer.elapsed() * format_desc.fps * 0.5);
-
-                    if (!std::get<0>(data)) {
+                // Video and audio always run their own loop on their own thread (even if one of
+                // them turns out not to exist for this output format - that thread then just
+                // drains and discards). Exactly one nullptr must reach packet_thread once *both*
+                // have finished, regardless of which one finishes first.
+                std::atomic<int> active_producers{2};
+                auto             finish_producer = [&] {
+                    if (--active_producers == 0) {
                         packet_buffer.push(nullptr);
-                        break;
                     }
-                }
+                };
+
+                std::thread video_proc_thread([&] {
+                    try {
+                        std::int64_t frame_number = 0;
+                        while (true) {
+                            std::tuple<core::const_frame, std::int64_t> data;
+                            video_frame_buffer_.pop(data);
+                            {
+                                std::lock_guard<std::mutex> lock(state_mutex_);
+                                state_["file/video-frame"] = frame_number++;
+                            }
+                            graph_->set_value("video-input",
+                                              static_cast<double>(video_frame_buffer_.size() + 0.001) /
+                                                  video_frame_buffer_.capacity());
+
+                            if (video_stream) {
+                                caspar::timer frame_timer;
+                                video_stream->send(data, format_desc, video_packet_cb);
+                                graph_->set_value("video-frame-time", frame_timer.elapsed() * format_desc.fps);
+                            }
+
+                            if (!std::get<0>(data)) {
+                                break;
+                            }
+                        }
+                    } catch (...) {
+                        std::lock_guard<std::mutex> lock(exception_mutex_);
+                        if (!exception_) {
+                            exception_ = std::current_exception();
+                        }
+                    }
+                    finish_producer();
+                });
+                CASPAR_SCOPE_EXIT
+                {
+                    // Guards against std::terminate() if anything between here and the
+                    // video_proc_thread.join() below throws (e.g. audio_proc_thread's own
+                    // construction failing under resource exhaustion) while this thread is still
+                    // joinable, mirroring the existing packet_thread guard above.
+                    if (video_proc_thread.joinable()) {
+                        video_frame_buffer_.push({core::const_frame{}, -1});
+                        video_proc_thread.join();
+                    }
+                };
+
+                // Detects any remaining gap between consecutive admitted audio chunks, regardless
+                // of cause - a cheap, independent cross-check that keeps working even if some
+                // future change reintroduces a discontinuity by a different path than the one
+                // fixed here.
+                bool         have_expected_audio_pts = false;
+                std::int64_t expected_audio_pts      = 0;
+
+                std::thread audio_proc_thread([&] {
+                    try {
+                        std::int64_t frame_number = 0;
+                        while (true) {
+                            std::tuple<core::const_frame, std::int64_t> data;
+                            audio_frame_buffer_.pop(data);
+                            {
+                                std::lock_guard<std::mutex> lock(state_mutex_);
+                                state_["file/audio-frame"] = frame_number++;
+                            }
+                            graph_->set_value("audio-input",
+                                              static_cast<double>(audio_frame_buffer_.size() + 0.001) /
+                                                  audio_frame_buffer_.capacity());
+
+                            const auto& in_frame = std::get<0>(data);
+                            if (in_frame) {
+                                const auto pts = std::get<1>(data);
+                                if (have_expected_audio_pts && pts != expected_audio_pts) {
+                                    CASPAR_LOG(warning) << print() << L" Audio timestamp discontinuity: expected pts "
+                                                        << expected_audio_pts << L", got " << pts << L" (gap of "
+                                                        << (pts - expected_audio_pts) << L" samples).";
+                                }
+                                have_expected_audio_pts = true;
+                                expected_audio_pts =
+                                    pts + static_cast<std::int64_t>(in_frame.audio_data().size()) /
+                                              std::max<std::size_t>(1, format_desc.audio_channels);
+                            }
+
+                            if (audio_stream) {
+                                caspar::timer frame_timer;
+                                audio_stream->send(data, format_desc, audio_packet_cb);
+                                graph_->set_value("audio-frame-time", frame_timer.elapsed() * format_desc.fps);
+                            }
+
+                            if (!in_frame) {
+                                break;
+                            }
+                        }
+                    } catch (...) {
+                        std::lock_guard<std::mutex> lock(exception_mutex_);
+                        if (!exception_) {
+                            exception_ = std::current_exception();
+                        }
+                    }
+                    finish_producer();
+                });
+                CASPAR_SCOPE_EXIT
+                {
+                    if (audio_proc_thread.joinable()) {
+                        audio_frame_buffer_.push({core::const_frame{}, -1});
+                        audio_proc_thread.join();
+                    }
+                };
+
+                video_proc_thread.join();
+                audio_proc_thread.join();
 
                 packet_thread.join();
             } catch (...) {
@@ -598,14 +815,46 @@ struct ffmpeg_consumer : public core::frame_consumer
             }
         }
 
-        if (!frame_buffer_.try_push({frame, video_pts, audio_pts})) {
-            graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
+        // Video and audio are admitted independently so that a transient stall on one side (e.g.
+        // a video encode briefly falling behind under system contention) can never also discard
+        // audio content for the same frame - see the comment on video_frame_buffer_ above. Both
+        // queues only ever drop, never block: send() runs on the shared channel thread and must
+        // never stall channel/SDI playout regardless of how this consumer is keeping up.
+        if (!video_frame_buffer_.try_push({frame, video_pts})) {
+            graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-video-frame");
+            video_frame_drops_.note_drop(*this, L"video frame-admission", 1);
+        } else {
+            video_frame_drops_.note_ok();
+        }
+
+        if (!audio_frame_buffer_.try_push({frame, audio_pts})) {
+            graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-audio-frame");
+            audio_frame_drops_.note_drop(
+                *this, L"audio frame-admission", frame.audio_data().size() / format_desc_.audio_channels);
+        } else {
+            audio_frame_drops_.note_ok();
         }
 
         video_pts += 1;
         audio_pts += frame.audio_data().size() / format_desc_.audio_channels;
 
-        graph_->set_value("input", static_cast<double>(frame_buffer_.size() + 0.001) / frame_buffer_.capacity());
+        const auto video_size = video_frame_buffer_.size();
+        const auto audio_size = audio_frame_buffer_.size();
+
+        graph_->set_value("video-input", static_cast<double>(video_size + 0.001) / video_frame_buffer_.capacity());
+        graph_->set_value("audio-input", static_cast<double>(audio_size + 0.001) / audio_frame_buffer_.capacity());
+
+        if (video_size > video_queue_high_water_ || audio_size > audio_queue_high_water_) {
+            std::lock_guard<std::mutex> lock(state_mutex_);
+            if (video_size > video_queue_high_water_) {
+                video_queue_high_water_            = video_size;
+                state_["file/video-queue-high-water"] = video_queue_high_water_;
+            }
+            if (audio_size > audio_queue_high_water_) {
+                audio_queue_high_water_            = audio_size;
+                state_["file/audio-queue-high-water"] = audio_queue_high_water_;
+            }
+        }
 
         return make_ready_future(true);
     }
