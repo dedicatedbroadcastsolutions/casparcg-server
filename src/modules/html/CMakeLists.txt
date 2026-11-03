@@ -10,6 +10,8 @@ set(SOURCES
 		html.cpp
 		html.h
 		util.h
+		browser_lifecycle.h
+		subprocess_group.h
 )
 
 casparcg_add_module_project(html

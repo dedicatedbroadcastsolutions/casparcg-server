@@ -60,6 +60,81 @@ The most up-to-date documentation is always available at https://casparcg.com/do
 
 Ask questions in the forum: https://casparcgforum.org/
 
+### Linux HTML/CEF shutdown and supervision
+
+Use the normal AMCP `KILL` command, or send `SIGINT`/`SIGTERM` to the CasparCG
+**server PID** after startup. Leave CEF renderer, GPU, network-service and zygote
+processes running while CasparCG closes browsers and shuts CEF down. Supervisors
+should wait for the server to exit before restarting it. Do not send an initial
+shutdown signal to the entire process tree or cgroup: killing CEF children while
+the browser process is still running can trigger Chromium's crash recovery.
+Reserve forced process-tree termination for a graceful-shutdown timeout; it is
+not expected to produce a clean CEF shutdown.
+
+On Linux, a child-side fork hook places subprocesses in separate process groups
+before exec, including while the dynamic loader is loading CEF. The subprocess
+entry point also checks isolation before executing CEF. The hook is process-wide;
+CasparCG's current subprocess forks are CEF's.
+This keeps a terminal's foreground-group Ctrl+C from prematurely terminating
+those children. This does not shield them from direct PID signals, cgroup/tree
+termination or the brief interval between the kernel fork and its child hook.
+
+The HTML module tracks pending browser creation as well as existing browsers.
+Shutdown closes them, keeps the CEF loop alive until all close callbacks finish,
+then calls `CefShutdown` on the same thread used for `CefInitialize`. A producer
+closed before its asynchronous browser creation completes closes that browser as
+soon as it is created. No shutdown timeout forcibly calls CEF teardown with live
+browsers; a supervisor should enforce its own final termination deadline.
+
+JavaScript/browser console messages are routed through CasparCG's HTML logging
+callback. Native Chromium diagnostics are different: CEF/Chromium initializes
+its own logging, and native errors/fatals can be written directly to inherited
+stderr, including in subprocesses. CasparCG's `log-level` does not filter those
+writes. A supervisor capturing the child's stderr will therefore see them.
+This change does not redirect stderr, disable native logging or disable GPU
+acceleration; runtime failures and fatal diagnostics remain visible.
+
+Standalone regression tests (no CEF runtime required):
+
+```sh
+c++ -std=c++20 -Wall -Wextra -Werror -pthread -Isrc tools/tests/cef_shutdown_test.cpp -o /tmp/cef-shutdown-test
+/tmp/cef-shutdown-test
+```
+
+These exercise shutdown bookkeeping and actual Linux process-group signal
+delivery, including isolation before the child entry point, not Chromium
+rendering. To test a built server with the real CEF runtime, install Xvfb,
+xauth and Pillow (`sudo apt-get install xvfb xauth python3-pil` on Ubuntu),
+then run:
+
+```sh
+xvfb-run -a -s '-screen 0 1280x720x24 -noreset' /usr/bin/python3 tools/tests/cef_shutdown_integration.py /absolute/path/to/casparcg /tmp/cef-shutdown-results
+```
+
+The output directory must not already exist. The runner starts only isolated
+test servers with temporary AMCP ports/configurations and captures stdout/stderr
+separately. It checks zero, one and three templates, actual screenshot pixels,
+replacement, immediate shutdown after creation requests, AMCP `KILL`, server-PID
+SIGINT/SIGTERM, group SIGINT and PTY Ctrl+C. It checks exit status, shutdown
+deadlines, known Chromium crash/restart diagnostics and leftover subprocesses.
+It preserves native logs and writes per-case results as JSON. It never signals
+an existing server binary that is already running. AMCP `BYE` only disconnects
+the client; it does not shut the server down.
+
+Validation on Ubuntu 24.04 with packaged CEF 150.0.23/API 15000 and Xvfb/Mesa
+software rendering passed 68/68 cases (two repetitions with both `enable-gpu`
+settings). Measured server shutdown was 0.114–0.380 seconds. A comparison binary
+using the unchanged upstream HTML module failed 2/34 cases with network-service
+restart diagnostics on early group SIGINT. Syscall tracing also confirmed an
+exec'd network-service child receiving SIGINT before reaching its entry-point
+isolation; the fork hook closes that loader-time gap. The complete reported GPU
+restart/fatal storm was not reproduced in this environment.
+
+Physical GPU drivers, production templates and the deployed supervisor still
+need on-site validation. Native startup diagnostics about this test environment
+(for example, absent D-Bus services) remain visible; they are not suppressed by
+the lifecycle fix.
+
 Development
 -----------
 

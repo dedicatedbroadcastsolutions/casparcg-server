@@ -197,9 +197,9 @@ class html_client
 
     void reload()
     {
-        html::begin_invoke([this] {
-            if (browser_ != nullptr)
-                browser_->Reload();
+        html::begin_invoke([self = CefRefPtr<html_client>(this)] {
+            if (!self->closing_ && self->browser_ != nullptr)
+                self->browser_->Reload();
         });
     }
 
@@ -462,6 +462,9 @@ class html_client
         CASPAR_ASSERT(CefCurrentlyOn(TID_UI));
 
         browser_ = std::move(browser);
+        if (closing_) {
+            browser_->GetHost()->CloseBrowser(true);
+        }
     }
 
     void OnBeforeClose(CefRefPtr<CefBrowser> browser) override
@@ -469,6 +472,8 @@ class html_client
         CASPAR_ASSERT(CefCurrentlyOn(TID_UI));
 
         browser_ = nullptr;
+        closing_ = true;
+        unregister_browser_client(this);
     }
 
     bool DoClose(CefRefPtr<CefBrowser> browser) override
@@ -617,10 +622,13 @@ class html_client
 
     void do_execute_javascript(const std::wstring& javascript)
     {
-        html::begin_invoke([this, javascript] {
-            if (browser_ != nullptr)
-                browser_->GetMainFrame()->ExecuteJavaScript(
-                    u8(javascript).c_str(), browser_->GetMainFrame()->GetURL(), 0);
+        html::begin_invoke([self = CefRefPtr<html_client>(this), javascript] {
+            if (!self->closing_ && self->browser_ != nullptr) {
+                auto frame = self->browser_->GetMainFrame();
+                if (frame) {
+                    frame->ExecuteJavaScript(u8(javascript).c_str(), frame->GetURL(), 0);
+                }
+            }
         });
     }
 
@@ -671,7 +679,11 @@ class html_producer : public core::frame_producer
             browser_settings.webgl = gpu.first ? cef_state_t::STATE_ENABLED : cef_state_t::STATE_DISABLED;
             double fps             = format_desc.fps;
             browser_settings.windowless_frame_rate = int(ceil(fps));
-            CefBrowserHost::CreateBrowser(window_info, client_.get(), url, browser_settings, nullptr, nullptr);
+            register_browser_client(client_.get(), [client = client_] { client->close(); });
+            if (!CefBrowserHost::CreateBrowser(window_info, client_.get(), url, browser_settings, nullptr, nullptr)) {
+                unregister_browser_client(client_.get());
+                CASPAR_THROW_EXCEPTION(caspar_exception() << msg_info("Failed to create HTML browser."));
+            }
         });
     }
 

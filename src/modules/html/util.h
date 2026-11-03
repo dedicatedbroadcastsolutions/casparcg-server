@@ -33,6 +33,9 @@ const std::string LOG_MESSAGE_NAME    = "CasparCGLog";
 void              invoke(const std::function<void()>& func);
 std::future<void> begin_invoke(const std::function<void()>& func);
 
+void register_browser_client(const void* client, std::function<void()> close);
+void unregister_browser_client(const void* client);
+
 std::pair<bool, bool> is_gpu_shared_texture_enabled();
 
 } // namespace caspar::html

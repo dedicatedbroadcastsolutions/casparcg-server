@@ -20,11 +20,14 @@
  */
 
 #include "html.h"
+#include "browser_lifecycle.h"
+#include "subprocess_group.h"
 #include "util.h"
 
 #include "producer/html_cg_proxy.h"
 #include "producer/html_producer.h"
 
+#include <common/assert.h>
 #include <common/env.h>
 #include <common/executor.h>
 #include <common/future.h>
@@ -37,7 +40,10 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/range/algorithm/remove_if.hpp>
 
+#include <cstdio>
+#include <cstdlib>
 #include <memory>
+#include <system_error>
 #include <utility>
 
 #include <include/cef_api_hash.h>
@@ -80,7 +86,20 @@ extern "C" struct mallinfo mallinfo(void)
 
 namespace caspar::html {
 
-std::unique_ptr<executor> g_cef_executor;
+std::unique_ptr<executor>          g_cef_executor;
+std::unique_ptr<browser_lifecycle> g_browser_lifecycle;
+
+void register_browser_client(const void* client, std::function<void()> close)
+{
+    CASPAR_ASSERT(CefCurrentlyOn(TID_UI));
+    g_browser_lifecycle->add(client, std::move(close));
+}
+
+void unregister_browser_client(const void* client)
+{
+    CASPAR_ASSERT(CefCurrentlyOn(TID_UI));
+    g_browser_lifecycle->remove(client);
+}
 
 void caspar_log(const CefRefPtr<CefBrowser>&        browser,
                 boost::log::trivial::severity_level level,
@@ -261,6 +280,14 @@ bool intercept_command_line(int argc, char** argv)
     CefMainArgs main_args;
 #else
     CefMainArgs main_args(argc, argv);
+#if defined(__linux__)
+    auto command_line = CefCommandLine::CreateCommandLine();
+    command_line->InitFromArgv(argc, argv);
+    if (command_line->HasSwitch("type") && !isolate_subprocess_group()) {
+        std::perror("[html] Failed to isolate CEF subprocess process group");
+        std::exit(EXIT_FAILURE);
+    }
+#endif
 #endif
 
     return CefExecuteProcess(main_args, CefRefPtr<CefApp>(new renderer_application(false, false)), nullptr) >= 0;
@@ -268,6 +295,12 @@ bool intercept_command_line(int argc, char** argv)
 
 void init(const core::module_dependencies& dependencies)
 {
+#if defined(__linux__)
+    const auto isolation_error = install_subprocess_group_isolation();
+    if (isolation_error != 0) {
+        throw std::system_error(isolation_error, std::generic_category(), "Installing CEF subprocess group isolation");
+    }
+#endif
 // Malinfo patch section 2 start - Remove once fixed upstream.
 #if defined(__linux__)
     // Verify the override resolves before CEF initializes.
@@ -281,8 +314,6 @@ void init(const core::module_dependencies& dependencies)
     }
 #endif
 // Malinfo patch section 2 end - Remove once fixed upstream.
-    dependencies.producer_registry->register_producer_factory(L"HTML Producer", html::create_producer);
-
     CefMainArgs main_args;
     g_cef_executor = std::make_unique<executor>(L"cef");
     bool result    = g_cef_executor->invoke([&] {
@@ -312,8 +343,12 @@ void init(const core::module_dependencies& dependencies)
 
     if (!result) {
         CASPAR_LOG(error) << "[html] Failed to initialize CEF";
+        g_cef_executor.reset();
         return;
     }
+
+    g_browser_lifecycle = std::make_unique<browser_lifecycle>([] { CefQuitMessageLoop(); });
+    dependencies.producer_registry->register_producer_factory(L"HTML Producer", html::create_producer);
 
     // The loaded libcef can be newer than the headers we were built with, as long as it supports our API version
     CASPAR_LOG(info) << "[html] Using CEF " << cef_version_info(0) << "." << cef_version_info(1) << "."
@@ -337,9 +372,13 @@ void uninit()
     if (!g_cef_executor)
         return;
 
-    invoke([] { CefQuitMessageLoop(); });
-    g_cef_executor->begin_invoke([&] { CefShutdown(); });
+    CASPAR_LOG(info) << "[html] Closing CEF browsers before stopping the message loop.";
+    invoke([] { g_browser_lifecycle->shutdown(); });
+    // The executor is occupied by CefRunMessageLoop until every OnBeforeClose has completed.
+    g_cef_executor->begin_invoke([] { CefShutdown(); }).get();
     g_cef_executor.reset();
+    g_browser_lifecycle.reset();
+    CASPAR_LOG(info) << "[html] CEF shutdown complete.";
 }
 
 class cef_task : public CefTask
