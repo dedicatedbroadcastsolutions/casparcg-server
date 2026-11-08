@@ -65,6 +65,18 @@ Development
 
 See [BUILDING](BUILDING.md) for instructions on how to build the CasparCG Server from source manually.
 
+Channel audio width
+-------------------
+
+Set `<audio-channels>` inside a `<channel>` in `casparcg.config` to configure
+that channel's audio bus width (1–256); it defaults to 16. The core mixer,
+routes, audio matrix, and FFmpeg/HTML producers preserve the configured width,
+padding or truncating source PCM as needed.
+
+DeckLink and Bluefish embedded-audio outputs remain limited to 16 channels per
+output connector and reject larger configured widths when embedded audio is
+enabled. This setting does not distribute audio across multilink connectors.
+
 License
 ---------
 

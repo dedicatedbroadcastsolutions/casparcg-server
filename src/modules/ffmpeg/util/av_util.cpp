@@ -1,6 +1,7 @@
 #include "av_util.h"
 #include "av_assert.h"
 
+#include <algorithm>
 #include <common/bit_depth.h>
 #include <cstdint>
 #include <cstring>
@@ -70,7 +71,8 @@ core::mutable_frame make_frame(void*                            tag,
                                std::shared_ptr<AVFrame>         audio,
                                core::color_space                color_space,
                                core::frame_geometry::scale_mode scale_mode,
-                               bool                             is_straight_alpha)
+                               bool                             is_straight_alpha,
+                               int                              audio_channels)
 {
     std::vector<int> data_map; // TODO(perf) when using data_map, avoid uploading duplicate planes
 
@@ -101,22 +103,26 @@ core::mutable_frame make_frame(void*                            tag,
         },
         [&]() {
             if (audio) {
-                const int channel_count = 16;
-                frame.audio_data()      = std::vector<int32_t>(audio->nb_samples * channel_count, 0);
+                const int channel_count = audio_channels;
+                frame.audio_channels(channel_count);
+                frame.audio_data() = std::vector<int32_t>(audio->nb_samples * channel_count, 0);
 
                 auto source_channel_count = audio->ch_layout.nb_channels;
+                if (audio->format != AV_SAMPLE_FMT_S32 ||
+                    av_sample_fmt_is_planar(static_cast<AVSampleFormat>(audio->format)) != 0) {
+                    CASPAR_THROW_EXCEPTION(user_error()
+                                           << msg_info(L"Unexpected FFmpeg audio sample format; expected packed S32."));
+                }
                 if (source_channel_count == channel_count) {
                     std::memcpy(frame.audio_data().data(),
                                 reinterpret_cast<int32_t*>(audio->data[0]),
                                 sizeof(int32_t) * channel_count * audio->nb_samples);
                 } else {
-                    // This isn't pretty, but some callers may not provide 16 channels
-
                     auto dst = frame.audio_data().data();
-                    auto src = reinterpret_cast<int32_t*>(audio->data[0]);
                     for (auto i = 0; i < audio->nb_samples; i++) {
                         for (auto j = 0; j < std::min(channel_count, source_channel_count); ++j) {
-                            dst[i * channel_count + j] = src[i * source_channel_count + j];
+                            dst[i * channel_count + j] =
+                                reinterpret_cast<const int32_t*>(audio->data[0])[i * source_channel_count + j];
                         }
                     }
                 }

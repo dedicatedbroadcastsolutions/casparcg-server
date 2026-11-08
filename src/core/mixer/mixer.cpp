@@ -74,8 +74,9 @@ struct mixer::impl
             frame.accept(*image_mixer_);
         }
 
-        auto result = image_mixer_->render(format_desc, need_host_frame);
-        auto audio  = audio_mixer_(format_desc, nb_samples);
+        auto       result        = image_mixer_->render(format_desc, need_host_frame);
+        const auto master_volume = audio_mixer_.get_master_volume();
+        auto       audio         = audio_mixer_(format_desc, nb_samples, true, master_volume);
 
         state_["audio"] = audio_mixer_.state();
 
@@ -94,7 +95,12 @@ struct mixer::impl
                 std::vector<array<const uint8_t>> image_data;
                 auto                              tuple = std::move(result.get());
                 image_data.emplace_back(std::move(std::get<0>(tuple)));
-                return const_frame(tag, std::move(image_data), std::move(audio), desc, std::move(std::get<1>(tuple)));
+                return const_frame(tag,
+                                   std::move(image_data),
+                                   std::move(audio),
+                                   desc,
+                                   std::move(std::get<1>(tuple)),
+                                   format_desc.audio_channels);
             }));
 
         if (buffer_.size() <= format_desc.field_count) {

@@ -19,6 +19,8 @@ class texture
     virtual void unbind()        = 0;
 };
 
+inline constexpr int default_audio_channels = 16;
+
 class mutable_frame final
 {
     friend class const_frame;
@@ -48,6 +50,8 @@ class mutable_frame final
 
     array<std::int32_t>&       audio_data();
     const array<std::int32_t>& audio_data() const;
+    void                       audio_channels(int channels);
+    int                        audio_channels() const;
 
     std::size_t width() const;
 
@@ -71,7 +75,8 @@ class const_frame final
                          std::vector<array<const std::uint8_t>> image_data,
                          array<const std::int32_t>              audio_data,
                          const struct pixel_format_desc&        desc,
-                         std::shared_ptr<core::texture>         texture = nullptr);
+                         std::shared_ptr<core::texture>         texture        = nullptr,
+                         int                                    audio_channels = 0);
     const_frame(const const_frame& other);
     const_frame(mutable_frame&& other);
 
@@ -84,6 +89,7 @@ class const_frame final
     const array<const std::uint8_t>& image_data(std::size_t index) const;
 
     const array<const std::int32_t>& audio_data() const;
+    int                              audio_channels() const;
 
     std::shared_ptr<core::texture> texture() const;
 
@@ -95,6 +101,7 @@ class const_frame final
 
     const void* stream_tag() const;
     const_frame with_tag(const void* new_tag) const;
+    const_frame with_tag(const void* new_tag, array<const std::int32_t> audio_data, int audio_channels = -1) const;
 
     const std::any& opaque() const;
 

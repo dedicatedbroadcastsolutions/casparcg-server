@@ -46,7 +46,8 @@ core::mutable_frame     make_frame(void*                    tag,
                                    std::shared_ptr<AVFrame> audio,
                                    core::color_space        color_space = core::color_space::unknown,
                                    core::frame_geometry::scale_mode     = core::frame_geometry::scale_mode::stretch,
-                                   bool is_straight_alpha               = false);
+                                   bool is_straight_alpha               = false,
+                                   int  audio_channels                  = core::default_audio_channels);
 
 std::shared_ptr<AVFrame> make_av_video_frame(const core::const_frame& frame, const core::video_format_desc& format_des);
 std::shared_ptr<AVFrame> make_av_audio_frame(const core::const_frame& frame, const core::video_format_desc& format_des);

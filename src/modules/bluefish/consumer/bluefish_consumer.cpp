@@ -854,6 +854,9 @@ struct bluefish_consumer_proxy : public core::frame_consumer
                     const core::channel_info&      channel_info,
                     int                            port_index) override
     {
+        if (config_.embedded_audio && format_desc.audio_channels > 16)
+            CASPAR_THROW_EXCEPTION(caspar_exception()
+                                   << msg_info(L"Bluefish embedded audio supports at most 16 channels per output."));
         format_desc_ = format_desc;
         executor_.invoke([=, this] {
             consumer_.reset();
