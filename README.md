@@ -95,8 +95,8 @@ CALL 5-20 AUDIO_MAP
 CALL 5-20 AUDIO_MAP DEFAULT
 ```
 
-Live mapped-to-mapped changes ramp the routed audio down and back up over 5 ms,
-using the source sample rate. Initial mappings and switches to or from
+Live mapped-to-mapped changes ramp the routed audio down over 5 ms and back up
+over 5 ms, using the source sample rate. Initial mappings and switches to or from
 `DEFAULT` remain immediate. Explicitly mapped routes mute repeated late audio
 frames rather than replaying stale audio, while preserving their video.
 Passthrough frames retain legacy behavior.
