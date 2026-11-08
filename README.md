@@ -204,7 +204,7 @@ single-reader FIFOs. They do not create route producers, copy pixel data, or
 render source video for the tap. Source producers still produce their normal
 frames for other users; a source channel with no consumers does not run its
 image compositor just to supply audio. Taps mix on engine channel threads, not
-PortAudio callback threads.
+device callback threads.
 
 All sources and destinations must use the same sample rate; mismatches are
 rejected rather than silently resampled. Different video rates/field cadences
@@ -233,7 +233,7 @@ Threaded channel tests exercise live matrix and native route updates, invalid
 updates, unchanged producer/consumer instances, and audio-only sources without
 compositing their video. They are engine tests, not a
 hardware synchronization guarantee. On site, repeat the route verification above
-using matrix commands, both pro-audio devices, source channels without consumers,
+using matrix commands, source channels without consumers,
 and a prolonged independent-clock test. Verify audio channel layout with the
 same eight-channel FFmpeg consumer filter, and check no program SDI audio or
 source meters change while updating destination mixes.
