@@ -92,6 +92,20 @@ If all goes to plan, a folder called 'staging' has been created with everything 
 
 -DENABLE_HTML=OFF - useful if you lack CEF, and would like to build without that module.
 
+-DBUILD_TESTING=ON - build the audio matrix PCM regression tests. Matrix
+processing uses the engine's PCM interface and the tests require no audio
+hardware:
+
+```sh
+cmake --build build --target audio_matrix_tests
+ctest --test-dir build --output-on-failure -R audio_matrix
+```
+
+The `audio_matrix_samples` test covers deterministic PCM logic. The
+`audio_matrix_channel_samples` test exercises headless channel processing with
+a fake image mixer and capturing consumer; it is not a GPU, device-sync, or
+independent-clock drift test. Both cases have a 60-second timeout.
+
 -DUSE_STATIC_BOOST=ON - (Linux only, default OFF) statically link against Boost.
 
 -DUSE_SYSTEM_CEF=OFF - (Linux only, default ON) use the version of CEF from your OS. This expects to be using builds from https://launchpad.net/~casparcg/+archive/ubuntu/ppa
