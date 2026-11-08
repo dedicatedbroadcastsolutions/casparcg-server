@@ -293,6 +293,11 @@ struct server::impl
 
             auto format_desc_str = xml_channel.second.get(L"video-mode", L"PAL");
             auto format_desc     = video_format_repository_.find(format_desc_str);
+            format_desc.audio_channels = xml_channel.second.get<int>(L"audio-channels", format_desc.audio_channels);
+            if (format_desc.audio_channels < 1 || format_desc.audio_channels > 256)
+                CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Invalid audio-channels: " +
+                                                                std::to_wstring(format_desc.audio_channels) +
+                                                                L" (expected 1..256)"));
             auto color_depth     = xml_channel.second.get<unsigned char>(L"color-depth", 8);
             if (color_depth != 8 && color_depth != 16)
                 CASPAR_THROW_EXCEPTION(user_error()

@@ -14,9 +14,10 @@ namespace caspar::ffmpeg {
 class AudioResampler
 {
     std::shared_ptr<SwrContext> ctx;
+    int                         channels_;
 
   public:
-    AudioResampler(int sample_rate, AVSampleFormat in_sample_fmt);
+    AudioResampler(int sample_rate, AVSampleFormat in_sample_fmt, int channels);
 
     AudioResampler(const AudioResampler&)            = delete;
     AudioResampler& operator=(const AudioResampler&) = delete;
