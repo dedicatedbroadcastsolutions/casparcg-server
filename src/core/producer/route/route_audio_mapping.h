@@ -43,9 +43,21 @@ inline int parse_route_audio_map_index(std::wstring_view value)
     return result;
 }
 
-// Each entry is destination=source. Unmapped destinations are represented by -1.
-inline std::vector<int>
-parse_route_audio_mapping(const std::wstring& value, int source_channels, int destination_channels)
+inline std::vector<int> identity_route_audio_mapping(int channels)
+{
+    if (channels <= 0)
+        throw std::invalid_argument("audio channel count must be positive");
+    std::vector<int> mapping(static_cast<std::size_t>(channels));
+    for (int channel = 0; channel < channels; ++channel)
+        mapping[channel] = channel;
+    return mapping;
+}
+
+// Each entry patches destination=source; -1 explicitly selects silence.
+inline std::vector<int> parse_route_audio_mapping(const std::wstring&     value,
+                                                  int                     source_channels,
+                                                  int                     destination_channels,
+                                                  const std::vector<int>& current)
 {
     if (source_channels <= 0 || destination_channels <= 0) {
         throw std::invalid_argument("audio channel counts must be positive");
@@ -54,8 +66,11 @@ parse_route_audio_mapping(const std::wstring& value, int source_channels, int de
         throw std::invalid_argument("audio mapping cannot be empty");
     }
 
-    std::vector<int> mapping(static_cast<std::size_t>(destination_channels), -1);
-    std::size_t      entry_start = 0;
+    if (current.size() != static_cast<std::size_t>(destination_channels))
+        throw std::invalid_argument("invalid current audio mapping dimensions");
+    auto              mapping = current;
+    std::vector<bool> updated(static_cast<std::size_t>(destination_channels), false);
+    std::size_t       entry_start = 0;
     while (entry_start < value.size()) {
         const auto comma  = value.find(L',', entry_start);
         auto       entry  = trim_route_audio_map_entry(std::wstring_view(value).substr(
@@ -65,15 +80,22 @@ parse_route_audio_mapping(const std::wstring& value, int source_channels, int de
             throw std::invalid_argument("each audio mapping entry must be destination=source");
         }
 
-        const auto destination = parse_route_audio_map_index(trim_route_audio_map_entry(entry.substr(0, equals)));
-        const auto source      = parse_route_audio_map_index(trim_route_audio_map_entry(entry.substr(equals + 1)));
+        const auto destination  = parse_route_audio_map_index(trim_route_audio_map_entry(entry.substr(0, equals)));
+        const auto source_value = trim_route_audio_map_entry(entry.substr(equals + 1));
+        const bool silence =
+            source_value.size() == 7 &&
+            std::equal(source_value.begin(), source_value.end(), L"SILENCE", [](wchar_t left, wchar_t right) {
+                return left == right || left == right + (L'a' - L'A');
+            });
+        const auto source = silence ? -1 : parse_route_audio_map_index(source_value);
         if (destination >= destination_channels || source >= source_channels) {
             throw std::invalid_argument("audio channel index is outside the source or destination channel count");
         }
-        if (mapping[static_cast<std::size_t>(destination)] != -1) {
+        if (updated[static_cast<std::size_t>(destination)]) {
             throw std::invalid_argument("audio mapping contains a duplicate destination");
         }
         mapping[static_cast<std::size_t>(destination)] = source;
+        updated[static_cast<std::size_t>(destination)] = true;
 
         if (comma == std::wstring::npos) {
             entry_start = value.size();
@@ -85,6 +107,13 @@ parse_route_audio_mapping(const std::wstring& value, int source_channels, int de
         }
     }
     return mapping;
+}
+
+inline std::vector<int>
+parse_route_audio_mapping(const std::wstring& value, int source_channels, int destination_channels)
+{
+    return parse_route_audio_mapping(
+        value, source_channels, destination_channels, identity_route_audio_mapping(destination_channels));
 }
 
 inline std::vector<std::int32_t> remap_route_audio(const std::int32_t*     source,

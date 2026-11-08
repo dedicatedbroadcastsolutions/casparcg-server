@@ -68,21 +68,24 @@ See [BUILDING](BUILDING.md) for instructions on how to build the CasparCG Server
 Native route audio mapping
 --------------------------
 
-Native `route://` producers pass audio through unchanged unless `AUDIO_MAP` is
-specified at creation. Entries use `destination=source` with zero-based audio
-channel indices. When a map is active, destination channels not listed are
-silent. Source channel buffers are not modified. The same creation option works
-with `LOAD` and `LOADBG`; it is native route processing, not the FFmpeg
-producer's `AF` option.
+Native `route://` producers always have an audio patchbay, initially an identity
+map: each destination receives the same-numbered source audio channel, matching
+master's normal passthrough. Entries use `destination=source` with zero-based
+audio channel indices. Each command patches only the destinations listed;
+unlisted destinations retain their existing mappings and are never implicitly
+muted. Source channel buffers are not modified. The same creation option works
+with `LOAD` and `LOADBG`; it is native route processing, not the FFmpeg producer's
+`AF` option.
 
 ```text
-PLAY 5-10 route://1 AUDIO_MAP "0=0,1=1"
+PLAY 5-10 route://1
 PLAY 5-20 route://2 AUDIO_MAP "2=0,3=1"
 ```
 
 Change a playing route without replacing its producer using `CALL`. The update
-takes effect on the next source frame pair; `DEFAULT` restores normal
-passthrough. Calling `AUDIO_MAP` without a value returns the current setting.
+takes effect on the next source frame pair, after previously queued frames drain.
+`DEFAULT` resets all destinations to identity. Calling `AUDIO_MAP` without a
+value returns the complete accepted map, including explicit silences.
 The effective mapping is reported as `route/audio-map` in producer state, and
 the source bus width as `route/source-audio-channels`. Mapping uses the engine's
 existing 16-channel PCM buses: source and destination indices are 0 through 15.
@@ -91,15 +94,23 @@ channel count.
 
 ```text
 CALL 5-20 AUDIO_MAP "2=4,3=5"
+CALL 5-20 AUDIO_MAP "4=SILENCE"
+CALL 5-20 AUDIO_MAP "4=4"
 CALL 5-20 AUDIO_MAP
 CALL 5-20 AUDIO_MAP DEFAULT
 ```
 
-Live mapped-to-mapped changes ramp the routed audio down over 5 ms and back up
-over 5 ms, using the source sample rate. Initial mappings and switches to or from
-`DEFAULT` remain immediate. Explicitly mapped routes mute repeated late audio
-frames rather than replaying stale audio, while preserving their video.
-Passthrough frames retain legacy behavior.
+`destination=SILENCE` is the only way to explicitly mute a destination. Routing
+it to a source again restores audio. Invalid patches are rejected atomically
+without changing any destination.
+
+Live changes ramp only the affected destinations down over 5 ms and back up
+over 5 ms, using the source sample rate. Other destinations remain sample-exact,
+even while a different destination is fading. This also applies to explicit
+silence and `DEFAULT`; initial creation maps apply immediately. Identity routes
+share the original PCM and preserve master passthrough behavior, including
+late-frame repeats. Remapped or fading frames mute repeated late audio rather
+than replaying stale audio, while preserving their video.
 
 License
 ---------

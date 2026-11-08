@@ -11,6 +11,7 @@
 #include <core/video_channel.h>
 
 #include <array>
+#include <future>
 #include <optional>
 #include <stdexcept>
 #include <string>
@@ -122,8 +123,13 @@ void test_native_route(const std::wstring& format_name)
             return std::any(std::string("route-metadata"));
         });
     const_frame original(std::move(input));
-    const auto  publish = [&] {
-        route->signal(draw_frame(original), format.field_count == 2 ? draw_frame(original) : draw_frame{});
+    const auto  publish = [&](int count = 0) {
+        auto published = count == 0 ? original
+                                     : original.with_tag(&tag,
+                                                        array<const int32_t>(original.audio_data().data(),
+                                                                             static_cast<std::size_t>(count) * 16,
+                                                                             original.audio_data()));
+        route->signal(draw_frame(published), format.field_count == 2 ? draw_frame(published) : draw_frame{});
     };
     const auto receive = [&](video_field field) {
         capture_frame captured;
@@ -134,44 +140,132 @@ void test_native_route(const std::wstring& format_name)
         return captured_result{captured.frame, captured.volume};
     };
     const auto first_field = format.field_count == 2 ? video_field::a : video_field::progressive;
-    publish();
+    {
+        auto default_producer = create_route_producer(dependencies, {L"route://1-10"});
+        publish();
+        capture_frame default_frame;
+        default_producer->receive(first_field, samples).accept(default_frame);
+        check(default_frame.frame.has_value());
+        check(default_frame.frame->audio_data().data() == original.audio_data().data());
+        check(parse_route_audio_mapping(default_producer->call({L"AUDIO_MAP"}).get(), 16, 16) ==
+              identity_route_audio_mapping(16));
+        if (format.field_count == 2)
+            default_producer->receive(video_field::b, samples);
+        capture_frame repeated;
+        default_producer->receive(first_field, samples).accept(repeated);
+        check(repeated.volume == 1.0);
+    }
     auto initial = receive(first_field);
     check(initial.frame->audio_data().data()[0] == 24000 && initial.frame->audio_data().data()[1] == 25000);
-    check(initial.frame->audio_data().data()[2] == 0 && original.audio_data().data()[0] == 10000);
+    check(initial.frame->audio_data().data()[2] == 12000 && original.audio_data().data()[0] == 10000);
     check(initial.frame->audio_data().data() != original.audio_data().data());
     if (format.field_count == 2)
         check(receive(video_field::b).frame->audio_data().data()[0] == 24000);
     const auto tag_before = initial.frame->stream_tag();
 
-    producer->call({L"AUDIO_MAP", L"0=6,1=7"}).get();
+    producer->call({L"AUDIO_MAP", L"0=6"}).get();
     publish();
     auto        faded = receive(first_field);
     const auto* audio = faded.frame->audio_data().data();
     check(audio[0] == 24000 && audio[(ramp / 2) * 16] == 12000);
     check(audio[ramp * 16] == 0 && audio[(2 * ramp) * 16] == 16000);
+    for (int sample = 0; sample < samples; ++sample) {
+        check(audio[sample * 16 + 1] == 25000);
+        for (int channel = 2; channel < 16; ++channel)
+            check(audio[sample * 16 + channel] == original.audio_data().data()[sample * 16 + channel]);
+    }
     check(faded.frame->stream_tag() == tag_before);
     if (format.field_count == 2)
         check(receive(video_field::b).frame->audio_data().data()[0] == 16000);
     bool rejected = false;
     try {
-        producer->call({L"AUDIO_MAP", L"0=16"}).get();
+        producer->call({L"AUDIO_MAP", L"1=2,0=16"}).get();
     } catch (const user_error&) {
         rejected = true;
     }
-    check(rejected && producer->call({L"AUDIO_MAP"}).get() == L"0=6,1=7");
+    auto expected = identity_route_audio_mapping(16);
+    expected[0]   = 6;
+    expected[1]   = 15;
+    check(rejected && parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16) == expected);
+    producer->call({L"AUDIO_MAP", L"0=6"}).get();
+    publish();
+    auto unchanged = receive(first_field);
+    check(unchanged.frame->audio_data().data()[0] == 16000);
+    if (format.field_count == 2)
+        receive(video_field::b);
+
+    producer->call({L"AUDIO_MAP", L"1=SILENCE"}).get();
+    publish();
+    auto silenced = receive(first_field);
+    for (int sample = 0; sample < samples; ++sample) {
+        check(silenced.frame->audio_data().data()[sample * 16] == 16000);
+        check(silenced.frame->audio_data().data()[sample * 16 + 2] == 12000);
+    }
+    check(silenced.frame->audio_data().data()[2 * ramp * 16 + 1] == 0);
+    expected[1] = -1;
+    check(parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16) == expected);
+    if (format.field_count == 2)
+        receive(video_field::b);
     check(receive(first_field).volume == 0.0);
     producer->call({L"AUDIO_MAP", L"DEFAULT"}).get();
     check(receive(first_field).volume == 0.0);
     publish();
+    auto restored = receive(first_field);
+    check(restored.frame->audio_data().data()[2 * ramp * 16] == 10000);
+    check(restored.frame->audio_data().data()[2 * ramp * 16 + 1] == 11000);
+    for (int sample = 0; sample < samples; ++sample)
+        for (int channel = 2; channel < 16; ++channel)
+            check(restored.frame->audio_data().data()[sample * 16 + channel] ==
+                  original.audio_data().data()[sample * 16 + channel]);
+    check(parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16) == identity_route_audio_mapping(16));
+    if (format.field_count == 2)
+        receive(video_field::b);
+    publish();
     auto passthrough = receive(first_field);
     check(passthrough.frame->audio_data().data() == original.audio_data().data());
     check(passthrough.frame->audio_data().data()[0] == 10000 && passthrough.volume == 1.0);
+
+    if (format.field_count == 1) {
+        producer->call({L"AUDIO_MAP", L"0=3"}).get();
+        publish(ramp / 2);
+        check(receive(first_field).frame->audio_data().data()[0] == 10000);
+        producer->call({L"AUDIO_MAP", L"0=4,1=5"}).get();
+        publish(ramp / 2);
+        auto pending = receive(first_field);
+        check(pending.frame->audio_data().data()[0] == 5000);
+        check(pending.frame->audio_data().data()[1] == 11000);
+        publish(ramp / 2);
+        auto switched = receive(first_field);
+        check(switched.frame->audio_data().data()[0] == 0);
+        check(switched.frame->audio_data().data()[1] == 5500);
+        publish(ramp / 2);
+        auto rising = receive(first_field);
+        check(rising.frame->audio_data().data()[0] == 7000);
+        check(rising.frame->audio_data().data()[1] == 0);
+        publish();
+        auto finished = receive(first_field);
+        check(finished.frame->audio_data().data()[0] == 14000);
+        check(finished.frame->audio_data().data()[1] == 7500);
+        check(finished.frame->audio_data().data()[ramp * 16 + 1] == 15000);
+        for (int sample = 0; sample < samples; ++sample)
+            for (int channel = 2; channel < 16; ++channel)
+                check(finished.frame->audio_data().data()[sample * 16 + channel] ==
+                      original.audio_data().data()[sample * 16 + channel]);
+    }
+
+    auto patch2 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"2=8"}).get(); });
+    auto patch3 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"3=9"}).get(); });
+    patch2.get();
+    patch3.get();
+    const auto concurrent = parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16);
+    check(concurrent[2] == 8 && concurrent[3] == 9 && concurrent[4] == 4);
 }
 
 } // namespace
 
 int main()
 {
+    using caspar::core::identity_route_audio_mapping;
     using caspar::core::parse_route_audio_mapping;
     using caspar::core::remap_route_audio;
 
@@ -180,11 +274,15 @@ int main()
     const auto                         output  = remap_route_audio(input.data(), input.size(), 8, 8, mapping);
 
     check(output.size() == input.size());
-    check(output[0] == 0 && output[1] == 0);
+    check(output[0] == 10 && output[1] == 11);
     check(output[2] == 10 && output[3] == 11);
-    check(output[4] == 10 && output[5] == 0);
+    check(output[4] == 10 && output[5] == 15);
     check(output[10] == 20 && output[11] == 21);
     check(input[0] == 10 && input[1] == 11);
+    const auto patched = parse_route_audio_mapping(L"0=7,5=SiLeNcE", 8, 8, mapping);
+    check(patched[0] == 7 && patched[2] == 0 && patched[3] == 1 && patched[5] == -1 && patched[6] == 6);
+    const auto silence = remap_route_audio(input.data(), input.size(), 8, 8, patched);
+    check(silence[5] == 0 && silence[13] == 0 && silence[6] == 16);
 
     const auto invalid_update = [&] { parse_route_audio_mapping(L"2=0,2=1", 8, 8); };
     bool       rejected       = false;
@@ -195,8 +293,19 @@ int main()
     }
     check(rejected);
 
-    for (const auto& value :
-         {L"", L"0", L"0==1", L"-1=0", L"0=-1", L"0=8", L"0=0,", L",0=0", L"0=0,,1=1", L"999999999999999999999=0"}) {
+    for (const auto& value : {L"",
+                              L"0",
+                              L"0==1",
+                              L"-1=0",
+                              L"0=-1",
+                              L"0=8",
+                              L"0=0,",
+                              L",0=0",
+                              L"0=0,,1=1",
+                              L"999999999999999999999=0",
+                              L"0=SILENCE,0=1",
+                              L"0=SILENT",
+                              L"0=0,1=SILENT"}) {
         rejected = false;
         try {
             parse_route_audio_mapping(value, 8, 8);
