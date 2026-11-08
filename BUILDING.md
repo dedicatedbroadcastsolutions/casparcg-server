@@ -92,6 +92,21 @@ If all goes to plan, a folder called 'staging' has been created with everything 
 
 -DENABLE_HTML=OFF - useful if you lack CEF, and would like to build without that module.
 
+-DBUILD_TESTING=ON - build the native route audio mapping regression test:
+
+```sh
+cmake --build build --target route_audio_mapping_tests
+ctest --test-dir build --output-on-failure -R route_audio_mapping
+```
+
+The test covers mapping parsing, validation, partial PCM blocks, native route
+creation and live switching on 16-channel buses. Progressive and interlaced
+formats verify identity passthrough, differential patches, explicit silence,
+per-destination fades, source-buffer isolation, metadata preservation, and
+silence on late remapped frames without audio hardware. Progressive cases
+additionally cover interrupted ramps spanning PCM blocks, unequal-length PCM
+leaves in both traversal orders, and preserved layer gain transforms.
+
 -DUSE_STATIC_BOOST=ON - (Linux only, default OFF) statically link against Boost.
 
 -DUSE_SYSTEM_CEF=OFF - (Linux only, default ON) use the version of CEF from your OS. This expects to be using builds from https://launchpad.net/~casparcg/+archive/ubuntu/ppa
