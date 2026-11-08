@@ -65,6 +65,42 @@ Development
 
 See [BUILDING](BUILDING.md) for instructions on how to build the CasparCG Server from source manually.
 
+Native route audio mapping
+--------------------------
+
+Native `route://` producers pass audio through unchanged unless `AUDIO_MAP` is
+specified at creation. Entries use `destination=source` with zero-based audio
+channel indices. When a map is active, destination channels not listed are
+silent. Source channel buffers are not modified. The same creation option works
+with `LOAD` and `LOADBG`; it is native route processing, not the FFmpeg
+producer's `AF` option.
+
+```text
+PLAY 5-10 route://1 AUDIO_MAP "0=0,1=1"
+PLAY 5-20 route://2 AUDIO_MAP "2=0,3=1"
+```
+
+Change a playing route without replacing its producer using `CALL`. The update
+takes effect on the next source frame pair; `DEFAULT` restores normal
+passthrough. Calling `AUDIO_MAP` without a value returns the current setting.
+The effective mapping is reported as `route/audio-map` in producer state, and
+the source bus width as `route/source-audio-channels`. Mapping uses the engine's
+existing 16-channel PCM buses: source and destination indices are 0 through 15.
+This feature does not change channel bus widths or add a configurable audio
+channel count.
+
+```text
+CALL 5-20 AUDIO_MAP "2=4,3=5"
+CALL 5-20 AUDIO_MAP
+CALL 5-20 AUDIO_MAP DEFAULT
+```
+
+Live mapped-to-mapped changes ramp the routed audio down and back up over 5 ms,
+using the source sample rate. Initial mappings and switches to or from
+`DEFAULT` remain immediate. Explicitly mapped routes mute repeated late audio
+frames rather than replaying stale audio, while preserving their video.
+Passthrough frames retain legacy behavior.
+
 License
 ---------
 
