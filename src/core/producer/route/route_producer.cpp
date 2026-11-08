@@ -389,7 +389,7 @@ class route_producer
         } catch (const std::invalid_argument&) {
             CASPAR_THROW_EXCEPTION(
                 user_error() << msg_info(
-                    L"Invalid AUDIO_MAP. Use destination=source or destination=SILENCE entries with zero-based "
+                    L"Invalid AUDIO_MAP. Use destination:source or destination:SILENCE entries with zero-based "
                     L"indices within the source and destination channel counts."));
         }
     }
@@ -404,7 +404,7 @@ class route_producer
             if (!first) {
                 result << L",";
             }
-            result << destination << L"=";
+            result << destination << L":";
             if (source < 0)
                 result << L"SILENCE";
             else

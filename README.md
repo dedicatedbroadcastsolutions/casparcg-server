@@ -70,16 +70,20 @@ Native route audio mapping
 
 Native `route://` producers always have an audio patchbay, initially an identity
 map: each destination receives the same-numbered source audio channel, matching
-master's normal passthrough. Entries use `destination=source` with zero-based
+master's normal passthrough. Entries use `destination:source` with zero-based
 audio channel indices. Each command patches only the destinations listed;
 unlisted destinations retain their existing mappings and are never implicitly
 muted. Source channel buffers are not modified. The same creation option works
 with `LOAD` and `LOADBG`; it is native route processing, not the FFmpeg producer's
 `AF` option.
 
+Normal route commands require no changes. The optional mapping uses colon-separated
+indices, similar in style to FFmpeg selectors, but its order is destination first:
+`2:4` sends source audio channel 4 to destination audio channel 2.
+
 ```text
 PLAY 5-10 route://1
-PLAY 5-20 route://2 AUDIO_MAP "2=0,3=1"
+PLAY 5-20 route://2 AUDIO_MAP "2:0,3:1"
 ```
 
 Change a playing route without replacing its producer using `CALL`. The update
@@ -93,14 +97,14 @@ This feature does not change channel bus widths or add a configurable audio
 channel count.
 
 ```text
-CALL 5-20 AUDIO_MAP "2=4,3=5"
-CALL 5-20 AUDIO_MAP "4=SILENCE"
-CALL 5-20 AUDIO_MAP "4=4"
+CALL 5-20 AUDIO_MAP "2:4,3:5"
+CALL 5-20 AUDIO_MAP "4:SILENCE"
+CALL 5-20 AUDIO_MAP "4:4"
 CALL 5-20 AUDIO_MAP
 CALL 5-20 AUDIO_MAP DEFAULT
 ```
 
-`destination=SILENCE` is the only way to explicitly mute a destination. Routing
+`destination:SILENCE` is the only way to explicitly mute a destination. Routing
 it to a source again restores audio. Invalid patches are rejected atomically
 without changing any destination.
 

@@ -104,7 +104,7 @@ void test_native_route(const std::wstring& format_name)
                                              format,
                                              spl::make_shared<frame_producer_registry>(),
                                              spl::make_shared<cg_producer_registry>());
-    auto      producer = create_route_producer(dependencies, {L"route://1-10", L"AUDIO_MAP", L"0=14,1=15"});
+    auto      producer = create_route_producer(dependencies, {L"route://1-10", L"AUDIO_MAP", L"0:14,1:15"});
     auto      route    = source->route(10);
     const int samples  = format.audio_cadence.front();
     const int ramp     = format.audio_sample_rate / 200;
@@ -163,7 +163,7 @@ void test_native_route(const std::wstring& format_name)
         check(receive(video_field::b).frame->audio_data().data()[0] == 24000);
     const auto tag_before = initial.frame->stream_tag();
 
-    producer->call({L"AUDIO_MAP", L"0=6"}).get();
+    producer->call({L"AUDIO_MAP", L"0:6"}).get();
     publish();
     auto        faded = receive(first_field);
     const auto* audio = faded.frame->audio_data().data();
@@ -179,7 +179,7 @@ void test_native_route(const std::wstring& format_name)
         check(receive(video_field::b).frame->audio_data().data()[0] == 16000);
     bool rejected = false;
     try {
-        producer->call({L"AUDIO_MAP", L"1=2,0=16"}).get();
+        producer->call({L"AUDIO_MAP", L"1:2,0:16"}).get();
     } catch (const user_error&) {
         rejected = true;
     }
@@ -187,14 +187,14 @@ void test_native_route(const std::wstring& format_name)
     expected[0]   = 6;
     expected[1]   = 15;
     check(rejected && parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16) == expected);
-    producer->call({L"AUDIO_MAP", L"0=6"}).get();
+    producer->call({L"AUDIO_MAP", L"0:6"}).get();
     publish();
     auto unchanged = receive(first_field);
     check(unchanged.frame->audio_data().data()[0] == 16000);
     if (format.field_count == 2)
         receive(video_field::b);
 
-    producer->call({L"AUDIO_MAP", L"1=SILENCE"}).get();
+    producer->call({L"AUDIO_MAP", L"1:SILENCE"}).get();
     publish();
     auto silenced = receive(first_field);
     for (int sample = 0; sample < samples; ++sample) {
@@ -226,10 +226,10 @@ void test_native_route(const std::wstring& format_name)
     check(passthrough.frame->audio_data().data()[0] == 10000 && passthrough.volume == 1.0);
 
     if (format.field_count == 1) {
-        producer->call({L"AUDIO_MAP", L"0=3"}).get();
+        producer->call({L"AUDIO_MAP", L"0:3"}).get();
         publish(ramp / 2);
         check(receive(first_field).frame->audio_data().data()[0] == 10000);
-        producer->call({L"AUDIO_MAP", L"0=4,1=5"}).get();
+        producer->call({L"AUDIO_MAP", L"0:4,1:5"}).get();
         publish(ramp / 2);
         auto pending = receive(first_field);
         check(pending.frame->audio_data().data()[0] == 5000);
@@ -253,8 +253,8 @@ void test_native_route(const std::wstring& format_name)
                       original.audio_data().data()[sample * 16 + channel]);
     }
 
-    auto patch2 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"2=8"}).get(); });
-    auto patch3 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"3=9"}).get(); });
+    auto patch2 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"2:8"}).get(); });
+    auto patch3 = std::async(std::launch::async, [&] { producer->call({L"AUDIO_MAP", L"3:9"}).get(); });
     patch2.get();
     patch3.get();
     const auto concurrent = parse_route_audio_mapping(producer->call({L"AUDIO_MAP"}).get(), 16, 16);
@@ -269,7 +269,7 @@ int main()
     using caspar::core::parse_route_audio_mapping;
     using caspar::core::remap_route_audio;
 
-    const auto                         mapping = parse_route_audio_mapping(L"2=0, 3=1, 4=0", 8, 8);
+    const auto                         mapping = parse_route_audio_mapping(L"2:0, 3:1, 4:0", 8, 8);
     const std::array<std::int32_t, 16> input   = {10, 11, 12, 13, 14, 15, 16, 17, 20, 21, 22, 23, 24, 25, 26, 27};
     const auto                         output  = remap_route_audio(input.data(), input.size(), 8, 8, mapping);
 
@@ -279,12 +279,12 @@ int main()
     check(output[4] == 10 && output[5] == 15);
     check(output[10] == 20 && output[11] == 21);
     check(input[0] == 10 && input[1] == 11);
-    const auto patched = parse_route_audio_mapping(L"0=7,5=SiLeNcE", 8, 8, mapping);
+    const auto patched = parse_route_audio_mapping(L"0:7,5:SiLeNcE", 8, 8, mapping);
     check(patched[0] == 7 && patched[2] == 0 && patched[3] == 1 && patched[5] == -1 && patched[6] == 6);
     const auto silence = remap_route_audio(input.data(), input.size(), 8, 8, patched);
     check(silence[5] == 0 && silence[13] == 0 && silence[6] == 16);
 
-    const auto invalid_update = [&] { parse_route_audio_mapping(L"2=0,2=1", 8, 8); };
+    const auto invalid_update = [&] { parse_route_audio_mapping(L"2:0,2:1", 8, 8); };
     bool       rejected       = false;
     try {
         invalid_update();
@@ -295,17 +295,22 @@ int main()
 
     for (const auto& value : {L"",
                               L"0",
-                              L"0==1",
-                              L"-1=0",
-                              L"0=-1",
-                              L"0=8",
-                              L"0=0,",
-                              L",0=0",
-                              L"0=0,,1=1",
-                              L"999999999999999999999=0",
-                              L"0=SILENCE,0=1",
-                              L"0=SILENT",
-                              L"0=0,1=SILENT"}) {
+                              L"0::1",
+                              L"0=1",
+                              L"0:1:2",
+                              L":1",
+                              L"0:",
+                              L"0:1,1=2",
+                              L"-1:0",
+                              L"0:-1",
+                              L"0:8",
+                              L"0:0,",
+                              L",0:0",
+                              L"0:0,,1:1",
+                              L"999999999999999999999:0",
+                              L"0:SILENCE,0:1",
+                              L"0:SILENT",
+                              L"0:0,1:SILENT"}) {
         rejected = false;
         try {
             parse_route_audio_mapping(value, 8, 8);
@@ -317,7 +322,7 @@ int main()
 
     rejected = false;
     try {
-        parse_route_audio_mapping(L"8=0", 8, 8);
+        parse_route_audio_mapping(L"8:0", 8, 8);
     } catch (const std::invalid_argument&) {
         rejected = true;
     }
@@ -325,19 +330,19 @@ int main()
 
     rejected = false;
     try {
-        parse_route_audio_mapping(L"2=x", 8, 8);
+        parse_route_audio_mapping(L"2:x", 8, 8);
     } catch (const std::invalid_argument&) {
         rejected = true;
     }
     check(rejected);
 
-    const auto recovery_mapping = parse_route_audio_mapping(L"2=4,3=5", 8, 8);
+    const auto recovery_mapping = parse_route_audio_mapping(L"2:4,3:5", 8, 8);
     const auto recovered        = remap_route_audio(input.data(), input.size(), 8, 8, recovery_mapping);
     check(recovered[2] == 14 && recovered[3] == 15);
     check(recovered[10] == 24 && recovered[11] == 25);
 
     const std::array<std::int32_t, 3> partial_input   = {30, 31, 32};
-    const auto                        partial_mapping = parse_route_audio_mapping(L"0=0,1=1", 2, 4);
+    const auto                        partial_mapping = parse_route_audio_mapping(L"0:0,1:1", 2, 4);
     const auto partial = remap_route_audio(partial_input.data(), partial_input.size(), 2, 4, partial_mapping);
     check(partial.size() == 8);
     check(partial[0] == 30 && partial[1] == 31 && partial[2] == 0 && partial[3] == 0);

@@ -53,7 +53,7 @@ inline std::vector<int> identity_route_audio_mapping(int channels)
     return mapping;
 }
 
-// Each entry patches destination=source; -1 explicitly selects silence.
+// Each entry patches destination:source; -1 explicitly selects silence.
 inline std::vector<int> parse_route_audio_mapping(const std::wstring&     value,
                                                   int                     source_channels,
                                                   int                     destination_channels,
@@ -72,16 +72,16 @@ inline std::vector<int> parse_route_audio_mapping(const std::wstring&     value,
     std::vector<bool> updated(static_cast<std::size_t>(destination_channels), false);
     std::size_t       entry_start = 0;
     while (entry_start < value.size()) {
-        const auto comma  = value.find(L',', entry_start);
-        auto       entry  = trim_route_audio_map_entry(std::wstring_view(value).substr(
+        const auto comma     = value.find(L',', entry_start);
+        auto       entry     = trim_route_audio_map_entry(std::wstring_view(value).substr(
             entry_start, comma == std::wstring::npos ? std::wstring::npos : comma - entry_start));
-        const auto equals = entry.find(L'=');
-        if (equals == std::wstring_view::npos || entry.find(L'=', equals + 1) != std::wstring_view::npos) {
-            throw std::invalid_argument("each audio mapping entry must be destination=source");
+        const auto separator = entry.find(L':');
+        if (separator == std::wstring_view::npos || entry.find(L':', separator + 1) != std::wstring_view::npos) {
+            throw std::invalid_argument("each audio mapping entry must be destination:source");
         }
 
-        const auto destination  = parse_route_audio_map_index(trim_route_audio_map_entry(entry.substr(0, equals)));
-        const auto source_value = trim_route_audio_map_entry(entry.substr(equals + 1));
+        const auto destination  = parse_route_audio_map_index(trim_route_audio_map_entry(entry.substr(0, separator)));
+        const auto source_value = trim_route_audio_map_entry(entry.substr(separator + 1));
         const bool silence =
             source_value.size() == 7 &&
             std::equal(source_value.begin(), source_value.end(), L"SILENCE", [](wchar_t left, wchar_t right) {
