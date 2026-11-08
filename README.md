@@ -90,7 +90,7 @@ Change a playing route without replacing its producer using `CALL`. The update
 takes effect on the next source frame pair, after previously queued frames drain.
 `DEFAULT` resets all destinations to identity. Calling `AUDIO_MAP` without a
 value returns the complete accepted map, including explicit silences.
-The effective mapping is reported as `route/audio-map` in producer state, and
+The accepted mapping is reported as `route/audio-map` in producer state, and
 the source bus width as `route/source-audio-channels`. Mapping uses the engine's
 existing 16-channel PCM buses: source and destination indices are 0 through 15.
 This feature does not change channel bus widths or add a configurable audio
@@ -114,7 +114,18 @@ even while a different destination is fading. This also applies to explicit
 silence and `DEFAULT`; initial creation maps apply immediately. Identity routes
 share the original PCM and preserve master passthrough behavior, including
 late-frame repeats. Remapped or fading frames mute repeated late audio rather
-than replaying stale audio, while preserving their video.
+than replaying stale audio, while preserving their video. This safeguard silences
+the entire repeated route frame, not only the remapped destinations. Queries and
+producer state report accepted updates immediately; queued frames and switching
+ramps can still be using an earlier mapping.
+
+The audio routing point remains unchanged from master. Specific-layer routes
+remove the outer layer adjustments but retain producer/transition transforms.
+Whole-channel routes retain source layer adjustments and are summed by the
+destination's normal audio mixer; source channel master volume is not included.
+The map and shared fade envelope are applied to each PCM leaf before destination
+mixing, including when source layers have unequal audio buffer lengths. This is
+not a tap of the source channel's final mixed output.
 
 License
 ---------

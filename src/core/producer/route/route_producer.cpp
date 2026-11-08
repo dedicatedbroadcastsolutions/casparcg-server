@@ -76,13 +76,33 @@ class fix_stream_tag : public frame_visitor
         double             gain       = 1.0;
     };
 
+    class audio_sample_count final : public frame_visitor
+    {
+        const std::size_t channels_;
+
+      public:
+        std::size_t samples = 0;
+
+        explicit audio_sample_count(int channels)
+            : channels_(static_cast<std::size_t>(channels))
+        {
+        }
+
+        void push(const frame_transform&) override {}
+        void pop() override {}
+        void visit(const const_frame& frame) override
+        {
+            const auto size = frame.audio_data().size();
+            samples         = std::max(samples, size / channels_ + (size % channels_ != 0 ? 1 : 0));
+        }
+    };
+
     const void*                                                     route_producer_ptr_;
     std::vector<destination_transition>                             destinations_;
     int                                                             source_audio_channels_;
     int                                                             destination_audio_channels_;
     int                                                             ramp_samples_            = 1;
     bool                                                            mapping_initialized_     = false;
-    bool                                                            block_prepared_          = false;
     bool                                                            block_transition_active_ = false;
     std::vector<transition_sample>                                  block_transition_;
     std::stack<std::pair<frame_transform, std::vector<draw_frame>>> frames_stack_;
@@ -108,10 +128,6 @@ class fix_stream_tag : public frame_visitor
 
     void prepare_transition(std::size_t samples)
     {
-        if (block_prepared_) {
-            return;
-        }
-        block_prepared_          = true;
         block_transition_active_ = true;
         block_transition_.clear();
         block_transition_.reserve(samples * destinations_.size());
@@ -204,9 +220,6 @@ class fix_stream_tag : public frame_visitor
                 frame.audio_data().size() / static_cast<std::size_t>(source_audio_channels) +
                 (frame.audio_data().size() % static_cast<std::size_t>(source_audio_channels) != 0 ? 1 : 0);
             std::vector<std::int32_t> audio;
-            if (!block_prepared_ && transition_active()) {
-                prepare_transition(samples);
-            }
             if (!block_transition_active_) {
                 std::vector<int> mapping;
                 for (const auto& destination : destinations_)
@@ -217,15 +230,11 @@ class fix_stream_tag : public frame_visitor
                                           destination_audio_channels_,
                                           mapping);
             } else {
-                prepare_transition(samples);
                 audio.resize(samples * static_cast<std::size_t>(destination_audio_channels_), 0);
                 for (std::size_t sample = 0; sample < samples; ++sample) {
                     for (int destination = 0; destination < destination_audio_channels_; ++destination) {
-                        const auto  transition_samples = block_transition_.size() / destinations_.size();
-                        const auto& step =
-                            block_transition_[std::min(sample, transition_samples - 1) * destinations_.size() +
-                                              destination];
-                        const auto source_channel = step.source;
+                        const auto& step           = block_transition_[sample * destinations_.size() + destination];
+                        const auto  source_channel = step.source;
                         if (source_channel >= 0 && source_channel < source_audio_channels) {
                             const auto source_index = sample * static_cast<std::size_t>(source_audio_channels) +
                                                       static_cast<std::size_t>(source_channel);
@@ -264,8 +273,13 @@ class fix_stream_tag : public frame_visitor
 
     draw_frame operator()(draw_frame frame)
     {
-        block_prepared_          = false;
         block_transition_active_ = false;
+        if (transition_active()) {
+            audio_sample_count count(source_audio_channels_);
+            frame.accept(count);
+            if (count.samples > 0)
+                prepare_transition(count.samples);
+        }
         frame.accept(*this);
 
         auto popped = frames_stack_.top();

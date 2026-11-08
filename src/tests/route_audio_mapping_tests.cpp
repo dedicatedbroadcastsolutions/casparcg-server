@@ -68,6 +68,8 @@ class capture_frame final : public caspar::core::frame_visitor
 
   public:
     std::optional<caspar::core::const_frame> frame;
+    std::vector<caspar::core::const_frame>   frames;
+    std::vector<double>                      frame_volumes;
     double                                   volume = 1.0;
 
     void push(const caspar::core::frame_transform& transform) override
@@ -76,8 +78,10 @@ class capture_frame final : public caspar::core::frame_visitor
     }
     void visit(const caspar::core::const_frame& value) override
     {
-        frame  = value;
+        frame = value;
+        frames.push_back(value);
         volume = volumes_.back();
+        frame_volumes.push_back(volume);
     }
     void pop() override { volumes_.pop_back(); }
 };
@@ -226,6 +230,44 @@ void test_native_route(const std::wstring& format_name)
     check(passthrough.frame->audio_data().data()[0] == 10000 && passthrough.volume == 1.0);
 
     if (format.field_count == 1) {
+        auto mixed_producer = create_route_producer(dependencies, {L"route://1-11"});
+        auto mixed_route    = source->route(11);
+        mixed_route->signal(draw_frame(original), draw_frame{});
+        mixed_producer->receive(first_field, samples);
+        mixed_producer->call({L"AUDIO_MAP", L"0:3"}).get();
+        auto short_leaf                                = original.with_tag(&tag,
+                                            array<const int32_t>(original.audio_data().data(),
+                                                                 static_cast<std::size_t>(ramp / 2) * 16,
+                                                                 original.audio_data()));
+        auto short_layer                               = draw_frame(short_leaf);
+        auto long_layer                                = draw_frame(original);
+        short_layer.transform().audio_transform.volume = 0.5;
+        long_layer.transform().audio_transform.volume  = 0.25;
+        mixed_route->signal(draw_frame(std::vector<draw_frame>{short_layer, long_layer}), draw_frame{});
+        capture_frame unequal_leaves;
+        mixed_producer->receive(first_field, samples).accept(unequal_leaves);
+        check(unequal_leaves.frames.size() == 2);
+        check(unequal_leaves.frame_volumes[0] == 0.5 && unequal_leaves.frame_volumes[1] == 0.25);
+        check(unequal_leaves.frames[0].audio_data().data()[0] == 10000);
+        check(unequal_leaves.frames[1].audio_data().data()[0] == 10000);
+        check(unequal_leaves.frames[1].audio_data().data()[ramp * 16] == 0);
+        check(unequal_leaves.frames[1].audio_data().data()[2 * ramp * 16] == 13000);
+        for (const auto& leaf : unequal_leaves.frames)
+            for (std::size_t sample = 0; sample < leaf.audio_data().size() / 16; ++sample)
+                for (int channel = 1; channel < 16; ++channel)
+                    check(leaf.audio_data().data()[sample * 16 + channel] ==
+                          original.audio_data().data()[sample * 16 + channel]);
+
+        mixed_producer->call({L"AUDIO_MAP", L"DEFAULT"}).get();
+        mixed_route->signal(draw_frame(std::vector<draw_frame>{draw_frame(original), draw_frame(short_leaf)}),
+                            draw_frame{});
+        capture_frame reverse_order;
+        mixed_producer->receive(first_field, samples).accept(reverse_order);
+        check(reverse_order.frames.size() == 2);
+        check(reverse_order.frames[0].audio_data().data()[2 * ramp * 16] == 10000);
+        check(reverse_order.frames[1].audio_data().data()[0] == 13000);
+        check(reverse_order.frame_volumes[0] == 1.0 && reverse_order.frame_volumes[1] == 1.0);
+
         producer->call({L"AUDIO_MAP", L"0:3"}).get();
         publish(ramp / 2);
         check(receive(first_field).frame->audio_data().data()[0] == 10000);

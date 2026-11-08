@@ -102,9 +102,10 @@ ctest --test-dir build --output-on-failure -R route_audio_mapping
 The test covers mapping parsing, validation, partial PCM blocks, native route
 creation and live switching on 16-channel buses. Progressive and interlaced
 formats verify identity passthrough, differential patches, explicit silence,
-per-destination fades, interrupted ramps spanning PCM blocks, source-buffer
-isolation, metadata preservation, and silence on late remapped frames without
-audio hardware.
+per-destination fades, source-buffer isolation, metadata preservation, and
+silence on late remapped frames without audio hardware. Progressive cases
+additionally cover interrupted ramps spanning PCM blocks, unequal-length PCM
+leaves in both traversal orders, and preserved layer gain transforms.
 
 -DUSE_STATIC_BOOST=ON - (Linux only, default OFF) statically link against Boost.
 
