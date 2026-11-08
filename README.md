@@ -65,6 +65,41 @@ Development
 
 See [BUILDING](BUILDING.md) for instructions on how to build the CasparCG Server from source manually.
 
+Channel audio matrix
+--------------------
+
+`MIXER <channel> AUDIO_MATRIX` configures a weighted sum for each output audio
+channel. Each input is `source-channel:source-layer:audio-index:PRE|POST:gain`.
+Channel and layer numbers use normal AMCP addressing; audio indices are
+zero-based. Gains are finite values from -16 to 16. Inputs add together, and
+one input can feed multiple outputs. Up to 64 inputs per output and 64 distinct
+source buses per destination channel are supported.
+
+`PRE` reads before the outer layer fader; `POST` reads after it. `*` selects
+the whole source stage. Taps are pre-master and pre-matrix, so channel matrices
+cannot feed back into one another. Only configured output channels are
+overridden; `SILENCE` explicitly mutes an output and `DEFAULT` restores legacy
+summing.
+
+```text
+MIXER 5 AUDIO_MATRIX 0 "5:10:0:POST:1,5:20:4:PRE:0.5"
+MIXER 5 AUDIO_MATRIX 1 "1:10:4:PRE:1"
+MIXER 5 AUDIO_MATRIX 2 "2:*:0:POST:1"
+MIXER 5 AUDIO_MATRIX 3 SILENCE
+MIXER 5 AUDIO_MATRIX
+MIXER 5 AUDIO_MATRIX 3 DEFAULT
+MIXER 5 AUDIO_MATRIX DEFAULT
+```
+
+Updates replace a destination bus atomically without recreating producers,
+video, or consumers. Cross-channel taps transport PCM only through bounded
+single-writer/single-reader FIFOs; they do not render source video for the tap.
+Different video rates and field cadences are accommodated by sample-count
+consumption. All source and destination channels must use the same sample rate;
+rate mismatches are rejected, and independent-clock drift is not corrected.
+Format changes invalidate the affected tap until its matrix configuration is
+reissued. See [BUILDING](BUILDING.md) for the headless regression test commands.
+
 Channel audio width
 -------------------
 
