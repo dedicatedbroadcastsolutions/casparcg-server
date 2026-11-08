@@ -101,8 +101,9 @@ core::mutable_frame make_frame(void*                            tag,
         },
         [&]() {
             if (audio) {
-                const int channel_count = 16;
-                frame.audio_data()      = std::vector<int32_t>(audio->nb_samples * channel_count, 0);
+                const int channel_count = core::max_audio_channels;
+                frame.audio_channels(channel_count);
+                frame.audio_data() = std::vector<int32_t>(audio->nb_samples * channel_count, 0);
 
                 auto source_channel_count = audio->ch_layout.nb_channels;
                 if (source_channel_count == channel_count) {

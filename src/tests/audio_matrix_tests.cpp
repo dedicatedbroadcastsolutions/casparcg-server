@@ -14,6 +14,7 @@
 #include <core/producer/stage.h>
 #include <core/video_channel.h>
 
+#include <algorithm>
 #include <array>
 #include <chrono>
 #include <iostream>
@@ -41,8 +42,8 @@ caspar::core::draw_frame frame(const void* tag, int samples, int channels, int b
     desc.planes.emplace_back(1, 1, 4);
     std::vector<caspar::array<const uint8_t>> image;
     image.emplace_back(std::vector<uint8_t>(4));
-    return caspar::core::draw_frame(
-        caspar::core::const_frame(tag, std::move(image), caspar::array<const int32_t>(std::move(pcm)), desc));
+    return caspar::core::draw_frame(caspar::core::const_frame(
+        tag, std::move(image), caspar::array<const int32_t>(std::move(pcm)), desc, nullptr, channels));
 }
 
 class test_image_mixer final : public caspar::core::image_mixer
@@ -158,7 +159,7 @@ void channel_integration()
     auto destination = spl::make_shared<video_channel>(
         2, format, color_space::bt709, std::make_unique<test_image_mixer>(destination_renders), [](monitor::state) {});
     std::vector<spl::shared_ptr<video_channel>> channels{source, destination};
-    auto                                        input = spl::make_shared<test_producer>(8, 100);
+    auto                                        input = spl::make_shared<test_producer>(16, 100);
     auto                                        local = spl::make_shared<test_producer>(8, 1000);
     source->stage()->load(10, input).get();
     source->stage()->play(10).get();
@@ -214,12 +215,19 @@ void channel_integration()
                                              format,
                                              spl::make_shared<frame_producer_registry>(),
                                              spl::make_shared<cg_producer_registry>());
-    auto route = create_route_producer(dependencies, {L"route://1-10", L"AUDIO_MAP", L"0=4,1=5"});
+    auto                        route_source_format = format;
+    route_source_format.audio_channels              = 3;
+    source->stage()->stop(10).get();
+    source->stage()->video_format_desc(route_source_format).get();
+    source->stage()->load(10, input).get();
+    source->stage()->play(10).get();
+    auto route = create_route_producer(dependencies, {L"route://1-10", L"AUDIO_MAP", L"0=14,1=15"});
     destination->stage()->stop(20).get();
     destination->stage()->load(30, route).get();
     destination->stage()->play(30).get();
-    await(104);
-    check(consumer->second.load() == 105, "native route creation mapping failed");
+    await(114);
+    check(consumer->second.load() == 115, "route ignored actual producer PCM stride");
+    check(consumer->second.load() == 115, "native route creation mapping failed");
     destination->stage()->call(30, {L"AUDIO_MAP", L"0=6,1=7"}).get();
     await(106);
     check(consumer->second.load() == 107, "native route live mapping failed");
@@ -435,6 +443,38 @@ int main(int argc, char** argv)
             queued -= slow.audio_cadence.front();
             consumed += slow.audio_cadence.front();
         }
+
+        auto larger_cadence           = repository.find(L"1080p2398");
+        larger_cadence.audio_channels = 8;
+        audio_tap cadence_growth(1, 10, true, fast, graph);
+        cadence_growth.publish(frame(&tags[0], fast.audio_cadence.front(), 8, 400), fast, fast.audio_cadence.front());
+        check(cadence_growth.read(fast.audio_cadence.front())[0] == 400, "initial tap cadence failed");
+        cadence_growth.publish(frame(&tags[0], larger_cadence.audio_cadence.front(), 8, 800),
+                               larger_cadence,
+                               larger_cadence.audio_cadence.front());
+        check(cadence_growth.read(larger_cadence.audio_cadence.front())[0] == 0,
+              "cadence change did not discard pre-change PCM");
+        cadence_growth.publish(frame(&tags[0], larger_cadence.audio_cadence.front(), 8, 900),
+                               larger_cadence,
+                               larger_cadence.audio_cadence.front());
+        check(cadence_growth.read(larger_cadence.audio_cadence.front())[0] == 900,
+              "tap did not resize transport for the larger cadence");
+
+        auto       discontinuity_tap  = std::make_shared<audio_tap>(1, 10, true, fractional, graph);
+        const auto fractional_samples = fractional.audio_cadence.front();
+        discontinuity_tap->publish(frame(&tags[0], fractional_samples, 8, 70000, true), fractional, fractional_samples);
+        auto invalid_format           = fractional;
+        invalid_format.audio_channels = 2;
+        discontinuity_tap->publish(frame(&tags[0], fractional_samples, 8, 80000), invalid_format, fractional_samples);
+        check(discontinuity_tap->read(fractional_samples)[0] == 0, "format discontinuity leaked queued PCM");
+        discontinuity_tap->publish(frame(&tags[0], fractional_samples, 8, 90000, true), fractional, fractional_samples);
+        const auto& recovered_audio = discontinuity_tap->read(fractional_samples);
+        check(std::any_of(
+                  recovered_audio.begin(), recovered_audio.end(), [](int32_t sample) { return sample >= 90000; }) &&
+                  std::none_of(recovered_audio.begin(),
+                               recovered_audio.end(),
+                               [](int32_t sample) { return sample >= 70000 && sample < 80000; }),
+              "tap emitted cadence carry-over from before a format discontinuity");
 
         matrix.outputs.assign(8, std::nullopt);
         matrix.outputs[0] = std::vector<audio_matrix_input>{{{1, 10, 0, false, 0.12345678901234567}, pre}};

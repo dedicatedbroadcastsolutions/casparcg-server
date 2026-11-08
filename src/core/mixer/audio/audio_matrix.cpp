@@ -5,6 +5,7 @@
 #include <core/frame/draw_frame.h>
 #include <core/producer/route/route_audio_mapping.h>
 
+#include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <cmath>
 #include <iomanip>
@@ -16,7 +17,7 @@ namespace caspar { namespace core {
 
 namespace {
 
-std::size_t tap_capacity(const video_format_desc& format, int maximum_read_samples)
+std::size_t tap_capacity(const video_format_desc& format, int maximum_read_samples, int required_source_samples)
 {
     if (format.audio_channels <= 0 || format.audio_sample_rate <= 0 || format.audio_cadence.empty()) {
         CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Invalid AUDIO_MATRIX source audio format."));
@@ -25,11 +26,20 @@ std::size_t tap_capacity(const video_format_desc& format, int maximum_read_sampl
     if (maximum <= 0) {
         CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Invalid AUDIO_MATRIX source audio cadence."));
     }
-    return static_cast<std::size_t>(std::max(maximum, maximum_read_samples)) * 2 + static_cast<std::size_t>(maximum) -
-           1;
+    const auto largest_block = std::max({maximum, maximum_read_samples, required_source_samples});
+    return static_cast<std::size_t>(largest_block) * 2 + static_cast<std::size_t>(maximum) - 1;
 }
 
 } // namespace
+
+audio_tap::transport::transport(const video_format_desc& format, int maximum_read_samples, int required_source_samples)
+    : buffer(tap_capacity(format, maximum_read_samples, required_source_samples),
+             static_cast<std::size_t>(format.audio_channels))
+    , capacity_samples(std::max({*std::max_element(format.audio_cadence.begin(), format.audio_cadence.end()),
+                                 maximum_read_samples,
+                                 required_source_samples}))
+{
+}
 
 std::vector<audio_matrix_source> parse_audio_matrix_sources(const std::wstring& value)
 {
@@ -84,7 +94,8 @@ audio_tap::audio_tap(int                                         channel,
     , maximum_read_samples(maximum_read_samples)
     , graph_(std::move(graph))
     , mixer_(spl::make_shared<diagnostics::graph>(), false)
-    , buffer_(tap_capacity(format, maximum_read_samples), static_cast<std::size_t>(format.audio_channels))
+    , buffer_(std::make_shared<transport>(format, maximum_read_samples))
+    , source_cadence_(format.audio_cadence)
 {
 }
 
@@ -92,17 +103,43 @@ void audio_tap::publish(const draw_frame& frame, const video_format_desc& curren
 {
     const bool valid = format.audio_channels == current_format.audio_channels &&
                        format.audio_sample_rate == current_format.audio_sample_rate;
-    format_valid_.store(valid, std::memory_order_release);
     if (!valid) {
+        if (format_valid_.exchange(false, std::memory_order_acq_rel)) {
+            mixer_.reset();
+        }
         discontinuity_.store(true, std::memory_order_release);
         graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-matrix-format");
         return;
+    }
+    format_valid_.store(true, std::memory_order_release);
+
+    const auto cadence_changed = source_cadence_ != current_format.audio_cadence;
+    const auto current_maximum =
+        current_format.audio_cadence.empty()
+            ? 0
+            : *std::max_element(current_format.audio_cadence.begin(), current_format.audio_cadence.end());
+    auto buffer = std::atomic_load_explicit(&buffer_, std::memory_order_acquire);
+    if (cadence_changed || nb_samples > buffer->capacity_samples || current_maximum > buffer->capacity_samples) {
+        if (current_maximum <= 0) {
+            discontinuity_.store(true, std::memory_order_release);
+            format_valid_.store(false, std::memory_order_release);
+            graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-matrix-format");
+            mixer_.reset();
+            return;
+        }
+        source_cadence_  = current_format.audio_cadence;
+        auto replacement = std::make_shared<transport>(current_format, maximum_read_samples, nb_samples);
+        discontinuity_.store(true, std::memory_order_release);
+        mixer_.reset();
+        std::atomic_store_explicit(&buffer_, std::move(replacement), std::memory_order_release);
+        buffer = std::atomic_load_explicit(&buffer_, std::memory_order_acquire);
     }
 
     const auto audio_frame = !post && layer >= 0 ? draw_frame::pop(frame) : frame;
     audio_frame.accept(mixer_);
     const auto audio = mixer_(current_format, nb_samples);
-    if (buffer_.push(audio.data(), static_cast<std::size_t>(nb_samples)) != static_cast<std::size_t>(nb_samples)) {
+    if (buffer->buffer.push(audio.data(), static_cast<std::size_t>(nb_samples)) !=
+        static_cast<std::size_t>(nb_samples)) {
         discontinuity_.store(true, std::memory_order_release);
         graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-matrix-overflow");
     }
@@ -112,13 +149,16 @@ const std::vector<int32_t>& audio_tap::read(int nb_samples)
 {
     scratch_.resize(static_cast<std::size_t>(nb_samples) * static_cast<std::size_t>(format.audio_channels));
     if (discontinuity_.exchange(false, std::memory_order_acq_rel) || !format_valid()) {
-        buffer_.discard();
+        std::atomic_load_explicit(&buffer_, std::memory_order_acquire)->buffer.discard();
         std::fill(scratch_.begin(), scratch_.end(), 0);
         return scratch_;
     }
-    const auto read = buffer_.pop(scratch_.data(), static_cast<std::size_t>(nb_samples));
-    if (!format_valid()) {
+    const auto buffer = std::atomic_load_explicit(&buffer_, std::memory_order_acquire);
+    const auto read   = buffer->buffer.pop(scratch_.data(), static_cast<std::size_t>(nb_samples));
+    if (!format_valid() || discontinuity_.exchange(false, std::memory_order_acq_rel)) {
+        std::atomic_load_explicit(&buffer_, std::memory_order_acquire)->buffer.discard();
         std::fill(scratch_.begin(), scratch_.end(), 0);
+        return scratch_;
     }
     if (read != static_cast<std::size_t>(nb_samples)) {
         graph_->set_tag(diagnostics::tag_severity::WARNING, "audio-matrix-underflow");

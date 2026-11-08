@@ -44,10 +44,18 @@ class audio_tap
     bool                        format_valid() const { return format_valid_.load(std::memory_order_acquire); }
 
   private:
+    struct transport
+    {
+        transport(const video_format_desc& format, int maximum_read_samples, int required_source_samples = 0);
+        audio_ring_buffer<int32_t> buffer;
+        std::size_t                capacity_samples;
+    };
+
     spl::shared_ptr<caspar::diagnostics::graph> graph_;
     audio_mixer                                 mixer_;
-    audio_ring_buffer<int32_t>                  buffer_;
+    std::shared_ptr<transport>                  buffer_;
     std::vector<int32_t>                        scratch_;
+    std::vector<int>                            source_cadence_;
     std::atomic<bool>                           format_valid_{true};
     std::atomic<bool>                           discontinuity_{false};
 };

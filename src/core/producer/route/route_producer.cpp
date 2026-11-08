@@ -40,6 +40,7 @@
 
 #include <tbb/concurrent_queue.h>
 
+#include <algorithm>
 #include <atomic>
 #include <optional>
 #include <sstream>
@@ -94,12 +95,15 @@ class fix_stream_tag : public frame_visitor
 
         // Audio is private to this route; image storage and frame metadata remain shared.
         if (audio_mapping_ && frame.audio_data()) {
+            const auto source_audio_channels =
+                frame.audio_channels() > 0 ? frame.audio_channels() : source_audio_channels_;
             auto audio = remap_route_audio(frame.audio_data().data(),
                                            frame.audio_data().size(),
-                                           source_audio_channels_,
+                                           source_audio_channels,
                                            destination_audio_channels_,
                                            *audio_mapping_);
-            upd_frame_ = frame.with_tag(unique_tag, array<const std::int32_t>(std::move(audio)));
+            upd_frame_ =
+                frame.with_tag(unique_tag, array<const std::int32_t>(std::move(audio)), destination_audio_channels_);
         } else {
             upd_frame_ = frame.with_tag(unique_tag);
         }
@@ -178,7 +182,7 @@ class route_producer
         const auto source = source_stage_.lock();
         if (!source)
             CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Route source channel is no longer available."));
-        return source->video_format_desc().audio_channels;
+        return std::max(source->video_format_desc().audio_channels, max_audio_channels);
     }
 
     // set the buffer depth to 2 for cross-channel routes, 1 otherwise
@@ -392,8 +396,9 @@ class route_producer
             state["route/layer"] = source_layer_;
         }
         state["route/audio-map"] = audio_mapping_text();
-        const auto source                    = source_stage_.lock();
-        state["route/source-audio-channels"] = source ? source->video_format_desc().audio_channels : 0;
+        const auto source        = source_stage_.lock();
+        state["route/source-audio-channels"] =
+            source ? std::max(source->video_format_desc().audio_channels, max_audio_channels) : 0;
 
         return state;
     }

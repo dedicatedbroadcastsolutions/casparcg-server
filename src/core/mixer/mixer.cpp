@@ -76,10 +76,11 @@ struct mixer::impl
             frame.accept(*image_mixer_);
         }
 
-        auto result = image_mixer_->render(format_desc, need_host_frame);
-        auto audio  = audio_mixer_(format_desc, nb_samples, matrix == nullptr);
+        auto       result        = image_mixer_->render(format_desc, need_host_frame);
+        const auto master_volume = audio_mixer_.get_master_volume();
+        auto       audio         = audio_mixer_(format_desc, nb_samples, matrix == nullptr, master_volume);
         if (matrix) {
-            audio = mix_audio_matrix(audio, format_desc, nb_samples, *matrix, audio_mixer_.get_master_volume());
+            audio = mix_audio_matrix(audio, format_desc, nb_samples, *matrix, master_volume);
             audio_mixer_.update_meter(audio, format_desc.audio_channels);
         }
 

@@ -36,6 +36,7 @@ struct mutable_frame::impl
 {
     std::vector<array<std::uint8_t>> image_data_;
     array<std::int32_t>              audio_data_;
+    int                              audio_channels_ = 0;
     const core::pixel_format_desc    desc_;
     const void*                      tag_;
     frame_geometry                   geometry_ = frame_geometry::get_default();
@@ -82,6 +83,8 @@ const array<std::uint8_t>& mutable_frame::image_data(std::size_t index) const { 
 const array<std::int32_t>& mutable_frame::audio_data() const { return impl_->audio_data_; }
 array<std::uint8_t>&       mutable_frame::image_data(std::size_t index) { return impl_->image_data_.at(index); }
 array<std::int32_t>&       mutable_frame::audio_data() { return impl_->audio_data_; }
+void                       mutable_frame::audio_channels(int channels) { impl_->audio_channels_ = channels; }
+int                        mutable_frame::audio_channels() const { return impl_->audio_channels_; }
 std::size_t                mutable_frame::width() const { return impl_->desc_.planes.at(0).width; }
 std::size_t                mutable_frame::height() const { return impl_->desc_.planes.at(0).height; }
 const void*                mutable_frame::stream_tag() const { return impl_->tag_; }
@@ -92,7 +95,8 @@ struct const_frame::impl
 {
     std::vector<array<const std::uint8_t>> image_data_;
     array<const std::int32_t>              audio_data_;
-    core::pixel_format_desc                desc_ = core::pixel_format_desc(pixel_format::invalid);
+    int                                    audio_channels_ = 0;
+    core::pixel_format_desc                desc_           = core::pixel_format_desc(pixel_format::invalid);
     const void*                            tag_;
     frame_geometry                         geometry_ = frame_geometry::get_default();
     std::any                               opaque_;
@@ -102,9 +106,11 @@ struct const_frame::impl
          std::vector<array<const std::uint8_t>> image_data,
          array<const std::int32_t>              audio_data,
          const core::pixel_format_desc&         desc,
-         std::shared_ptr<core::texture>         texture)
+         std::shared_ptr<core::texture>         texture,
+         int                                    audio_channels)
         : image_data_(std::move(image_data))
         , audio_data_(std::move(audio_data))
+        , audio_channels_(audio_channels)
         , desc_(desc)
         , tag_(tag)
         , texture_(texture)
@@ -118,6 +124,7 @@ struct const_frame::impl
         : image_data_(std::make_move_iterator(other.impl_->image_data_.begin()),
                       std::make_move_iterator(other.impl_->image_data_.end()))
         , audio_data_(std::move(other.impl_->audio_data_))
+        , audio_channels_(other.impl_->audio_channels_)
         , desc_(std::move(other.impl_->desc_))
         , tag_(other.stream_tag())
         , texture_(nullptr)
@@ -147,8 +154,9 @@ const_frame::const_frame(const void*                            tag,
                          std::vector<array<const std::uint8_t>> image_data,
                          array<const std::int32_t>              audio_data,
                          const core::pixel_format_desc&         desc,
-                         std::shared_ptr<core::texture>         texture)
-    : impl_(new impl(tag, std::move(image_data), std::move(audio_data), desc, texture))
+                         std::shared_ptr<core::texture>         texture,
+                         int                                    audio_channels)
+    : impl_(new impl(tag, std::move(image_data), std::move(audio_data), desc, texture, audio_channels))
 {
 }
 const_frame::const_frame(mutable_frame&& other)
@@ -172,6 +180,7 @@ bool                     const_frame::operator>(const const_frame& other) const 
 const pixel_format_desc& const_frame::pixel_format_desc() const { return impl_->desc_; }
 const array<const std::uint8_t>& const_frame::image_data(std::size_t index) const { return impl_->image_data(index); }
 const array<const std::int32_t>& const_frame::audio_data() const { return impl_->audio_data_; }
+int                              const_frame::audio_channels() const { return impl_->audio_channels_; }
 std::shared_ptr<core::texture>   const_frame::texture() const { return impl_->texture(); }
 std::size_t                      const_frame::width() const { return impl_->width(); }
 std::size_t                      const_frame::height() const { return impl_->height(); }
@@ -185,16 +194,20 @@ const_frame                      const_frame::with_tag(const void* new_tag) cons
 
     return with_tag(new_tag, impl_->audio_data_);
 }
-const_frame const_frame::with_tag(const void* new_tag, array<const std::int32_t> audio_data) const
+const_frame const_frame::with_tag(const void* new_tag, array<const std::int32_t> audio_data, int audio_channels) const
 {
     if (!impl_) {
         return const_frame();
     }
 
     std::vector<array<const std::uint8_t>> image_data_copy = impl_->image_data_;
-    auto                                   new_frame =
-        const_frame(new_tag, std::move(image_data_copy), std::move(audio_data), impl_->desc_, impl_->texture_);
-    new_frame.impl_->geometry_ = impl_->geometry_;
+    auto                                   new_frame       = const_frame(new_tag,
+                                 std::move(image_data_copy),
+                                 std::move(audio_data),
+                                 impl_->desc_,
+                                 impl_->texture_,
+                                 audio_channels < 0 ? impl_->audio_channels_ : audio_channels);
+    new_frame.impl_->geometry_                             = impl_->geometry_;
     if (impl_->opaque_.has_value()) {
         new_frame.impl_->opaque_ = impl_->opaque_;
     }
