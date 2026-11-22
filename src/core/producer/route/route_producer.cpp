@@ -19,8 +19,10 @@
  * Author: Robert Nagy, ronag89@gmail.com
  */
 #include "route_producer.h"
+#include "route_audio_mapping.h"
 
 #include <common/diagnostics/graph.h>
+#include <common/except.h>
 #include <common/param.h>
 #include <common/timer.h>
 
@@ -30,6 +32,7 @@
 #include <core/frame/frame_visitor.h>
 #include <core/monitor/monitor.h>
 #include <core/producer/frame_producer.h>
+#include <core/producer/stage.h>
 #include <core/video_channel.h>
 
 #include <boost/regex.hpp>
@@ -37,7 +40,11 @@
 
 #include <tbb/concurrent_queue.h>
 
+#include <algorithm>
+#include <atomic>
+#include <mutex>
 #include <optional>
+#include <sstream>
 #include <stack>
 #include <unordered_map>
 #include <unordered_set>
@@ -46,22 +53,152 @@ namespace caspar { namespace core {
 
 class fix_stream_tag : public frame_visitor
 {
+    enum class mapping_transition
+    {
+        stable,
+        fade_out,
+        fade_in
+    };
+
+    struct transition_sample
+    {
+        int    source;
+        double gain;
+    };
+
+    struct destination_transition
+    {
+        int                source     = 0;
+        int                requested  = 0;
+        mapping_transition transition = mapping_transition::stable;
+        int                position   = 0;
+        double             start_gain = 1.0;
+        double             gain       = 1.0;
+    };
+
+    class audio_sample_count final : public frame_visitor
+    {
+        const std::size_t channels_;
+
+      public:
+        std::size_t samples = 0;
+
+        explicit audio_sample_count(int channels)
+            : channels_(static_cast<std::size_t>(channels))
+        {
+        }
+
+        void push(const frame_transform&) override {}
+        void pop() override {}
+        void visit(const const_frame& frame) override
+        {
+            const auto size = frame.audio_data().size();
+            samples         = std::max(samples, size / channels_ + (size % channels_ != 0 ? 1 : 0));
+        }
+    };
+
     const void*                                                     route_producer_ptr_;
+    std::vector<destination_transition>                             destinations_;
+    int                                                             source_audio_channels_;
+    int                                                             destination_audio_channels_;
+    int                                                             ramp_samples_            = 1;
+    bool                                                            mapping_initialized_     = false;
+    bool                                                            block_transition_active_ = false;
+    std::vector<transition_sample>                                  block_transition_;
     std::stack<std::pair<frame_transform, std::vector<draw_frame>>> frames_stack_;
     std::optional<const_frame>                                      upd_frame_;
 
     fix_stream_tag(const fix_stream_tag&);
     fix_stream_tag& operator=(const fix_stream_tag&);
 
-  public:
-    fix_stream_tag(void* stream_tag)
-        : route_producer_ptr_(stream_tag)
+    bool transition_active() const
     {
+        return std::any_of(destinations_.begin(), destinations_.end(), [](const auto& destination) {
+            return destination.transition != mapping_transition::stable;
+        });
+    }
+
+    bool identity_mapping() const
+    {
+        for (std::size_t channel = 0; channel < destinations_.size(); ++channel)
+            if (destinations_[channel].source != static_cast<int>(channel))
+                return false;
+        return true;
+    }
+
+    void prepare_transition(std::size_t samples)
+    {
+        block_transition_active_ = true;
+        block_transition_.clear();
+        block_transition_.reserve(samples * destinations_.size());
+        const auto ramp_count = std::max(1, ramp_samples_);
+
+        for (std::size_t sample = 0; sample < samples; ++sample) {
+            for (auto& destination : destinations_) {
+                if (destination.transition == mapping_transition::fade_out) {
+                    destination.gain =
+                        destination.start_gain * (1.0 - static_cast<double>(destination.position) / ramp_count);
+                    block_transition_.push_back({destination.source, destination.gain});
+                    if (++destination.position >= ramp_count) {
+                        destination.source     = destination.requested;
+                        destination.transition = mapping_transition::fade_in;
+                        destination.position   = 0;
+                        destination.gain       = 0.0;
+                    }
+                } else if (destination.transition == mapping_transition::fade_in) {
+                    destination.gain = static_cast<double>(destination.position) / ramp_count;
+                    block_transition_.push_back({destination.source, destination.gain});
+                    if (++destination.position >= ramp_count) {
+                        destination.transition = mapping_transition::stable;
+                        destination.position   = 0;
+                        destination.gain       = 1.0;
+                    }
+                } else {
+                    block_transition_.push_back({destination.source, 1.0});
+                }
+            }
+        }
+    }
+
+  public:
+    fix_stream_tag(void* stream_tag, int source_audio_channels, int destination_audio_channels)
+        : route_producer_ptr_(stream_tag)
+        , destinations_(static_cast<std::size_t>(destination_audio_channels))
+        , source_audio_channels_(source_audio_channels)
+        , destination_audio_channels_(destination_audio_channels)
+    {
+        for (int channel = 0; channel < destination_audio_channels; ++channel)
+            destinations_[channel].source = destinations_[channel].requested = channel;
         frames_stack_ = std::stack<std::pair<frame_transform, std::vector<draw_frame>>>();
         frames_stack_.emplace(frame_transform{}, std::vector<draw_frame>());
     }
 
     void push(const frame_transform& transform) { frames_stack_.emplace(transform, std::vector<core::draw_frame>()); }
+
+    bool has_remapped_audio() const { return transition_active() || !identity_mapping(); }
+
+    void set_audio_mapping(std::shared_ptr<const std::vector<int>> audio_mapping,
+                           int                                     source_audio_channels,
+                           int                                     source_audio_sample_rate)
+    {
+        for (std::size_t channel = 0; channel < destinations_.size(); ++channel) {
+            auto&     destination = destinations_[channel];
+            const int requested   = audio_mapping->at(channel);
+            if (!mapping_initialized_) {
+                destination.source = destination.requested = requested;
+            } else if (destination.requested != requested) {
+                destination.requested = requested;
+                if (destination.transition != mapping_transition::fade_out) {
+                    destination.start_gain = destination.gain;
+                    destination.position   = 0;
+                    destination.transition = mapping_transition::fade_out;
+                }
+            }
+        }
+        mapping_initialized_   = true;
+        source_audio_channels_ = source_audio_channels;
+        ramp_samples_          = std::max(1, source_audio_sample_rate / 200);
+    }
 
     void visit(const const_frame& frame)
     {
@@ -76,8 +213,45 @@ class fix_stream_tag : public frame_visitor
         intptr_t    unique_value = base_addr ^ source_addr ^ 0xDEADBEEF; // Constant helps avoid collisions
         const void* unique_tag   = reinterpret_cast<const void*>(unique_value);
 
-        // Apply the tag to the frame
-        upd_frame_ = frame.with_tag(unique_tag);
+        // Audio is private to this route; image storage and frame metadata remain shared.
+        if (frame.audio_data() && (transition_active() || block_transition_active_ || !identity_mapping())) {
+            const auto source_audio_channels = source_audio_channels_;
+            const auto samples =
+                frame.audio_data().size() / static_cast<std::size_t>(source_audio_channels) +
+                (frame.audio_data().size() % static_cast<std::size_t>(source_audio_channels) != 0 ? 1 : 0);
+            std::vector<std::int32_t> audio;
+            if (!block_transition_active_) {
+                std::vector<int> mapping;
+                for (const auto& destination : destinations_)
+                    mapping.push_back(destination.source);
+                audio = remap_route_audio(frame.audio_data().data(),
+                                          frame.audio_data().size(),
+                                          source_audio_channels,
+                                          destination_audio_channels_,
+                                          mapping);
+            } else {
+                audio.resize(samples * static_cast<std::size_t>(destination_audio_channels_), 0);
+                for (std::size_t sample = 0; sample < samples; ++sample) {
+                    for (int destination = 0; destination < destination_audio_channels_; ++destination) {
+                        const auto& step           = block_transition_[sample * destinations_.size() + destination];
+                        const auto  source_channel = step.source;
+                        if (source_channel >= 0 && source_channel < source_audio_channels) {
+                            const auto source_index = sample * static_cast<std::size_t>(source_audio_channels) +
+                                                      static_cast<std::size_t>(source_channel);
+                            if (source_index >= frame.audio_data().size()) {
+                                continue;
+                            }
+                            audio[sample * static_cast<std::size_t>(destination_audio_channels_) + destination] =
+                                static_cast<std::int32_t>(frame.audio_data().data()[source_index] * step.gain);
+                        }
+                    }
+                }
+            }
+            array<std::int32_t> storage(std::move(audio));
+            upd_frame_ = frame.with_tag(unique_tag, array<const std::int32_t>(std::move(storage)));
+        } else {
+            upd_frame_ = frame.with_tag(unique_tag);
+        }
     }
 
     void pop()
@@ -99,6 +273,13 @@ class fix_stream_tag : public frame_visitor
 
     draw_frame operator()(draw_frame frame)
     {
+        block_transition_active_ = false;
+        if (transition_active()) {
+            audio_sample_count count(source_audio_channels_);
+            frame.accept(count);
+            if (count.samples > 0)
+                prepare_transition(count.samples);
+        }
         frame.accept(*this);
 
         auto popped = frames_stack_.top();
@@ -116,27 +297,54 @@ class route_producer
     , public route_control
     , public std::enable_shared_from_this<route_producer>
 {
+    struct buffered_frame
+    {
+        draw_frame first;
+        draw_frame second;
+        bool       remapped_audio;
+    };
+
     spl::shared_ptr<diagnostics::graph> graph_;
 
-    tbb::concurrent_bounded_queue<std::pair<core::draw_frame, core::draw_frame>> buffer_;
+    tbb::concurrent_bounded_queue<buffered_frame> buffer_;
 
     caspar::timer produce_timer_;
     caspar::timer consume_timer_;
 
     std::shared_ptr<route>  route_;
+    std::weak_ptr<stage>    source_stage_;
     const video_format_desc format_desc_;
 
-    std::optional<std::pair<core::draw_frame, core::draw_frame>> frame_;
-    int                                                          source_channel_;
-    int                                                          source_layer_;
-    fix_stream_tag                                               tag_fix_;
-    core::video_format_desc                                      source_format_;
-    bool                                                         is_cross_channel_ = false;
+    std::optional<buffered_frame>           frame_;
+    int                                     source_channel_;
+    int                                     source_layer_;
+    fix_stream_tag                          tag_fix_;
+    core::video_format_desc                 source_format_;
+    bool                                    is_cross_channel_ = false;
+    std::shared_ptr<const std::vector<int>> audio_mapping_;
+    std::mutex                              audio_mapping_mutex_;
+    bool                                    late_frame_ = false;
 
     boost::signals2::scoped_connection connection_;
 
     int get_source_channel() const override { return source_channel_; }
     int get_source_layer() const override { return source_layer_; }
+
+    int source_audio_channels() const
+    {
+        const auto source = source_stage_.lock();
+        if (!source)
+            CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Route source channel is no longer available."));
+        return source->video_format_desc().audio_channels;
+    }
+
+    int source_audio_sample_rate() const
+    {
+        const auto source = source_stage_.lock();
+        if (!source)
+            CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Route source channel is no longer available."));
+        return source->video_format_desc().audio_sample_rate;
+    }
 
     // set the buffer depth to 2 for cross-channel routes, 1 otherwise
     void set_cross_channel(bool cross) override
@@ -156,12 +364,16 @@ class route_producer
                    video_format_desc      format_desc,
                    int                    buffer,
                    int                    source_channel,
-                   int                    source_layer)
+                   int                    source_layer,
+                   std::shared_ptr<stage> source_stage)
         : route_(route)
+        , source_stage_(std::move(source_stage))
         , format_desc_(format_desc)
         , source_channel_(source_channel)
         , source_layer_(source_layer)
-        , tag_fix_(this)
+        , tag_fix_(this, route_->format_desc.audio_channels, format_desc.audio_channels)
+        , audio_mapping_(
+              std::make_shared<const std::vector<int>>(identity_route_audio_mapping(format_desc.audio_channels)))
     {
         graph_ = spl::make_shared<diagnostics::graph>();
         buffer_.set_capacity(buffer > 0 ? buffer : 1);
@@ -176,13 +388,77 @@ class route_producer
         CASPAR_LOG(debug) << print() << L" Initialized";
     }
 
+    void set_audio_mapping(const std::wstring& value)
+    {
+        std::lock_guard<std::mutex> lock(audio_mapping_mutex_);
+        try {
+            const auto current = std::atomic_load_explicit(&audio_mapping_, std::memory_order_acquire);
+            auto       mapping =
+                boost::iequals(value, L"DEFAULT")
+                          ? identity_route_audio_mapping(format_desc_.audio_channels)
+                          : parse_route_audio_mapping(value, source_audio_channels(), format_desc_.audio_channels, *current);
+            std::atomic_store_explicit(&audio_mapping_,
+                                       std::make_shared<const std::vector<int>>(std::move(mapping)),
+                                       std::memory_order_release);
+        } catch (const std::invalid_argument&) {
+            CASPAR_THROW_EXCEPTION(
+                user_error() << msg_info(
+                    L"Invalid AUDIO_MAP. Use destination:source or destination:SILENCE entries with zero-based "
+                    L"indices within the source and destination channel counts."));
+        }
+    }
+
+    std::wstring audio_mapping_text() const
+    {
+        const auto         mapping = std::atomic_load_explicit(&audio_mapping_, std::memory_order_acquire);
+        std::wstringstream result;
+        bool               first = true;
+        for (std::size_t destination = 0; destination < mapping->size(); ++destination) {
+            const auto source = mapping->at(destination);
+            if (!first) {
+                result << L",";
+            }
+            result << destination << L":";
+            if (source < 0)
+                result << L"SILENCE";
+            else
+                result << source;
+            first = false;
+        }
+        return result.str();
+    }
+
+    std::future<std::wstring> call(const std::vector<std::wstring>& params) override
+    {
+        if (params.empty() || !boost::iequals(params.front(), L"AUDIO_MAP")) {
+            CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"Unsupported route CALL operation."));
+        }
+        if (params.size() == 1) {
+            std::promise<std::wstring> promise;
+            promise.set_value(audio_mapping_text());
+            return promise.get_future();
+        }
+        if (params.size() != 2) {
+            CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"AUDIO_MAP accepts exactly one mapping value."));
+        }
+
+        set_audio_mapping(params.at(1));
+        std::promise<std::wstring> promise;
+        promise.set_value(audio_mapping_text());
+        return promise.get_future();
+    }
+
     void connect_slot()
     {
         auto weak_self = weak_from_this();
         connection_ =
             route_->signal.connect([weak_self](const core::draw_frame& frame1, const core::draw_frame& frame2) {
                 if (auto self = weak_self.lock()) {
-                    auto frame1b = frame1;
+                    const auto mapping = std::atomic_load_explicit(&self->audio_mapping_, std::memory_order_acquire);
+                    self->tag_fix_.set_audio_mapping(
+                        mapping, self->source_audio_channels(), self->source_audio_sample_rate());
+                    const bool remapped = self->tag_fix_.has_remapped_audio();
+                    auto       frame1b  = frame1;
                     if (!frame1b) {
                         // We got a frame, so ensure it is a real frame (otherwise the layer gets confused)
                         frame1b = core::draw_frame::push(frame1);
@@ -201,7 +477,7 @@ class route_producer
                         frame2b = self->tag_fix_(frame2b);
                     }
 
-                    if (!self->buffer_.try_push(std::make_pair(frame1b, frame2b))) {
+                    if (!self->buffer_.try_push({frame1b, frame2b, remapped})) {
                         self->graph_->set_tag(diagnostics::tag_severity::WARNING, "dropped-frame");
                     }
                     self->graph_->set_value("produce-time",
@@ -214,7 +490,7 @@ class route_producer
     draw_frame last_frame(const core::video_field field) override
     {
         if (!frame_) {
-            std::pair<core::draw_frame, core::draw_frame> frame;
+            buffered_frame frame;
             if (buffer_.try_pop(frame)) {
                 frame_ = frame;
             }
@@ -243,11 +519,13 @@ class route_producer
         }
 
         if (field == core::video_field::a || field == core::video_field::progressive) {
-            std::pair<core::draw_frame, core::draw_frame> frame;
+            buffered_frame frame;
             if (!buffer_.try_pop(frame)) {
                 graph_->set_tag(diagnostics::tag_severity::WARNING, "late-frame");
+                late_frame_ = true;
             } else {
-                frame_ = frame;
+                frame_      = frame;
+                late_frame_ = false;
             }
         }
 
@@ -259,9 +537,9 @@ class route_producer
         }
 
         if (field == core::video_field::b) {
-            return frame_->second;
+            return late_frame_ && frame_->remapped_audio ? core::draw_frame::still(frame_->second) : frame_->second;
         } else {
-            return frame_->first;
+            return late_frame_ && frame_->remapped_audio ? core::draw_frame::still(frame_->first) : frame_->first;
         }
     }
 
@@ -279,6 +557,9 @@ class route_producer
         if (source_layer_ > -1) {
             state["route/layer"] = source_layer_;
         }
+        state["route/audio-map"]             = audio_mapping_text();
+        const auto source                    = source_stage_.lock();
+        state["route/source-audio-channels"] = source ? source->video_format_desc().audio_channels : 0;
 
         return state;
     }
@@ -316,7 +597,10 @@ spl::shared_ptr<core::frame_producer> create_route_producer(const core::frame_pr
 
     auto buffer = get_param(L"BUFFER", params, 0);
     auto rp     = spl::make_shared<route_producer>(
-        (*channel_it)->route(layer, mode), dependencies.format_desc, buffer, channel, layer);
+        (*channel_it)->route(layer, mode), dependencies.format_desc, buffer, channel, layer, (*channel_it)->stage());
+    if (contains_param(L"AUDIO_MAP", params)) {
+        rp->set_audio_mapping(get_param(L"AUDIO_MAP", params));
+    }
     rp->connect_slot();
     return rp;
 }

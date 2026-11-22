@@ -118,6 +118,21 @@ The test uses local UDP sockets and does not require a GPU or broadcast hardware
 
 -DENABLE_HTML=OFF - useful if you lack CEF, and would like to build without that module.
 
+-DBUILD_TESTING=ON - build the native route audio mapping regression test:
+
+```sh
+cmake --build build --target route_audio_mapping_tests
+ctest --test-dir build --output-on-failure -R route_audio_mapping
+```
+
+The test covers mapping parsing, validation, partial PCM blocks, native route
+creation and live switching on 16-channel buses. Progressive and interlaced
+formats verify identity passthrough, differential patches, explicit silence,
+per-destination fades, source-buffer isolation, metadata preservation, and
+silence on late remapped frames without audio hardware. Progressive cases
+additionally cover interrupted ramps spanning PCM blocks, unequal-length PCM
+leaves in both traversal orders, and preserved layer gain transforms.
+
 -DUSE_STATIC_BOOST=ON - (Linux only, default OFF) statically link against Boost.
 
 -DUSE_SYSTEM_CEF=OFF - (Linux only, default OFF on Debian/openSUSE and ON elsewhere) use pinned prebuilt CEF binaries instead of a compatible system CEF package.
