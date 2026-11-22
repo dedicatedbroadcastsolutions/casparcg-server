@@ -60,6 +60,7 @@ set(HEADERS
 
 		producer/color/color_producer.h
 		producer/separated/separated_producer.h
+		producer/route/route_audio_mapping.h
 		producer/transition/transition_producer.h
 		producer/transition/sting_producer.h
 		producer/route/route_producer.h

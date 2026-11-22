@@ -179,13 +179,17 @@ std::size_t                      const_frame::size() const { return impl_->size(
 const void*                      const_frame::stream_tag() const { return impl_->tag_; }
 const_frame                      const_frame::with_tag(const void* new_tag) const
 {
+    return with_tag(new_tag, impl_ ? impl_->audio_data_ : array<const std::int32_t>{});
+}
+const_frame const_frame::with_tag(const void* new_tag, array<const std::int32_t> audio_data) const
+{
     if (!impl_) {
         return const_frame();
     }
 
     std::vector<array<const std::uint8_t>> image_data_copy = impl_->image_data_;
     auto                                   new_frame =
-        const_frame(new_tag, std::move(image_data_copy), impl_->audio_data_, impl_->desc_, impl_->texture_);
+        const_frame(new_tag, std::move(image_data_copy), std::move(audio_data), impl_->desc_, impl_->texture_);
 
     new_frame.impl_->geometry_ = impl_->geometry_;
     if (impl_->opaque_.has_value()) {

@@ -65,6 +65,68 @@ Development
 
 See [BUILDING](BUILDING.md) for instructions on how to build the CasparCG Server from source manually.
 
+Native route audio mapping
+--------------------------
+
+Native `route://` producers always have an audio patchbay, initially an identity
+map: each destination receives the same-numbered source audio channel, matching
+master's normal passthrough. Entries use `destination:source` with zero-based
+audio channel indices. Each command patches only the destinations listed;
+unlisted destinations retain their existing mappings and are never implicitly
+muted. Source channel buffers are not modified. The same creation option works
+with `LOAD` and `LOADBG`; it is native route processing, not the FFmpeg producer's
+`AF` option.
+
+Normal route commands require no changes. The optional mapping uses colon-separated
+indices, similar in style to FFmpeg selectors, but its order is destination first:
+`2:4` sends source audio channel 4 to destination audio channel 2.
+
+```text
+PLAY 5-10 route://1
+PLAY 5-20 route://2 AUDIO_MAP "2:0,3:1"
+```
+
+Change a playing route without replacing its producer using `CALL`. The update
+takes effect on the next source frame pair, after previously queued frames drain.
+`DEFAULT` resets all destinations to identity. Calling `AUDIO_MAP` without a
+value returns the complete accepted map, including explicit silences.
+The accepted mapping is reported as `route/audio-map` in producer state, and
+the source bus width as `route/source-audio-channels`. Mapping uses the engine's
+existing 16-channel PCM buses: source and destination indices are 0 through 15.
+This feature does not change channel bus widths or add a configurable audio
+channel count.
+
+```text
+CALL 5-20 AUDIO_MAP "2:4,3:5"
+CALL 5-20 AUDIO_MAP "4:SILENCE"
+CALL 5-20 AUDIO_MAP "4:4"
+CALL 5-20 AUDIO_MAP
+CALL 5-20 AUDIO_MAP DEFAULT
+```
+
+`destination:SILENCE` is the only way to explicitly mute a destination. Routing
+it to a source again restores audio. Invalid patches are rejected atomically
+without changing any destination.
+
+Live changes ramp only the affected destinations down over 5 ms and back up
+over 5 ms, using the source sample rate. Other destinations remain sample-exact,
+even while a different destination is fading. This also applies to explicit
+silence and `DEFAULT`; initial creation maps apply immediately. Identity routes
+share the original PCM and preserve master passthrough behavior, including
+late-frame repeats. Remapped or fading frames mute repeated late audio rather
+than replaying stale audio, while preserving their video. This safeguard silences
+the entire repeated route frame, not only the remapped destinations. Queries and
+producer state report accepted updates immediately; queued frames and switching
+ramps can still be using an earlier mapping.
+
+The audio routing point remains unchanged from master. Specific-layer routes
+remove the outer layer adjustments but retain producer/transition transforms.
+Whole-channel routes retain source layer adjustments and are summed by the
+destination's normal audio mixer; source channel master volume is not included.
+The map and shared fade envelope are applied to each PCM leaf before destination
+mixing, including when source layers have unequal audio buffer lengths. This is
+not a tap of the source channel's final mixed output.
+
 License
 ---------
 
