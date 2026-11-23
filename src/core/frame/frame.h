@@ -71,7 +71,8 @@ class const_frame final
                          std::vector<array<const std::uint8_t>> image_data,
                          array<const std::int32_t>              audio_data,
                          const struct pixel_format_desc&        desc,
-                         std::shared_ptr<core::texture>         texture = nullptr);
+                         std::shared_ptr<core::texture>         texture = nullptr,
+                         std::any                               opaque  = std::any());
     const_frame(const const_frame& other);
     const_frame(mutable_frame&& other);
 

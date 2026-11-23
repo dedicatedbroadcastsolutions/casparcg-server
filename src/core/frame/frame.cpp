@@ -102,11 +102,13 @@ struct const_frame::impl
          std::vector<array<const std::uint8_t>> image_data,
          array<const std::int32_t>              audio_data,
          const core::pixel_format_desc&         desc,
-         std::shared_ptr<core::texture>         texture)
+         std::shared_ptr<core::texture>         texture,
+         std::any                               opaque)
         : image_data_(std::move(image_data))
         , audio_data_(std::move(audio_data))
         , desc_(desc)
         , tag_(tag)
+        , opaque_(std::move(opaque))
         , texture_(texture)
     {
         if (desc_.planes.size() != image_data_.size()) {
@@ -147,8 +149,9 @@ const_frame::const_frame(const void*                            tag,
                          std::vector<array<const std::uint8_t>> image_data,
                          array<const std::int32_t>              audio_data,
                          const core::pixel_format_desc&         desc,
-                         std::shared_ptr<core::texture>         texture)
-    : impl_(new impl(tag, std::move(image_data), std::move(audio_data), desc, texture))
+                         std::shared_ptr<core::texture>         texture,
+                         std::any                               opaque)
+    : impl_(new impl(tag, std::move(image_data), std::move(audio_data), desc, texture, std::move(opaque)))
 {
 }
 const_frame::const_frame(mutable_frame&& other)

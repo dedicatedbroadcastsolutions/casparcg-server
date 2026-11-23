@@ -26,6 +26,7 @@
 #include <core/frame/frame_visitor.h>
 #include <core/frame/pixel_format.h>
 
+#include <any>
 #include <cstdint>
 #include <future>
 
@@ -48,7 +49,9 @@ class image_mixer
 
     virtual void update_aspect_ratio(double aspect_ratio) = 0;
 
-    virtual std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<texture>>>
+    // The std::any is an opaque, backend-specific handle to the rendered texture (e.g. a reference-counted
+    // GPU texture future), reusable as-is if this frame is visited by another image_mixer of the same backend.
+    virtual std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<texture>, std::any>>
     render(const struct video_format_desc& format_desc, bool need_host_frame) = 0;
 
     class mutable_frame create_frame(const void* tag, const struct pixel_format_desc& desc) override = 0;

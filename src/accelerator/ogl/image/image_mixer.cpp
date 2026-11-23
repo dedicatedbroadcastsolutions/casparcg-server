@@ -88,29 +88,37 @@ class image_renderer
     {
     }
 
-    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
     operator()(std::vector<layer> layers, const core::video_format_desc& format_desc)
     {
         if (layers.empty()) { // Bypass GPU with empty frame.
             static const std::vector<uint8_t, boost::alignment::aligned_allocator<uint8_t, 32>> buffer(max_frame_size_,
                                                                                                        0);
-            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>(
-                {array<const std::uint8_t>(buffer.data(), format_desc.size, true), nullptr});
+            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>(
+                {array<const std::uint8_t>(buffer.data(), format_desc.size, true), nullptr, std::any()});
         }
 
-        auto f = std::move(
-            ogl_->dispatch_async([this, format_desc, layers = std::move(layers)]() mutable
-                                 -> std::tuple<std::future<array<const std::uint8_t>>, std::shared_ptr<core::texture>> {
+        auto f = std::move(ogl_->dispatch_async(
+            [this, format_desc, layers = std::move(layers)]() mutable
+                -> std::tuple<std::future<array<const std::uint8_t>>, std::shared_ptr<core::texture>, std::any> {
                 auto target_texture = ogl_->create_texture(format_desc.width, format_desc.height, 4, depth_);
                 draw(target_texture, std::move(layers), format_desc);
-                return {ogl_->copy_async(target_texture), target_texture};
+
+                // Expose the composited texture the same way create_frame()'s producer-side textures are
+                // exposed, so this frame can be reused directly (no re-upload) if it's visited by another
+                // channel's image_mixer of the same backend - e.g. a whole-channel MIX route.
+                std::vector<future_texture> textures{
+                    make_ready_future<std::shared_ptr<texture>>(std::shared_ptr<texture>(target_texture)).share()};
+                std::any opaque = std::make_shared<std::vector<future_texture>>(std::move(textures));
+
+                return {ogl_->copy_async(target_texture), target_texture, std::move(opaque)};
             }));
 
         return std::async(
             std::launch::deferred,
-            [f = std::move(f)]() mutable -> std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>> {
+            [f = std::move(f)]() mutable -> std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any> {
                 auto tuple = std::move(f.get());
-                return {std::move(std::get<0>(tuple).get()), std::move(std::get<1>(tuple))};
+                return {std::move(std::get<0>(tuple).get()), std::move(std::get<1>(tuple)), std::move(std::get<2>(tuple))};
             });
     }
 
@@ -332,7 +340,7 @@ struct image_mixer::impl
         layer_stack_.resize(transform_stack_.back().image_transform.layer_depth);
     }
 
-    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
     render(const core::video_format_desc& format_desc)
     {
         return renderer_(std::move(layers_), format_desc);
@@ -429,7 +437,7 @@ void image_mixer::push(const core::frame_transform& transform) { impl_->push(tra
 void image_mixer::visit(const core::const_frame& frame) { impl_->visit(frame); }
 void image_mixer::pop() { impl_->pop(); }
 void image_mixer::update_aspect_ratio(double aspect_ratio) { impl_->update_aspect_ratio(aspect_ratio); }
-std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
 image_mixer::render(const core::video_format_desc& format_desc, bool /*need_host_frame*/)
 {
     return impl_->render(format_desc);
