@@ -305,6 +305,13 @@ spl::shared_ptr<core::frame_producer> create_route_producer(const core::frame_pr
             mode = core::route_mode::next;
     }
 
+    // MIX pulls the channel's already mixed-down frame instead of re-compositing each layer on the
+    // destination channel. Only meaningful for whole-channel routes (no explicit LAYER).
+    auto flattened = contains_param(L"MIX", params);
+    if (flattened && layer >= 0) {
+        CASPAR_THROW_EXCEPTION(user_error() << msg_info(L"MIX is only valid for whole-channel routes."));
+    }
+
     auto channel_it =
         std::find_if(dependencies.channels.begin(),
                      dependencies.channels.end(),
@@ -316,7 +323,7 @@ spl::shared_ptr<core::frame_producer> create_route_producer(const core::frame_pr
 
     auto buffer = get_param(L"BUFFER", params, 0);
     auto rp     = spl::make_shared<route_producer>(
-        (*channel_it)->route(layer, mode), dependencies.format_desc, buffer, channel, layer);
+        (*channel_it)->route(layer, mode, flattened), dependencies.format_desc, buffer, channel, layer);
     rp->connect_slot();
     return rp;
 }

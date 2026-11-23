@@ -43,12 +43,16 @@
 
 #include <mutex>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <utility>
 
 namespace caspar { namespace core {
 
-bool operator<(const route_id& a, const route_id& b) { return a.mode + (a.index << 2) < b.mode + (b.index << 2); }
+bool operator<(const route_id& a, const route_id& b)
+{
+    return std::tie(a.index, a.mode, a.flattened) < std::tie(b.index, b.mode, b.flattened);
+}
 
 struct video_channel::impl final
 {
@@ -81,6 +85,10 @@ struct video_channel::impl final
     std::function<void(int, const layer_frame&)> routesCb = [&](int layer, const layer_frame& layer_frame) {
         std::lock_guard<std::mutex> lock(routes_mutex_);
         for (auto& r : routes_) {
+            // Flattened/MIX routes are fed the fully mixed frame further down, not the pre-composite layers.
+            if (r.first.flattened)
+                continue;
+
             // if this layer is the source for this route, push the frame to the route producers
             if (layer == r.first.index) {
                 auto route = r.second.lock();
@@ -134,8 +142,10 @@ struct video_channel::impl final
 
                     caspar::timer frame_timer;
 
-                    // Determine all layers that need a frame from the background producer
+                    // Determine all layers that need a frame from the background producer, and whether any
+                    // whole-channel MIX route is attached (it needs the mixed frame even with no consumers).
                     std::vector<int> background_routes = {};
+                    bool             has_flattened_route = false;
                     {
                         std::lock_guard<std::mutex> lock(routes_mutex_);
 
@@ -143,6 +153,11 @@ struct video_channel::impl final
                             // Ensure pointer is still valid
                             if (!r.second.lock())
                                 continue;
+
+                            if (r.first.flattened) {
+                                has_flattened_route = true;
+                                continue;
+                            }
 
                             if (r.first.mode != route_mode::foreground) {
                                 background_routes.push_back(r.first.index);
@@ -157,22 +172,41 @@ struct video_channel::impl final
 
                     // This is a little race prone, but at worst a new consumer will start with a frame of black
                     bool has_consumers   = output_.consumer_count() > 0;
-                    bool need_host_frame = output_.needs_host_frame();
+                    bool should_mix      = has_consumers || has_flattened_route;
+                    // A MIX route needs the host-readable bytes even if no local consumer does.
+                    bool need_host_frame = output_.needs_host_frame() || has_flattened_route;
 
                     // Mix
                     caspar::timer mix_timer;
-                    auto          mixed_frame  = has_consumers ? mixer_(stage_frames.frames,
+                    auto          mixed_frame  = should_mix ? mixer_(stage_frames.frames,
                                                               stage_frames.format_desc,
                                                               stage_frames.nb_samples,
                                                               need_host_frame)
                                                                : const_frame{};
-                    auto          mixed_frame2 = has_consumers && stage_frames.format_desc.field_count == 2
+                    auto          mixed_frame2 = should_mix && stage_frames.format_desc.field_count == 2
                                                      ? mixer_(stage_frames.frames2,
                                                      stage_frames.format_desc,
                                                      stage_frames.nb_samples,
                                                      need_host_frame)
                                                      : const_frame{};
                     graph_->set_value("mix-time", mix_timer.elapsed() * stage_frames.format_desc.hz * 0.5);
+
+                    // Push the mixed-down frame to any whole-channel MIX routes
+                    if (has_flattened_route) {
+                        std::lock_guard<std::mutex> lock(routes_mutex_);
+                        for (auto& r : routes_) {
+                            if (!r.first.flattened)
+                                continue;
+
+                            auto route = r.second.lock();
+                            if (!route)
+                                continue;
+
+                            route->signal(draw_frame(mixed_frame),
+                                         stage_frames.format_desc.field_count == 2 ? draw_frame(mixed_frame2)
+                                                                                    : draw_frame{});
+                        }
+                    }
 
                     // Consume
                     caspar::timer consume_timer;
@@ -211,13 +245,14 @@ struct video_channel::impl final
         thread_.join();
     }
 
-    std::shared_ptr<core::route> route(int index = -1, route_mode mode = route_mode::foreground)
+    std::shared_ptr<core::route> route(int index = -1, route_mode mode = route_mode::foreground, bool flattened = false)
     {
         std::lock_guard<std::mutex> lock(routes_mutex_);
 
         route_id id = {};
-        id.index    = index;
-        id.mode     = mode;
+        id.index     = index;
+        id.mode      = mode;
+        id.flattened = flattened;
 
         auto route = routes_[id].lock();
         if (!route) {
@@ -231,6 +266,9 @@ struct video_channel::impl final
                 route->name += L"/background";
             } else if (mode == route_mode::next) {
                 route->name += L"/next";
+            }
+            if (flattened) {
+                route->name += L"/mix";
             }
             routes_[id] = route;
         }
@@ -273,6 +311,9 @@ core::monitor::state video_channel::state() const
     return impl_->state_;
 }
 
-std::shared_ptr<route> video_channel::route(int index, route_mode mode) { return impl_->route(index, mode); }
+std::shared_ptr<route> video_channel::route(int index, route_mode mode, bool flattened)
+{
+    return impl_->route(index, mode, flattened);
+}
 
 }} // namespace caspar::core
