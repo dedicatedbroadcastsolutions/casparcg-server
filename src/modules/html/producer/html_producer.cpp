@@ -590,7 +590,8 @@ class html_client
 
     void OnAudioStreamStarted(CefRefPtr<CefBrowser> browser, const CefAudioParameters& params, int channels) override
     {
-        audioResampler_ = std::make_unique<ffmpeg::AudioResampler>(params.sample_rate, AV_SAMPLE_FMT_FLTP);
+        audioResampler_ = std::make_unique<ffmpeg::AudioResampler>(
+            params.sample_rate, AV_SAMPLE_FMT_FLTP, format_desc_.audio_channels);
     }
     void OnAudioStreamPacket(CefRefPtr<CefBrowser> browser, const float** data, int samples, int64_t pts) override
     {

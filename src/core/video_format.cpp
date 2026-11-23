@@ -251,14 +251,15 @@ bool operator==(const video_format_desc& lhs, const video_format_desc& rhs)
         }
 
         // TODO - expand on this
-        if (lhs.width != rhs.width || lhs.height != rhs.height || lhs.framerate != rhs.framerate) {
+        if (lhs.width != rhs.width || lhs.height != rhs.height || lhs.framerate != rhs.framerate ||
+            lhs.audio_channels != rhs.audio_channels) {
             return false;
         }
 
         return true;
     } else {
         // If neither are custom, look just at the format
-        return lhs.format == rhs.format;
+        return lhs.format == rhs.format && lhs.audio_channels == rhs.audio_channels;
     }
 }
 

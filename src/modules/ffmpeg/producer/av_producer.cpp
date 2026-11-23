@@ -915,8 +915,14 @@ struct AVProducer::Impl
                 frame.duration   = av_rescale_q(frame.audio->nb_samples, {1, sr}, TIME_BASE_Q);
             }
 
-            frame.frame = core::draw_frame(
-                make_frame(this, *frame_factory_, frame.video, frame.audio, get_color_space(frame.video), scale_mode_));
+            frame.frame       = core::draw_frame(make_frame(this,
+                                                      *frame_factory_,
+                                                      frame.video,
+                                                      frame.audio,
+                                                      get_color_space(frame.video),
+                                                      scale_mode_,
+                                                      false,
+                                                      format_desc_.audio_channels));
             frame.frame_count = frame_count_++;
 
             graph_->set_value("decode-time", decode_timer.elapsed() * format_desc_.fps * 0.5);
