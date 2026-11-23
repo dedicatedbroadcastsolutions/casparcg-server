@@ -47,8 +47,14 @@ struct route_id
 {
     int        index;
     route_mode mode;
+    // Whole-channel (index == -1) routes created with the MIX param carry the channel's already
+    // mixed-down frame instead of each layer's pre-composite frame; see video_channel.cpp.
+    bool       flattened = false;
 
-    bool const operator==(const route_id& o) { return index == o.index && mode == o.mode; }
+    bool const operator==(const route_id& o) const
+    {
+        return index == o.index && mode == o.mode && flattened == o.flattened;
+    }
 };
 
 struct route
@@ -93,7 +99,7 @@ class video_channel final
 
     [[nodiscard]] channel_info get_consumer_channel_info() const;
 
-    std::shared_ptr<core::route> route(int index = -1, route_mode mode = route_mode::foreground);
+    std::shared_ptr<core::route> route(int index = -1, route_mode mode = route_mode::foreground, bool flattened = false);
 
   private:
     struct impl;
