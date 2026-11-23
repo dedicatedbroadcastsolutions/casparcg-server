@@ -307,10 +307,12 @@ struct image_mixer::impl
         item.transforms = transform_stack_.back();
         item.geometry   = frame.geometry();
 
-        auto textures_ptr = std::any_cast<std::shared_ptr<std::vector<future_texture>>>(frame.opaque());
+        // Non-throwing pointer form: frames with no cached GPU texture (e.g. a MIX route's
+        // already-composited frame) fall through to the upload-from-host-bytes path below.
+        auto textures_ptr = std::any_cast<std::shared_ptr<std::vector<future_texture>>>(&frame.opaque());
 
-        if (textures_ptr) {
-            item.textures = *textures_ptr;
+        if (textures_ptr && *textures_ptr) {
+            item.textures = **textures_ptr;
         } else {
             for (int n = 0; n < static_cast<int>(item.pix_desc.planes.size()); ++n) {
                 item.textures.emplace_back(ogl_->copy_async(frame.image_data(n),
