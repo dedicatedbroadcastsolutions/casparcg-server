@@ -94,7 +94,12 @@ struct mixer::impl
                 std::vector<array<const uint8_t>> image_data;
                 auto                              tuple = std::move(result.get());
                 image_data.emplace_back(std::move(std::get<0>(tuple)));
-                return const_frame(tag, std::move(image_data), std::move(audio), desc, std::move(std::get<1>(tuple)));
+                return const_frame(tag,
+                                   std::move(image_data),
+                                   std::move(audio),
+                                   desc,
+                                   std::move(std::get<1>(tuple)),
+                                   std::move(std::get<2>(tuple)));
             }));
 
         if (buffer_.size() <= format_desc.field_count) {

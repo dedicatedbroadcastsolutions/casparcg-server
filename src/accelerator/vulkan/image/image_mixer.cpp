@@ -88,14 +88,14 @@ class image_renderer
     {
     }
 
-    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
     operator()(std::vector<layer> layers, const core::video_format_desc& format_desc, bool need_host_frame)
     {
         if (layers.empty()) { // Bypass GPU with empty frame.
             static const std::vector<uint8_t, boost::alignment::aligned_allocator<uint8_t, 32>> buffer(max_frame_size_,
                                                                                                        0);
-            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>(
-                {array<const std::uint8_t>(buffer.data(), format_desc.size, true), nullptr});
+            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>(
+                {array<const std::uint8_t>(buffer.data(), format_desc.size, true), nullptr, std::any()});
         }
 
         // Record + submit synchronously on the caller's (mixer) thread; the only
@@ -106,19 +106,28 @@ class image_renderer
 
         pass->commit();
 
+        // Expose the composited texture the same way create_frame()'s producer-side textures are
+        // exposed, so this frame can be reused directly (no re-upload) if it's visited by another
+        // channel's image_mixer of the same backend - e.g. a whole-channel MIX route. The render
+        // pass is already committed at this point, so this is valid regardless of need_host_frame.
+        std::vector<future_texture> textures{
+            make_ready_future<std::shared_ptr<texture>>(std::shared_ptr<texture>(target)).share()};
+        std::any                    opaque = std::make_shared<std::vector<future_texture>>(std::move(textures));
+
         // No consumer wants the bytes on the host: skip the GPU->host
         if (!need_host_frame) {
-            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>(
-                {array<const std::uint8_t>(), nullptr});
+            return make_ready_future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>(
+                {array<const std::uint8_t>(), nullptr, std::move(opaque)});
         }
 
         auto readback = vulkan_->transfer().copy_async(target);
 
-        return std::async(std::launch::deferred,
-                          [readback = std::move(readback)]() mutable
-                          -> std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>> {
-                              return {std::move(readback.get()), nullptr};
-                          });
+        return std::async(
+            std::launch::deferred,
+            [readback = std::move(readback), opaque = std::move(opaque)]() mutable
+                -> std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any> {
+                return {std::move(readback.get()), nullptr, std::move(opaque)};
+            });
     }
 
     common::bit_depth depth() const { return depth_; }
@@ -344,7 +353,7 @@ struct image_mixer::impl
         layer_stack_.resize(transform_stack_.back().image_transform.layer_depth);
     }
 
-    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+    std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
     render(const core::video_format_desc& format_desc, bool need_host_frame)
     {
         return renderer_(std::move(layers_), format_desc, need_host_frame);
@@ -412,7 +421,7 @@ void image_mixer::push(const core::frame_transform& transform) { impl_->push(tra
 void image_mixer::visit(const core::const_frame& frame) { impl_->visit(frame); }
 void image_mixer::pop() { impl_->pop(); }
 void image_mixer::update_aspect_ratio(double aspect_ratio) { impl_->update_aspect_ratio(aspect_ratio); }
-std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>>>
+std::future<std::tuple<array<const std::uint8_t>, std::shared_ptr<core::texture>, std::any>>
 image_mixer::render(const core::video_format_desc& format_desc, bool need_host_frame)
 {
     return impl_->render(format_desc, need_host_frame);
