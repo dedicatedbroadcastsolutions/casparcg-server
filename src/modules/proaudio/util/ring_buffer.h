@@ -18,20 +18,13 @@
 #pragma once
 
 #include <common/audio_ring_buffer.h>
-#include <cstdint>
 
 namespace caspar { namespace proaudio {
 
-// Single-producer/single-consumer lock-free ring buffer of interleaved audio frames.
-//
-// push() and pop() never block or take a lock against each other, so each may safely be called
-// from a realtime PortAudio callback that must never block, allocate, or touch a mutex - which
-// side that is depends on the direction of data flow: the consumer pushes from its executor
-// thread and pops from its realtime playback callback, while the producer is the other way
-// around (pushes from its realtime capture callback, pops from the mixer's executor thread).
-// Either way, push() must only ever be called from one fixed thread and pop() from the other.
-//
-// One "frame" here is `channels` interleaved int16_t samples.
-using frame_ring_buffer = caspar::audio_ring_buffer<std::int16_t>;
+// Single-producer/single-consumer lock-free ring buffer of interleaved audio frames: push() from
+// one fixed thread, pop() from another, either of which may be a realtime callback. One frame is
+// `channels` interleaved samples of type T.
+template <typename T>
+using frame_ring_buffer = caspar::audio_ring_buffer<T>;
 
 }} // namespace caspar::proaudio

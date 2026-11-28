@@ -67,8 +67,10 @@ std::vector<int> parse_channel_map(const std::string& str, int default_channels)
     return map;
 }
 
-PaDeviceIndex
-find_device(device_direction direction, const std::string& device_name, const std::string& host_api_name)
+PaDeviceIndex find_device(device_direction   direction,
+                          const std::string& device_name,
+                          const std::string& host_api_name,
+                          bool               log_available)
 {
     const auto is_output = direction == device_direction::output;
 
@@ -115,10 +117,12 @@ find_device(device_direction direction, const std::string& device_name, const st
             return i;
     }
 
-    CASPAR_LOG(info) << "-------- PortAudio Devices -------";
-    for (auto&& name : available)
-        CASPAR_LOG(info) << u16(name);
-    CASPAR_LOG(info) << "-------- PortAudio Devices -------";
+    if (log_available) {
+        CASPAR_LOG(info) << "-------- PortAudio Devices -------";
+        for (auto&& name : available)
+            CASPAR_LOG(info) << u16(name);
+        CASPAR_LOG(info) << "-------- PortAudio Devices -------";
+    }
 
     CASPAR_THROW_EXCEPTION(invalid_operation()
                            << msg_info("Invalid PortAudio device/host-api: '" + device_name + "' '" + host_api_name +
