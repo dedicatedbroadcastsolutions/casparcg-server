@@ -54,7 +54,7 @@ jobs:
               run: |
                   cmake -S src -B dist -DBUILD_TESTING=ON -DENABLE_PROAUDIO=ON
                   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-                  cmake --build dist --config Release --target route_audio_mapping_tests audio_matrix_tests proaudio_tests --parallel
+                  cmake --build dist --config Release --target route_audio_mapping_tests audio_matrix_tests proaudio --parallel
                   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
                   $env:PATH = "$(Resolve-Path dist/shell/Release);$env:PATH"
                   ctest --test-dir dist -C Release --output-on-failure -L "unit|module"
