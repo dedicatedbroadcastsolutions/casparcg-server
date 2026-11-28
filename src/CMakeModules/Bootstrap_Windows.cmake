@@ -215,7 +215,7 @@ target_link_libraries(OpenAL::OpenAL INTERFACE OpenAL32)
 casparcg_add_runtime_dependency("${openal_SOURCE_DIR}/bin/Win64/OpenAL32.dll")
 
 # PortAudio (proaudio consumer) - optional, off by default.
-# Provides ASIO/WASAPI/WDM-KS/DirectSound multi-channel pro-audio output.
+# Provides ASIO (and WASAPI) multi-channel pro-audio output.
 option(ENABLE_PROAUDIO "Enable the PortAudio-based multi-channel pro-audio consumer" OFF)
 if (ENABLE_PROAUDIO)
 	# Steinberg's ASIO SDK cannot be redistributed - point this at your own local copy to enable ASIO
@@ -229,8 +229,10 @@ if (ENABLE_PROAUDIO)
 	set(PA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 	set(PA_DLL_LINK_WITH_STATIC_RUNTIME OFF CACHE BOOL "" FORCE)
 	set(PA_USE_WASAPI ON CACHE BOOL "" FORCE)
-	set(PA_USE_WDMKS ON CACHE BOOL "" FORCE)
-	set(PA_USE_DS ON CACHE BOOL "" FORCE)
+	# WDM-KS defines GUID_NULL, which collides with uuid.lib when linked into casparcg.exe, and
+	# DirectSound adds nothing for professional interfaces: ASIO is the target, WASAPI the fallback.
+	set(PA_USE_WDMKS OFF CACHE BOOL "" FORCE)
+	set(PA_USE_DS OFF CACHE BOOL "" FORCE)
 	set(PA_USE_WMME OFF CACHE BOOL "" FORCE)
 
 	if (PROAUDIO_ASIO_SDK_PATH)

@@ -43,10 +43,12 @@ enum class device_direction
 // Finds a PortAudio device by (fuzzy, case/whitespace-insensitive) name and, optionally, host API
 // name (e.g. "ASIO", "WASAPI", "ALSA", "JACK") to disambiguate identically-named devices exposed
 // through more than one host API. Empty device_name + empty host_api_name means "the default
-// input/output device". Throws invalid_operation (after logging all available devices) if nothing
-// matches.
-PaDeviceIndex
-find_device(device_direction direction, const std::string& device_name, const std::string& host_api_name);
+// input/output device". Throws invalid_operation if nothing matches, after logging all available
+// devices unless log_available is false (a caller retrying a missing device throttles that list).
+PaDeviceIndex find_device(device_direction   direction,
+                          const std::string& device_name,
+                          const std::string& host_api_name,
+                          bool               log_available = true);
 
 // PortAudio's Pa_Initialize/Pa_Terminate must be balanced process-wide. Refcounted so the first
 // consumer/producer initializes it and the last one tears it down.
